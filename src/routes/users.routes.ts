@@ -87,4 +87,20 @@ router.put('/', async (req, res) => {
     });
 });
 
+router.delete('/', async (req, res) => {
+  db.Users
+    .destroy({
+      where: {
+        Username: req.body.Username,
+      },
+    })
+    .then((user: any) => {
+      res.send(user);
+    })
+    .catch((err: any) => {
+      res.status(500);
+      res.send(err);
+    });
+});
+
 module.exports = router;
