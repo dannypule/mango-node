@@ -10,39 +10,41 @@ export default (sequelize: any, DataTypes: any) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      First_Name: {
+      FirstName: {
         allowNull: true,
         type: DataTypes.STRING(50),
       },
-      Last_Name: {
+      LastName: {
         allowNull: true,
         type: DataTypes.STRING(50),
       },
       Email: {
         allowNull: true,
         type: DataTypes.STRING(50),
+        unique: true,
       },
       Username: {
         allowNull: false,
         type: DataTypes.STRING(50),
+        unique: true,
       },
       Password: {
         allowNull: false,
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(150),
       },
-      Date_Created: {
+      DateCreated: {
         allowNull: true,
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
       },
-      Date_Updated: {
+      DateUpdated: {
         allowNull: true,
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
       },
     },
     {
       freezeTableName: true,
-      updatedAt: 'Date_Updated',
-      createdAt: 'Date_Created',
+      updatedAt: 'DateUpdated',
+      createdAt: 'DateCreated',
       classMethods: {
         associate(models: any) {
           // associations can be defined here
@@ -55,42 +57,77 @@ export default (sequelize: any, DataTypes: any) => {
         },
       },
       hooks: {
-        beforeUpdate: (user: any, options: any, next: any) => {
-          const saltFactor = 8;
-
-          // Only hash the password if it has been modified or is new
-          if (user.changed('Password') && user.get('Password') !== null) {
-            // generate a salt
-            bcrypt
-              .genSalt(saltFactor)
-              // hash the password along with our new salt
-              .then(salt => bcrypt.hash(user.Password, salt, null))
-              // override the plain password with the hashed one
-              .then(hash => {
-                user.Password = hash;
-                next();
-              })
-              .catch(next);
-          } else next();
-        },
-        afterUpdate: async (user: any, options: any) => {
-          const { transaction } = options;
-          // Save password in password history
-          if (user.changed('Password') && user.get('Password') !== null) {
-            try {
-              await user.createUserPassword(
-                {
-                  Password: user.Password,
-                },
-                {
-                  transaction,
-                }
-              );
-            } catch (err) {
-              throw err;
-            }
-          }
-        },
+        // beforeCreate: (user: any, options: any, next: any) => {
+        //   const saltFactor = 6;
+        //   // Only hash the password if it has been modified or is new
+        //   if (user.get('Password') !== null) {
+        //     // generate a salt
+        //     bcrypt
+        //       .genSalt(saltFactor)
+        //       // hash the password along with our new salt
+        //       .then(salt => bcrypt.hash(user.Password, salt, null))
+        //       // override the plain password with the hashed one
+        //       .then(hash => {
+        //         user.set('Password', hash);
+        //         debugger;
+        //         next(user);
+        //       })
+        //       .catch(next);
+        //   } else next();
+        // },
+        // afterCreate: async (user: any, options: any) => {
+        //   const { transaction } = options;
+        //   // Save password in password history
+        //   if (user.changed('Password') && user.get('Password') !== null) {
+        //     try {
+        //       await user.createUserPassword(
+        //         {
+        //           Password: user.Password,
+        //         },
+        //         {
+        //           transaction,
+        //         }
+        //       );
+        //     } catch (err) {
+        //       throw err;
+        //     }
+        //   }
+        // },
+        // beforeUpdate: (user: any, options: any, next: any) => {
+        //   const saltFactor = 6;
+        //   // Only hash the password if it has been modified or is new
+        //   if (user.changed('Password') && user.get('Password') !== null) {
+        //     // generate a salt
+        //     bcrypt
+        //       .genSalt(saltFactor)
+        //       // hash the password along with our new salt
+        //       .then(salt => bcrypt.hash(user.Password, salt, null))
+        //       // override the plain password with the hashed one
+        //       .then(hash => {
+        //         user.Password = hash;
+        //         next();
+        //       })
+        //       .catch(next);
+        //   } else next();
+        // },
+        // afterUpdate: async (user: any, options: any) => {
+        //   const { transaction } = options;
+        //   // Save password in password history
+        //   if (user.changed('Password') && user.get('Password') !== null) {
+        //     try {
+        //       await user.createUserPassword(
+        //         {
+        //           Password: user.Password,
+        //         },
+        //         {
+        //           transaction,
+        //         }
+        //       );
+        //     } catch (err) {
+        //       throw err;
+        //     }
+        //   }
+        // },
       },
     }
   );

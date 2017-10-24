@@ -1,5 +1,5 @@
 {
-  "name": "stirwell",
+  "name": "ribena",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,19 +19,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dannypule/stirwell.git"
+    "url": "git+https://github.com/dannypule/ribena.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dannypule/stirwell/issues"
+    "url": "https://github.com/dannypule/ribena/issues"
   },
-  "homepage": "https://github.com/dannypule/stirwell#readme",
+  "homepage": "https://github.com/dannypule/ribena#readme",
   "dependencies": {
     "bcrypt": "^1.0.3",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
+    "pg": "^7.3.0",
+    "pg-hstore": "^2.3.2",
     "sequelize": "^4.17.2"
   },
   "devDependencies": {

@@ -8,12 +8,21 @@ const dbConfig = config[env];
 
 const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
 const db: any = {};
 
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
-    return file.indexOf('.') !== 0 && file !== 'index.js';
+    return file.indexOf('.') !== 0 && file !== 'index.js' && !file.includes('js.map');
   })
   .forEach(function(file) {
     const model: any = sequelize.import(path.join(__dirname, file));

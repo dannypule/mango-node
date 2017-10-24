@@ -17,7 +17,7 @@ export default (sequelize: any, DataTypes: any) => {
       },
       AuditLastUsedDatetime: {
         allowNull: false,
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
     },

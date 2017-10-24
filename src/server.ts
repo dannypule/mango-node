@@ -1,7 +1,7 @@
 import * as express from 'express';
 const bodyParser = require('body-parser');
 
-const usersRoute = require('./routes/users');
+const usersRoute = require('./routes/users.routes');
 
 const port = process.env.PORT || 5566;
 
