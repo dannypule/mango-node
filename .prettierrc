@@ -1,0 +1,30 @@
+{
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "semi": true,
+        "bracketSpacing": true,
+        "parser": "babylon",
+        "printWidth": 120,
+        "trailingComma": "es5",
+        "excludeFiles": ["*.scss"],
+        "tabWidth": 2,
+        "singleQuote": true
+      }
+    },
+    {
+      "files": "*.ts",
+      "options": {
+        "semi": true,
+        "bracketSpacing": true,
+        "parser": "typescript",
+        "printWidth": 120,
+        "trailingComma": "es5",
+        "excludeFiles": ["*.scss"],
+        "tabWidth": 2,
+        "singleQuote": true
+      }
+    }
+  ]
+}

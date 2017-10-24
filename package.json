@@ -1,0 +1,49 @@
+{
+  "name": "stirwell",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && npm run watch",
+    "build": "npm run build-ts && npm run tslint && npm run copy-static-assets",
+    "serve": "nodemon dist/server.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve\"",
+    "test": "jest --forceExit",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "copy-static-assets": "node copyStaticAssets.js",
+    "debug": "npm run build && npm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/server.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannypule/stirwell.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dannypule/stirwell/issues"
+  },
+  "homepage": "https://github.com/dannypule/stirwell#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "sequelize": "^4.17.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^1.0.0",
+    "@types/sequelize": "^4.0.77",
+    "@types/express": "^4.0.37",
+    "concurrently": "^3.5.0",
+    "jest": "^21.2.1",
+    "nodemon": "^1.12.1",
+    "shelljs": "^0.7.8",
+    "supertest": "^3.0.0",
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
+  }
+}
