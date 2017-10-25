@@ -1,7 +1,11 @@
 import * as express from 'express';
-const bodyParser = require('body-parser');
+import * as bodyParser from 'body-parser';
 
-const usersRoute = require('./routes/users.routes');
+// import authRoute from './routes/auth.route';
+import usersRoute from './routes/users.route';
+
+// const usersRoute = require('./routes/users.route');
+const authRoute = require('./routes/users.route');
 
 const port = process.env.PORT || 5566;
 
