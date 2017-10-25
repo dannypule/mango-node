@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import * as faker from 'faker';
-import db from '../models';
+import db from '../db-schema';
 
 // console.log(faker.commerce.productName());
 

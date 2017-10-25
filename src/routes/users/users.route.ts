@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bcrypt from 'bcrypt';
-import db from '../models';
-import { getUsers, addUser, deleteUser } from '../controllers/users.controller';
+import db from '../../db-schema';
+import { getUsers, addUser, deleteUser } from '../../controllers/users/users.controller';
 const router = express.Router();
 
 // ===================================================

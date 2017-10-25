@@ -1,11 +1,12 @@
 import * as express from 'express';
 import * as bcrypt from 'bcrypt';
-import db from '../models';
+import db from '../../db-schema';
+import { formatGetUserResponse } from './users.helpers';
 
-export const getUsers = (req: express.Request, res: express.Response) => {
+export const getUsers = async (req: express.Request, res: express.Response) => {
   db.Users.findAll().then((users: any[]) => {
-    // debugger;
-    res.send(users);
+    const formattedUsers: any[] = users.map(formatGetUserResponse);
+    res.send(formattedUsers);
   });
 };
 
