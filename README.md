@@ -19,3 +19,5 @@ An `.env` file - speak to your project's maintainter or setup your configuration
 ## Other useful bits
 
 This project is configured to run with an external Postgres database. Heroku have a free add-on which you can use with an existing application.
+
+### Contributor(s) Danny Pule - open sourced under the MIT Liscense
