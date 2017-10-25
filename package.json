@@ -6,18 +6,17 @@
   "scripts": {
     "dev": "npm run build && npm run watch",
     "debug": "npm run build && npm run watch-debug",
+    "setup:db": "node dist/dev-setup/db.setup.js",
     "build": "npm run build-ts && npm run tslint && npm run copy-static-assets",
     "serve": "nodemon dist/server.js",
-    "watch":
-      "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve\"",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve\"",
     "test": "jest --forceExit",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "copy-static-assets": "node copyStaticAssets.js",
     "serve-debug": "nodemon --inspect dist/server.js",
-    "watch-debug":
-      "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "repository": {
     "type": "git",
@@ -34,6 +33,7 @@
     "bcrypt": "^1.0.3",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
+    "moment": "^2.19.1",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.17.2"

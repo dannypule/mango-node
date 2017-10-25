@@ -40,6 +40,10 @@ export default (sequelize: any, DataTypes: any) => {
         allowNull: true,
         type: DataTypes.DATE,
       },
+      RoleID: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
     },
     {
       freezeTableName: true,

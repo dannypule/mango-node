@@ -4,7 +4,7 @@ export default (sequelize: any, DataTypes: any) => {
     {
       Token: {
         allowNull: false,
-        type: DataTypes.STRING(300),
+        type: DataTypes.STRING(400),
         primaryKey: true,
       },
       UserID: {
@@ -15,14 +15,14 @@ export default (sequelize: any, DataTypes: any) => {
         allowNull: false,
         type: DataTypes.DATE,
       },
-      AuditLastUsedDatetime: {
+      LastUsedDatetime: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
     },
     {
-      createdAt: 'AuditCreatedAtDatetime',
+      createdAt: 'LastUsedDatetime',
       updatedAt: false,
       freezeTableName: true,
       classMethods: {

@@ -5,7 +5,7 @@ export default (sequelize: any, DataTypes: any) => {
       RoleID: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        autoIncrement: true,
+        autoIncrement: false,
         primaryKey: true,
       },
       RoleDescription: {
