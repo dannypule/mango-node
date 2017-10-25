@@ -33,6 +33,7 @@
     "bcrypt": "^1.0.3",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
+    "faker": "^4.1.0",
     "moment": "^2.19.1",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
@@ -40,8 +41,9 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^1.0.0",
-    "@types/sequelize": "^4.0.77",
     "@types/express": "^4.0.37",
+    "@types/faker": "^4.1.1",
+    "@types/sequelize": "^4.0.77",
     "concurrently": "^3.5.0",
     "jest": "^21.2.1",
     "nodemon": "^1.12.1",
