@@ -1,8 +1,8 @@
-# Ribena - Node, Postgres, Typescript starter seed project
+# Node, Postgres, Typescript starter seed project (https://github.com/dannypule)
 
 ## Prereqs
 
-Node 6.10.x
+Node 6.10.x or a higher LTS release
 
 NPM 3.x.x
 
@@ -20,4 +20,4 @@ An `.env` file - speak to your project's maintainter or setup your configuration
 
 This project is configured to run with an external Postgres database. Heroku have a free add-on which you can use with an existing application.
 
-### Contributor(s) Danny Pule - open sourced under the MIT Liscense
+### Contributor(s) Danny Pule - open sourced under the MIT Liscense https://github.com/dannypule

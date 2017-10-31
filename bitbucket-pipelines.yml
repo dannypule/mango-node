@@ -1,0 +1,11 @@
+image: node:6.11.4
+clone:
+  depth: full
+
+pipelines:
+  branches:
+    master:
+      - step:
+          script:
+            - chmod +x ./pipelinesDeploymentConfig.sh
+            - ./pipelinesDeploymentConfig.sh
