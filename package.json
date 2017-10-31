@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm run serve:prod",
+    "serve:prod": "node dist/server.js",
+    "serve": "nodemon dist/server.js",
     "dev": "npm run build && npm run watch",
     "debug": "npm run build && npm run watch-debug",
     "setup:db": "node dist/dev-setup/db.setup.js",
     "build":
       "rm -rf dist && npm run build-ts && npm run tslint && npm run copy-static-assets",
-    "serve": "nodemon dist/server.js",
     "watch":
       "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve\"",
     "test": "jest --forceExit",
@@ -37,6 +39,7 @@
   "homepage": "https://github.com/dannypule/ribena#readme",
   "dependencies": {
     "bcrypt": "^1.0.3",
+    "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "faker": "^4.1.0",
@@ -47,6 +50,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^1.0.0",
+    "@types/cors": "^2.8.1",
     "@types/express": "^4.0.37",
     "@types/faker": "^4.1.1",
     "@types/sequelize": "^4.0.77",

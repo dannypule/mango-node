@@ -1,6 +1,6 @@
 image: node:6.11.4
 clone:
-  depth: full
+  depth: 1000
 
 pipelines:
   branches:

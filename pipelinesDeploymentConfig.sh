@@ -4,7 +4,7 @@ set -e
 set -u
 
 npm install
-npm run pipelines:build -- --env=$(echo "${BITBUCKET_BRANCH}") --prod && npm run sw
+npm run build
 #ng test
 commit=$(git rev-parse HEAD)
 echo $commit > $commit.hash

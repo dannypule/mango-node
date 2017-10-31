@@ -119,11 +119,10 @@ db.Sales
   .then(() => {
     // Table created, now create sales items
     // create 30 sales items
-    let companyName: string;
-    for (let i = 0; i < 5; i++) {
-      companyName = faker.company.companyName();
+    // let companyName: string;
 
-      for (let f = 0; f < 6; f++) {
+    ['Ribena', 'Coca Cola', 'Evian'].forEach(companyName => {
+      for (let f = 0; f < 15; f++) {
         db.Sales.create({
           SaleDate: moment(faker.date.recent()).toISOString(),
           CompanyName: companyName,
@@ -133,7 +132,7 @@ db.Sales
           SalesCount: faker.random.number({ min: 12, max: 98 }),
         });
       }
-    }
+    });
   })
   .then(() => {
     console.log('Demo sales items inserted into Sales table.');

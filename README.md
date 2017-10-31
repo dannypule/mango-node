@@ -16,8 +16,14 @@ An `.env` file - speak to your project's maintainter or setup your configuration
 
 `npm run debug` (run in debug mode)
 
-## Other useful bits
+## Setting up the database
 
 This project is configured to run with an external Postgres database. Heroku have a free add-on which you can use with an existing application.
+
+When you have your postgres database details ready, enter them into the .env file.
+
+To seed the db with demo data, run this command `npm run setup:db`
+
+View your database data using this test command `http://localhost:5566/api/users`
 
 ### Contributor(s) Danny Pule - open sourced under the MIT Liscense https://github.com/dannypule
