@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run serve:prod",
+    "postinstall": "npm run build",
     "serve:prod": "node dist/server.js",
     "serve": "nodemon dist/server.js",
     "dev": "npm run build && npm run watch",
