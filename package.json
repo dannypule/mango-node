@@ -41,10 +41,11 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "faker": "^4.1.0",
-    "moment": "^2.19.1",
+    "moment": "^2.19.3",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.17.2"
+    "sequelize": "^4.17.2",
+    "uuid-token-generator": "^1.0.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^1.0.0",
@@ -58,6 +59,7 @@
     "@types/passport": "^0.4.2",
     "@types/passport-local": "^1.0.32",
     "@types/request": "^2.0.12",
+    "@types/moment": "^2.13.0",
     "@types/sequelize": "^4.0.77",
     "@types/supertest": "^2.0.4",
     "concurrently": "^3.5.0",

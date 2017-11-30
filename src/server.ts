@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 
-// import authRoute from './routes/auth/auth.route';
+import authRoute from './routes/auth/auth.route';
 import usersRoute from './routes/users/users.route';
 import salesRoute from './routes/sales/sales.route';
 import carsRoute from './routes/cars/cars.route';
@@ -44,6 +44,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/auth', authRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/sales', salesRoute);
 app.use('/api/cars', carsRoute);
