@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run serve:prod",
-    "postinstall": "npm run build",
+    "postinstall": "build-ts",
     "serve:prod": "node dist/server.js",
     "serve": "nodemon dist/server.js",
     "dev": "npm run build && npm run watch",
@@ -16,8 +16,8 @@
     "watch":
       "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve\"",
     "test": "jest --forceExit",
-    "build-ts": "./node_modules/typescript/bin/tsc",
-    "watch-ts": "./node_modules/typescript/bin/tsc -w",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "copy-static-assets": "node copyStaticAssets.js",
     "serve-debug": "nodemon --inspect dist/server.js",
