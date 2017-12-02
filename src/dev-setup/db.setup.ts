@@ -148,21 +148,18 @@ db.Sales.sync({ force: SalesSync })
 // Create Cars table
 // force: true will drop the table if it already exists
 // =================================================
-const CarsSync = false;
+const CarsSync = true;
 db.Cars.sync({ force: CarsSync })
   .then(() => {
     console.log('Cars table created.');
   })
   .then(() => {
-    if (!CarsSync) return;
-
     return db.Cars.create({
       Model: 'Range Rover',
       Year: 2018,
     });
   })
   .then(() => {
-    if (!CarsSync) return;
     console.log('Demo car inserted into Cars table.');
   })
   .catch((err: any) => console.log('Unable to perform action ', err));
