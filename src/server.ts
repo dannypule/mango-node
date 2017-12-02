@@ -5,6 +5,7 @@ import * as cors from 'cors';
 // import authRoute from './routes/auth/auth.route';
 import usersRoute from './routes/users/users.route';
 import salesRoute from './routes/sales/sales.route';
+import carsRoute from './routes/cars/cars.route';
 
 const port = process.env.PORT || 5566;
 const node_env = process.env.NODE_ENV;
@@ -45,6 +46,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/users', usersRoute);
 app.use('/api/sales', salesRoute);
+app.use('/api/cars', carsRoute);
 
 app.use('/', (req: express.Request, res: express.Response) => {
   res.send('up');
