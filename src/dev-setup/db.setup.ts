@@ -2,8 +2,6 @@ import * as moment from 'moment';
 import * as faker from 'faker';
 import db from '../db-schema';
 
-// console.log(faker.commerce.productName());
-
 /////////////////////////// WARNING ///////////////////////////
 //// This script will create new tables and insert demo data
 //// Using `force: true` will nuke any existing tables so use with extreme caution
@@ -13,13 +11,14 @@ import db from '../db-schema';
 // Create Users table
 // force: true will drop the table if it already exists
 // =================================================
-db.Users
-  // .sync() // or use sync({ force: true }) (this should be used with caution)
-  .sync({ force: true })
+const UsersSync = false;
+db.Users.sync({ force: UsersSync })
   .then(() => {
     console.log('Users table created.');
   })
   .then(() => {
+    if (!UsersSync) return;
+
     // Table created, now create a user
     return db.Users.create({
       FirstName: 'Super',
@@ -33,6 +32,8 @@ db.Users
     });
   })
   .then(() => {
+    if (!UsersSync) return;
+
     // Table created, now create a user
     return db.Users.create({
       FirstName: 'Regular',
@@ -46,6 +47,8 @@ db.Users
     });
   })
   .then(() => {
+    if (!UsersSync) return;
+
     console.log('Demo users inserted into Users table.');
   })
   .catch((err: any) => console.log('Unable to perform action ', err));
@@ -54,11 +57,13 @@ db.Users
 // Create UserRoles table
 // force: true will drop the table if it already exists
 // =================================================
-db.UserRoles
-  .sync() // or use sync({ force: true }) (this should be used with caution)
-  // .sync({ force: true })
+const UserRolesSync = false;
+db.UserRoles.sync({ force: UserRolesSync })
   .then((data: any) => {
     console.log('UserRoles table created.');
+
+    if (!UserRolesSync) return;
+
     // Table created, now create the roles
     const roles = [
       {
@@ -76,11 +81,10 @@ db.UserRoles
     ];
 
     roles.forEach(role => {
-      db.UserRoles
-        .create({
-          RoleID: role.id,
-          RoleDescription: role.description,
-        })
+      db.UserRoles.create({
+        RoleID: role.id,
+        RoleDescription: role.description,
+      })
         .then(() => {
           console.log(`Role ${role.id} user inserted into UserRoles table.`);
         })
@@ -93,9 +97,8 @@ db.UserRoles
 // Create UserTokens table
 // force: true will drop the table if it already exists
 // =================================================
-db.UserTokens
-  .sync() // or use sync({ force: true }) (this should be used with caution)
-  // .sync({ force: true })
+const UserTokensSync = false;
+db.UserTokens.sync({ force: UserTokensSync })
   .then(() => {
     console.log('UserTokens table created.');
   })
@@ -110,13 +113,13 @@ db.UserTokens
 // Create Sales table
 // force: true will drop the table if it already exists
 // =================================================
-db.Sales
-  // .sync() // or use sync({ force: true }) (this should be used with caution)
-  .sync({ force: true })
+const SalesSync = false;
+db.Sales.sync({ force: SalesSync })
   .then(() => {
     console.log('Sales table created.');
   })
   .then(() => {
+    if (!SalesSync) return;
     // Table created, now create sales items
     // create 30 sales items
     // let companyName: string;
@@ -135,6 +138,28 @@ db.Sales
     });
   })
   .then(() => {
+    if (!SalesSync) return;
+
     console.log('Demo sales items inserted into Sales table.');
+  })
+  .catch((err: any) => console.log('Unable to perform action ', err));
+
+// ==================================================================
+// Create Cars table
+// force: true will drop the table if it already exists
+// =================================================
+const CarsSync = true;
+db.Cars.sync({ force: CarsSync })
+  .then(() => {
+    console.log('Cars table created.');
+  })
+  .then(() => {
+    return db.Cars.create({
+      Model: 'Range Rover',
+      Year: 2018,
+    });
+  })
+  .then(() => {
+    console.log('Demo car inserted into Cars table.');
   })
   .catch((err: any) => console.log('Unable to perform action ', err));
