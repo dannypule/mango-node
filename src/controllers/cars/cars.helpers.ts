@@ -1,6 +1,6 @@
 import ICar from '../../models/car.model';
 
-export const formatGetCarsItemResponse = (item: any): ICar => {
+export const formatCarResponse = (item: any): ICar => {
   return {
     id: item.CarID,
     model: item.Model,
