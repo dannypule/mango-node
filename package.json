@@ -1,5 +1,5 @@
 {
-  "name": "ribena",
+  "name": "mango-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -29,15 +29,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dannypule/ribena.git"
+    "url": "git+https://github.com/dannypule/mango-node.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dannypule/ribena/issues"
+    "url": "https://github.com/dannypule/mango-node/issues"
   },
-  "homepage": "https://github.com/dannypule/ribena#readme",
+  "homepage": "https://github.com/dannypule/mango-node#readme",
   "dependencies": {
     "bcrypt": "^1.0.3",
     "cors": "^2.8.4",
