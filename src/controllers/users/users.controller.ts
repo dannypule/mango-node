@@ -23,8 +23,7 @@ export const addUser = async (req: express.Request, res: express.Response) => {
     .then(async hash => {
       user.Password = hash;
 
-      db.Users
-        .create(user, { individualHooks: true })
+      db.Users.create(user, { individualHooks: true })
         .then((user: any) => {
           res.send(user);
         })
@@ -40,12 +39,11 @@ export const addUser = async (req: express.Request, res: express.Response) => {
 };
 
 export const deleteUser = (req: express.Request, res: express.Response) => {
-  db.Users
-    .destroy({
-      where: {
-        Username: req.body.Username,
-      },
-    })
+  db.Users.destroy({
+    where: {
+      Username: req.body.Username,
+    },
+  })
     .then((user: any) => {
       res.send(user);
     })
