@@ -1,12 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as Sequelize from 'sequelize';
-import config from '../config';
+import appConfig from '../config';
 
 const env: string = process.env.NODE_ENV || 'development';
-const dbConfig = config[env];
+const config = appConfig[env];
 
-const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 sequelize
   .authenticate()

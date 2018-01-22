@@ -2,10 +2,18 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 
+import * as jwt from 'jsonwebtoken';
+import appConfig from './config';
+
 import authRoute from './routes/auth/auth.route';
 import usersRoute from './routes/users/users.route';
 import salesRoute from './routes/sales/sales.route';
 import carsRoute from './routes/cars/cars.route';
+
+import { validateToken } from './controllers/auth/auth.controller';
+
+const env: string = process.env.NODE_ENV || 'development';
+const config = appConfig[env];
 
 const port = process.env.PORT || 5566;
 const node_env = process.env.NODE_ENV;
@@ -40,11 +48,13 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/auth', authRoute);
+
+app.use('/api', validateToken);
+
 app.use('/api/users', usersRoute);
 app.use('/api/sales', salesRoute);
 app.use('/api/cars', carsRoute);

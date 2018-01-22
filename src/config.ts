@@ -15,6 +15,7 @@ const config: any = {
     dialectOptions: {
       ssl: true,
     },
+    secret: process.env.DEV_SECRET,
   },
   production: {
     username: process.env.PROD_DB_USERNAME,
@@ -26,6 +27,7 @@ const config: any = {
     dialectOptions: {
       ssl: true,
     },
+    secret: process.env.PROD_SECRET,
   },
 };
 

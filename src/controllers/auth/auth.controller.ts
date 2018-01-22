@@ -1,9 +1,13 @@
 import * as express from 'express';
 import * as bcrypt from 'bcrypt';
-import * as TokenGenerator from 'uuid-token-generator';
+import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import db from '../../db-schema';
+import appConfig from '../../config';
+
+const env: string = process.env.NODE_ENV || 'development';
+const config = appConfig[env];
 
 export const login = async (req: express.Request, res: express.Response) => {
   const { username, password } = req.body;
@@ -20,14 +24,16 @@ export const login = async (req: express.Request, res: express.Response) => {
       }
     })
     .then((user: any) => {
-      const tokgen = new TokenGenerator(256, TokenGenerator.BASE62);
-      const token = tokgen.generate();
+      const tokenLifetime = 30; // expires in 30 days
+      const token = jwt.sign({ id: user.UserID }, config.secret, {
+        expiresIn: 86400 * tokenLifetime, // expires in tokenLifetime days
+      });
 
       return Promise.all([
         db.UserTokens.create({
           Token: token,
           UserID: user.UserID,
-          ExpiryDatetime: moment(new Date(), moment.ISO_8601).add(30, 'days'),
+          ExpiryDatetime: moment(new Date(), moment.ISO_8601).add(tokenLifetime, 'days'),
           LastUsedDatetime: moment(new Date(), moment.ISO_8601),
         }),
         user,
@@ -42,52 +48,14 @@ export const login = async (req: express.Request, res: express.Response) => {
     });
 };
 
-export const getUsers = async (req: express.Request, res: express.Response) => {
-  // db.Users.findAll().then((users: any[]) => {
-  //   const formattedUsers: any[] = users.map(formatGetUserResponse);
-  //   res.send(formattedUsers);
-  // });
-};
+export const validateToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const token = req.headers['x-access-token'];
 
-export const addUser = async (req: express.Request, res: express.Response) => {
-  const user = req.body;
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
-  const saltFactor = 7;
+  jwt.verify(token, config.secret, function(err: any, decoded: any) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
 
-  const salt = await bcrypt
-    .genSalt(saltFactor)
-    // hash the password along with our new salt
-    .then(salt => bcrypt.hash(user.Password, salt, null))
-    // override the plain password with the hashed one
-    .then(async hash => {
-      user.Password = hash;
-
-      db.Users.create(user, { individualHooks: true })
-        .then((user: any) => {
-          res.send(user);
-        })
-        .catch((err: any) => {
-          res.status(500);
-          res.send(err);
-        });
-    })
-    .catch((err: any) => {
-      res.status(500);
-      res.send(err);
-    });
-};
-
-export const deleteUser = (req: express.Request, res: express.Response) => {
-  db.Users.destroy({
-    where: {
-      Username: req.body.Username,
-    },
-  })
-    .then((user: any) => {
-      res.send(user);
-    })
-    .catch((err: any) => {
-      res.status(500);
-      res.send(err);
-    });
+    next();
+  });
 };
