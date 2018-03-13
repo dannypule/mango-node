@@ -7,12 +7,14 @@
     "start": "node dist/server.js",
     "dev": "nodemon src/server.js --exec babel-node",
     "build": "babel src -d dist",
+    "postinstall": "npm run build",
     "debug": "npm run build && npm run watch-debug",
     "setup:db": "node dist/dev-setup/db.setup.js",
     "jest": "jest --forceExit --coverage --verbose",
     "copy-static-assets": "node copyStaticAssets.js",
     "serve-debug": "nodemon --inspect dist/server.js",
-    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+    "watch-debug":
+      "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "jest": {
     "transform": {},
