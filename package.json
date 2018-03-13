@@ -9,10 +9,14 @@
     "build": "babel lib -d dist",
     "debug": "npm run build && npm run watch-debug",
     "setup:db": "node dist/dev-setup/db.setup.js",
-    "test": "jest --forceExit --coverage --verbose",
+    "jest": "jest --forceExit --coverage --verbose",
     "copy-static-assets": "node copyStaticAssets.js",
     "serve-debug": "nodemon --inspect dist/server.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "jest": {
+    "transform": {},
+    "verbose": true
   },
   "engines": {
     "node": "6.11.4"
@@ -41,6 +45,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
@@ -48,6 +54,7 @@
     "jest": "^22.1.4",
     "mocha": "^5.0.4",
     "nodemon": "^1.12.1",
+    "regenerator-runtime": "^0.11.1",
     "shelljs": "^0.7.8",
     "supertest": "^3.0.0"
   }
