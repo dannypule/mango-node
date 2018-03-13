@@ -1,5 +1,5 @@
-import * as express from 'express';
-import * as bcrypt from 'bcrypt';
+import express from 'express';
+import bcrypt from 'bcrypt';
 import db from '../../db-schema';
 import { getUsers, addUser, deleteUser } from '../../controllers/users/users.controller';
 const router = express.Router();
@@ -12,13 +12,12 @@ router.get('/', getUsers);
 router.post('/', addUser);
 
 router.put('/', async (req, res) => {
-  db.Users
-    .findOne({
-      where: {
-        Username: req.body.Username,
-      },
-    })
-    .then((user: any) => {
+  db.Users.findOne({
+    where: {
+      Username: req.body.Username,
+    },
+  })
+    .then(user => {
       bcrypt.compare(req.body.Password, user.Password, (err, r) => {
         if (err) {
           res.status(500);
@@ -36,7 +35,7 @@ router.put('/', async (req, res) => {
         }
       });
     })
-    .catch((err: any) => {
+    .catch(err => {
       res.status(500);
       res.send(err);
     });

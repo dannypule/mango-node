@@ -1,5 +1,7 @@
 # Node, Postgres, Typescript starter seed project (https://github.com/dannypule)
 
+# --- converting to Babel https://github.com/babel/example-node-server
+
 ## Prereqs
 
 Node 6.10.x or a higher LTS release

@@ -1,5 +1,5 @@
 import {} from 'jest';
-import * as supertest from 'supertest';
+import supertest from 'supertest';
 
 const request = supertest('http://localhost:5566');
 

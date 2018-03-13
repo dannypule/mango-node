@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { getAllSales, getSalesByCompanyName } from '../../controllers/sales/sales.controller';
 const router = express.Router();
 

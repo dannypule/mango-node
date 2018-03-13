@@ -1,6 +1,4 @@
-import ICar from '../../models/car.model';
-
-export const formatCarResponse = (item: any): ICar => {
+export const formatCarResponse = item => {
   return {
     id: item.CarID,
     model: item.Model,
@@ -10,7 +8,7 @@ export const formatCarResponse = (item: any): ICar => {
   };
 };
 
-export const formatCarDbSave = (item: any): any => {
+export const formatCarDbSave = item => {
   return {
     Model: item.model,
     Year: item.year,

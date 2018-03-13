@@ -1,29 +1,28 @@
-import * as express from 'express';
+import express from 'express';
 import db from '../../db-schema';
 import { formatCarResponse, formatCarDbSave } from '../../controllers/cars/cars.helpers';
-import ICar from '../../models/car.model';
 
-export const getCars = (req: express.Request, res: express.Response) => {
-  db.Cars.findAll().then((cars: ICar[]) => {
-    const formatted: any[] = cars.map(formatCarResponse);
+export const getCars = (req, res) => {
+  db.Cars.findAll().then(cars => {
+    const formatted = cars.map(formatCarResponse);
     res.send(formatted);
   });
 };
 
-export const addCar = (req: express.Request, res: express.Response) => {
-  const formatted: any = formatCarDbSave(req.body);
+export const addCar = (req, res) => {
+  const formatted = formatCarDbSave(req.body);
 
   db.Cars.create(formatted)
-    .then((car: any) => {
+    .then(car => {
       res.send(car);
     })
-    .catch((err: any) => {
+    .catch(err => {
       res.status(500);
       res.send(err);
     });
 };
 
-export const updateCar = (req: express.Request, res: express.Response) => {
+export const updateCar = (req, res) => {
   const car = req.body;
 
   db.Cars.update(
@@ -44,14 +43,14 @@ export const updateCar = (req: express.Request, res: express.Response) => {
         },
       });
     })
-    .then((car: any) => res.send(formatCarResponse(car)))
-    .catch((err: any) => {
+    .then(car => res.send(formatCarResponse(car)))
+    .catch(err => {
       res.status(500);
       res.send(err);
     });
 };
 
-export const deleteCar = (req: express.Request, res: express.Response) => {
+export const deleteCar = (req, res) => {
   db.Cars.destroy({
     where: {
       CarID: req.body.id,
@@ -62,7 +61,7 @@ export const deleteCar = (req: express.Request, res: express.Response) => {
         message: 'Successfully deleted car.',
       });
     })
-    .catch((err: any) => {
+    .catch(err => {
       res.status(500);
       res.send(err);
     });

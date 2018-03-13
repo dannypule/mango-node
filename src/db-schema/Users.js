@@ -1,6 +1,6 @@
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 
-export default (sequelize: any, DataTypes: any) => {
+export default (sequelize, DataTypes) => {
   const Users = sequelize.define(
     'Users',
     {
@@ -50,7 +50,7 @@ export default (sequelize: any, DataTypes: any) => {
       updatedAt: 'DateUpdated',
       createdAt: 'DateCreated',
       classMethods: {
-        associate(models: any) {
+        associate(models) {
           // associations can be defined here
           Users.hasMany(models.UserToken, {
             foreignKey: 'UserID',

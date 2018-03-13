@@ -1,4 +1,4 @@
-export const formatGetUserResponse = (user: any) => {
+export const formatGetUserResponse = user => {
   return {
     id: user.UserID,
     firstName: user.FirstName,

@@ -1,4 +1,4 @@
-export const formatGetSalesItemResponse = (item: any) => {
+export const formatGetSalesItemResponse = item => {
   return {
     id: item.SaleID,
     saleDate: item.SaleDate,
