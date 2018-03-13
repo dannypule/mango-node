@@ -1,4 +1,4 @@
-export default (sequelize: any, DataTypes: any) => {
+export default (sequelize, DataTypes) => {
   const Sales = sequelize.define(
     'Sales',
     {

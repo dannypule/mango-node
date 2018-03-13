@@ -1,4 +1,4 @@
-export default (sequelize: any, DataTypes: any) => {
+export default (sequelize, DataTypes) => {
   const UserTokens = sequelize.define(
     'UserTokens',
     {
@@ -26,7 +26,7 @@ export default (sequelize: any, DataTypes: any) => {
       updatedAt: false,
       freezeTableName: true,
       classMethods: {
-        associate(models: any) {
+        associate(models) {
           // associations can be defined here
           UserTokens.belongsTo(models.Users, {
             foreignKey: 'UserID',

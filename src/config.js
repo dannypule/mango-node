@@ -1,6 +1,6 @@
 require('dotenv').load({ silent: true });
 
-const config: any = {
+const config = {
   port: 5566,
   cors: {
     exposedHeaders: ['Link'],

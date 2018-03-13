@@ -1,16 +1,16 @@
-import * as express from 'express';
-import * as bcrypt from 'bcrypt';
+import express from 'express';
+import bcrypt from 'bcrypt';
 import db from '../../db-schema';
 import { formatGetUserResponse } from './users.helpers';
 
-export const getUsers = async (req: express.Request, res: express.Response) => {
-  db.Users.findAll().then((users: any[]) => {
-    const formattedUsers: any[] = users.map(formatGetUserResponse);
+export const getUsers = async (req, res) => {
+  db.Users.findAll().then(users => {
+    const formattedUsers = users.map(formatGetUserResponse);
     res.send(formattedUsers);
   });
 };
 
-export const addUser = async (req: express.Request, res: express.Response) => {
+export const addUser = async (req, res) => {
   const user = req.body;
 
   const saltFactor = 7;
@@ -24,30 +24,30 @@ export const addUser = async (req: express.Request, res: express.Response) => {
       user.Password = hash;
 
       db.Users.create(user, { individualHooks: true })
-        .then((user: any) => {
+        .then(user => {
           res.send(user);
         })
-        .catch((err: any) => {
+        .catch(err => {
           res.status(500);
           res.send(err);
         });
     })
-    .catch((err: any) => {
+    .catch(err => {
       res.status(500);
       res.send(err);
     });
 };
 
-export const deleteUser = (req: express.Request, res: express.Response) => {
+export const deleteUser = (req, res) => {
   db.Users.destroy({
     where: {
       Username: req.body.Username,
     },
   })
-    .then((user: any) => {
+    .then(user => {
       res.send(user);
     })
-    .catch((err: any) => {
+    .catch(err => {
       res.status(500);
       res.send(err);
     });

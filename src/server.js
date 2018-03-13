@@ -1,6 +1,6 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 // import authRoute from './routes/auth/auth.route';
 import usersRoute from './routes/users/users.route';
@@ -48,7 +48,7 @@ app.use('/api/users', usersRoute);
 app.use('/api/sales', salesRoute);
 app.use('/api/cars', carsRoute);
 
-app.use('/', (req: express.Request, res: express.Response) => {
+app.use('/', (req, res) => {
   res.send('up');
 });
 

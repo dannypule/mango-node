@@ -1,10 +1,12 @@
-# Node, Postgres, Typescript starter seed project (https://github.com/dannypule)
+# Node, Postgres, Babel starter seed project (https://github.com/dannypule)
+
+# Babel setup from https://github.com/babel/example-node-server
 
 ## Prereqs
 
-Node 6.10.x or a higher LTS release
+Node 8.9.4 or a higher LTS release
 
-NPM 3.x.x
+NPM 5.6.0 or higher
 
 An `.env` file - speak to your project's maintainter or setup your
 configuration. An example `.env-example` file is included with this project for

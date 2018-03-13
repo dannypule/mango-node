@@ -1,5 +1,5 @@
-import * as moment from 'moment';
-import * as faker from 'faker';
+import moment from 'moment';
+import faker from 'faker';
 import db from '../db-schema';
 
 /////////////////////////// WARNING ///////////////////////////
@@ -51,7 +51,7 @@ db.Users.sync({ force: UsersSync })
 
     console.log('Demo users inserted into Users table.');
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err));
 
 // ==================================================================
 // Create UserRoles table
@@ -59,7 +59,7 @@ db.Users.sync({ force: UsersSync })
 // =================================================
 const UserRolesSync = false;
 db.UserRoles.sync({ force: UserRolesSync })
-  .then((data: any) => {
+  .then(data => {
     console.log('UserRoles table created.');
 
     if (!UserRolesSync) return;
@@ -88,10 +88,10 @@ db.UserRoles.sync({ force: UserRolesSync })
         .then(() => {
           console.log(`Role ${role.id} user inserted into UserRoles table.`);
         })
-        .catch((err: any) => console.log('An error occured ', err));
+        .catch(err => console.log('An error occured ', err));
     });
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err));
 
 // ==================================================================
 // Create UserTokens table
@@ -102,7 +102,7 @@ db.UserTokens.sync({ force: UserTokensSync })
   .then(() => {
     console.log('UserTokens table created.');
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err));
 
 /////////////////////////// WARNING ///////////////////////////
 //// This script will create new tables and insert demo data
@@ -142,7 +142,7 @@ db.Sales.sync({ force: SalesSync })
 
     console.log('Demo sales items inserted into Sales table.');
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err));
 
 // ==================================================================
 // Create Cars table
@@ -162,4 +162,4 @@ db.Cars.sync({ force: CarsSync })
   .then(() => {
     console.log('Demo car inserted into Cars table.');
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err));

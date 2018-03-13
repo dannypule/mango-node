@@ -1,4 +1,4 @@
-export default (sequelize: any, DataTypes: any) => {
+export default (sequelize, DataTypes) => {
   const UserRoles = sequelize.define(
     'UserRoles',
     {
@@ -17,7 +17,7 @@ export default (sequelize: any, DataTypes: any) => {
       timestamps: false,
       freezeTableName: true,
       classMethods: {
-        associate(models: any) {
+        associate(models) {
           // associations can be defined here
           UserRoles.hasMany(models.Users, {
             foreignKey: 'RoleID',

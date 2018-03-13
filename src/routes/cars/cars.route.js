@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { addCar, getCars, deleteCar, updateCar } from '../../controllers/cars/cars.controller';
 const router = express.Router();
 
