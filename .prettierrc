@@ -3,7 +3,7 @@
     {
       "files": "*.js",
       "options": {
-        "semi": true,
+        "semi": false,
         "bracketSpacing": true,
         "parser": "babylon",
         "printWidth": 120,
