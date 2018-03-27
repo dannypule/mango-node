@@ -14,23 +14,6 @@
       "restart": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
-    },
-
-    // older settings
-    // ========================================
-    {
-      "type": "node",
-      "request": "attach",
-      "name": "Attach",
-      "port": 9229
-    },
-    {
-      // select the one that shows node dist/server.js
-      "type": "node",
-      "request": "attach",
-      "name": "Attach by Process ID",
-      "processId": "${command:PickProcess}",
-      "protocol": "inspector"
     }
   ]
 }
