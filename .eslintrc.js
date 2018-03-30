@@ -44,6 +44,7 @@ module.exports = {
     "import/prefer-default-export": 0,
     "import/newline-after-import": 0,
     "function-paren-newline": 0,
-    "arrow-parens": 0
+    "arrow-parens": 0,
+    "space-before-function-paren": 0
   }
 };

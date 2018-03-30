@@ -7,6 +7,6 @@ export const formatGetUserResponse = user => {
     email: user.Email,
     dateCreated: user.DateCreated,
     dateUpdated: user.DateUpdated,
-    roleID: user.RoleID,
-  };
-};
+    roleID: user.RoleID
+  }
+}
