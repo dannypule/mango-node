@@ -9,31 +9,32 @@ import SalesController from '../controllers/sales/SalesController'
 require('./../middleware/passport')(passport)
 
 const router = express.Router()
+const authenticateViaToken = passport.authenticate('jwt', { session: false })
 
 // ===================================================
 // '/auth'
 // =========================
-router.post('/login', AuthController.login)
+router.post('/auth/login', AuthController.login)
 
 // ===================================================
 // '/cars'
 // =========================
-router.get('/cars', passport.authenticate('jwt', { session: false }), CarsController.getCars)
-router.post('/cars', CarsController.addCar)
-router.put('/cars', CarsController.updateCar)
-router.delete('/cars', CarsController.deleteCar)
+router.get('/cars', authenticateViaToken, CarsController.getCars)
+router.post('/cars', authenticateViaToken, CarsController.addCar)
+router.put('/cars', authenticateViaToken, CarsController.updateCar)
+router.delete('/cars', authenticateViaToken, CarsController.deleteCar)
 
 // ===================================================
 // '/users'
 // =========================
-router.get('/users', UsersController.getUsers)
-router.post('/users', UsersController.addUser)
-router.delete('/users', UsersController.deleteUser)
+router.get('/users', authenticateViaToken, UsersController.getUsers)
+router.post('/users', authenticateViaToken, UsersController.addUser)
+router.delete('/users', authenticateViaToken, UsersController.deleteUser)
 
 // ===================================================
 // '/sales'
 // =========================
-router.get('/sales', SalesController.getSales)
-router.post('/sales', SalesController.getSalesByCompanyName) // @todo convert to get/:companyName
+router.get('/sales', authenticateViaToken, SalesController.getSales)
+router.post('/sales', authenticateViaToken, SalesController.getSalesByCompanyName) // @todo convert to get/:companyName
 
 export default router

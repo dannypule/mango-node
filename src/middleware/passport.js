@@ -1,9 +1,8 @@
 import passportJWT from 'passport-jwt'
-import models from '../db-schema'
+import db from '../db-schema'
 import config from '../config'
 
 const { ExtractJwt, Strategy } = passportJWT
-const { Users } = models
 
 module.exports = passport => {
   const opts = {}
@@ -14,17 +13,20 @@ module.exports = passport => {
     new Strategy(opts, async (jwtPayload, done) => {
       // let err, user
       // ;[err, user] = await User.findById(jwt_payload.userID)
-
-      Users.findById(jwtPayload.userID)
-        .then((err, user) => {
-          console.log('user', user.id)
-          if (err) return done(err, false)
+      db.Users.findOne({
+        where: {
+          UserID: jwtPayload.userID
+        }
+      })
+        .then(user => {
+          console.log('user', user)
           if (user) {
             return done(null, user)
           }
           done(null, false)
         })
         .catch(err => {
+          debugger
           console.log(err) // @todo handle errors
         })
     })

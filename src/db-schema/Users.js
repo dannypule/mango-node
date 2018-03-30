@@ -138,9 +138,9 @@ export default (sequelize, DataTypes) => {
     }
   )
 
-  Users.prototype.getJWT = () => {
+  Users.prototype.getJWT = user => {
     const expirationTime = parseInt(config.jwt_expiration, 10)
-    const token = jwt.sign({ userID: this.UserID }, config.jwt_encryption, {
+    const token = jwt.sign({ userID: user.UserID }, config.jwt_encryption, {
       expiresIn: expirationTime
     })
     return `Bearer ${token}`
