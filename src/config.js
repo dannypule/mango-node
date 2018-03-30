@@ -1,9 +1,9 @@
-require('dotenv').load({ silent: true });
+require('dotenv').load({ silent: true })
 
 const config = {
   port: 5566,
   cors: {
-    exposedHeaders: ['Link'],
+    exposedHeaders: ['Link']
   },
   development: {
     username: process.env.DEV_DB_USERNAME,
@@ -13,8 +13,8 @@ const config = {
     dialect: 'postgres',
     operatorsAliases: false,
     dialectOptions: {
-      ssl: true,
-    },
+      ssl: true
+    }
   },
   production: {
     username: process.env.PROD_DB_USERNAME,
@@ -24,9 +24,9 @@ const config = {
     dialect: 'postgres',
     operatorsAliases: false,
     dialectOptions: {
-      ssl: true,
-    },
-  },
-};
+      ssl: true
+    }
+  }
+}
 
-export default config;
+export default config

@@ -5,19 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
-      // option 1
       "type": "node",
-      "request": "attach",
-      "name": "Attach",
-      "port": 9229
-    },
-    {
-      // option 2, select the one that shows node dist/server.js
-      "type": "node",
-      "request": "attach",
-      "name": "Attach by Process ID",
-      "processId": "${command:PickProcess}",
-      "protocol": "inspector"
+      "request": "launch",
+      "name": "nodemon",
+      "runtimeExecutable": "nodemon", // requires nodemon to be installed globally
+      "args": ["--exec", "${workspaceRoot}/node_modules/.bin/babel-node"],
+      "program": "${workspaceFolder}/src/server.js",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }

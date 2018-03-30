@@ -6,12 +6,12 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         autoIncrement: false,
-        primaryKey: true,
+        primaryKey: true
       },
       RoleDescription: {
         allowNull: false,
-        type: DataTypes.STRING(100),
-      },
+        type: DataTypes.STRING(100)
+      }
     },
     {
       timestamps: false,
@@ -20,12 +20,12 @@ export default (sequelize, DataTypes) => {
         associate(models) {
           // associations can be defined here
           UserRoles.hasMany(models.Users, {
-            foreignKey: 'RoleID',
-          });
-        },
-      },
+            foreignKey: 'RoleID'
+          })
+        }
+      }
     }
-  );
+  )
 
-  return UserRoles;
-};
+  return UserRoles
+}
