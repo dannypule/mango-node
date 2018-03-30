@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parser: "babel-eslint",
-  extends: "strongloop",
+  extends: "airbnb",
   globals: {
     process: true
   },

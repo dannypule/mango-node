@@ -3,10 +3,7 @@ import path from 'path'
 import Sequelize from 'sequelize'
 import config from '../config'
 
-const env = process.env.NODE_ENV || 'development'
-const dbConfig = config[env]
-
-const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
+const sequelize = new Sequelize(config.database, config.username, config.password, config)
 
 sequelize
   .authenticate()

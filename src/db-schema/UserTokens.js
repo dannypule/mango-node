@@ -27,7 +27,6 @@ export default (sequelize, DataTypes) => {
       freezeTableName: true,
       classMethods: {
         associate(models) {
-          // associations can be defined here
           UserTokens.belongsTo(models.Users, {
             foreignKey: 'UserID'
           })

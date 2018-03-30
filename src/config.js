@@ -1,6 +1,8 @@
 require('dotenv').load({ silent: true })
 
-const config = {
+const env = process.env.NODE_ENV || 'development'
+
+const configuration = {
   port: 5566,
   cors: {
     exposedHeaders: ['Link']
@@ -14,7 +16,9 @@ const config = {
     operatorsAliases: false,
     dialectOptions: {
       ssl: true
-    }
+    },
+    jwt_encryption: process.env.DEV_JWT_ENCRYPTION,
+    jwt_expiration: process.env.DEV_JWT_EXPIRATION
   },
   production: {
     username: process.env.PROD_DB_USERNAME,
@@ -25,8 +29,10 @@ const config = {
     operatorsAliases: false,
     dialectOptions: {
       ssl: true
-    }
+    },
+    jwt_encryption: process.env.PROD_JWT_ENCRYPTION,
+    jwt_expiration: process.env.PROD_JWT_EXPIRATION
   }
 }
 
-export default config
+export default configuration[env]

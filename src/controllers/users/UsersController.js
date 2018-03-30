@@ -1,21 +1,23 @@
 // import express from 'express'
 import bcrypt from 'bcrypt'
 import db from '../../db-schema'
-import { formatGetUserResponse } from './users.helpers'
+import { formatGetUserResponse } from './UsersService'
 
-export const getUsers = async (req, res) => {
+const UserController = {}
+
+UserController.getUsers = async (req, res) => {
   db.Users.findAll().then(users => {
     const formattedUsers = users.map(formatGetUserResponse)
     res.send(formattedUsers)
   })
 }
 
-export const addUser = async (req, res) => {
+UserController.addUser = async (req, res) => {
   const user = req.body
 
-  const saltFactor = 7
+  const saltFactor = 13
 
-  const salt = await bcrypt // eslint-disable-line
+  bcrypt
     .genSalt(saltFactor)
     // hash the password along with our new salt
     .then(salt => bcrypt.hash(user.Password, salt, null))
@@ -38,7 +40,7 @@ export const addUser = async (req, res) => {
     })
 }
 
-export const deleteUser = (req, res) => {
+UserController.deleteUser = (req, res) => {
   db.Users.destroy({
     where: {
       Username: req.body.Username
@@ -52,3 +54,5 @@ export const deleteUser = (req, res) => {
       res.send(err)
     })
 }
+
+export default UserController

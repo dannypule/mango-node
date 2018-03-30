@@ -1,12 +1,11 @@
 import 'babel-polyfill'
 import express from 'express'
 import bodyParser from 'body-parser'
+import logger from 'morgan'
+import passport from 'passport'
 // import cors from 'cors'
 
-// import authRoute from './routes/auth/auth.route';
-import usersRoute from './routes/users/users.route'
-import salesRoute from './routes/sales/sales.route'
-import carsRoute from './routes/cars/cars.route'
+import apiRoutes from './routes/routes'
 
 const port = process.env.PORT || 5566
 // const node_env = process.env.NODE_ENV
@@ -31,9 +30,17 @@ const app = express()
 
 // setup cors
 app.use((req, res, next) => {
+  // allowed sites
   res.header('Access-Control-Allow-Origin', '*')
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
   res.header('Access-Control-Allow-Credentials', 'true')
+
+  // allowed request methods
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+
+  // allowed headers
   res.header(
     'Access-Control-Allow-Headers',
     'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json'
@@ -41,13 +48,17 @@ app.use((req, res, next) => {
   next()
 })
 
+// logger
+app.use(logger('dev'))
+
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use('/api/users', usersRoute)
-app.use('/api/sales', salesRoute)
-app.use('/api/cars', carsRoute)
+// Passport
+app.use(passport.initialize())
+
+app.use('/api', apiRoutes)
 
 app.use('/', (req, res) => {
   res.send('up')
