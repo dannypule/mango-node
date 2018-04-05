@@ -9,7 +9,8 @@
     "build": "babel src -d dist",
     "postinstall": "npm run build",
     "setup:db": "npm run build && node dist/dev-setup/db.setup.js",
-    "jest": "jest --forceExit --coverage --verbose"
+    "jest": "jest --forceExit --coverage --verbose",
+    "lint": "eslint src"
   },
   "jest": {
     "transform": {},
