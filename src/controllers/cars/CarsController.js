@@ -1,16 +1,16 @@
-// import express from 'express'
 import db from '../../db-schema'
-import { formatCarResponse, formatCarDbSave } from '../../controllers/cars/cars.helpers'
+import { formatCarResponse, formatCarDbSave } from '../../controllers/cars/CarsService'
 
-export const getCars = (req, res) => {
-  debugger
+const CarsController = {}
+
+CarsController.getCars = (req, res) => {
   db.Cars.findAll().then(cars => {
     const formatted = cars.map(formatCarResponse)
     res.send(formatted)
   })
 }
 
-export const addCar = (req, res) => {
+CarsController.addCar = (req, res) => {
   const formatted = formatCarDbSave(req.body)
 
   db.Cars.create(formatted)
@@ -23,7 +23,7 @@ export const addCar = (req, res) => {
     })
 }
 
-export const updateCar = (req, res) => {
+CarsController.updateCar = (req, res) => {
   const car = req.body
 
   db.Cars.update(
@@ -51,7 +51,7 @@ export const updateCar = (req, res) => {
     })
 }
 
-export const deleteCar = (req, res) => {
+CarsController.deleteCar = (req, res) => {
   db.Cars.destroy({
     where: {
       CarID: req.body.id
@@ -67,3 +67,5 @@ export const deleteCar = (req, res) => {
       res.send(err)
     })
 }
+
+export default CarsController

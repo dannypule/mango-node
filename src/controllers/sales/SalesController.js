@@ -1,15 +1,17 @@
 // import express from 'express'
 import db from '../../db-schema'
-import { formatGetSalesItemResponse } from './sales.helpers'
+import { formatGetSalesItemResponse } from './SalesService'
 
-export const getAllSales = (req, res) => {
+const SalesController = {}
+
+SalesController.getSales = (req, res) => {
   db.Sales.findAll().then(sales => {
     const formatted = sales.map(formatGetSalesItemResponse)
     res.send(formatted)
   })
 }
 
-export const getSalesByCompanyName = (req, res) => {
+SalesController.getSalesByCompanyName = (req, res) => {
   db.Sales.findAll({
     where: {
       CompanyName: req.body.companyName
@@ -19,3 +21,5 @@ export const getSalesByCompanyName = (req, res) => {
     res.send(formatted)
   })
 }
+
+export default SalesController

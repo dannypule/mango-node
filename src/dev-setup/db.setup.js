@@ -59,6 +59,7 @@ db.Users.sync({ force: UsersSync })
 // =================================================
 const UserRolesSync = false
 db.UserRoles.sync({ force: UserRolesSync })
+  // eslint-disable-next-line
   .then(data => {
     console.log('UserRoles table created.')
 
@@ -119,11 +120,14 @@ db.Sales.sync({ force: SalesSync })
     console.log('Sales table created.')
   })
   .then(() => {
-    if (!SalesSync)
+    if (!SalesSync) {
       return // Table created, now create sales items
-      // create 30 sales items
-      // let companyName: string;
-    ;['Ribena', 'Coca Cola', 'Evian'].forEach(companyName => {
+    }
+
+    // create 30 sales items
+    // let companyName: string;
+    const companies = ['Ribena', 'Coca Cola', 'Evian']
+    companies.forEach(companyName => {
       for (let f = 0; f < 15; f++) {
         db.Sales.create({
           SaleDate: moment(faker.date.recent()).toISOString(),
