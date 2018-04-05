@@ -13,8 +13,8 @@ module.exports = passport => {
     new Strategy(opts, async (jwtPayload, done) => {
       db.Users.findOne({
         where: {
-          UserID: jwtPayload.userID
-        }
+          UserID: jwtPayload.userID,
+        },
       })
         .then(user => {
           if (user) {
@@ -25,6 +25,6 @@ module.exports = passport => {
         .catch(err => {
           console.log(err) // @todo handle errors
         })
-    })
+    }),
   )
 }

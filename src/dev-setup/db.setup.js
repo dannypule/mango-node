@@ -28,7 +28,7 @@ db.Users.sync({ force: UsersSync })
       Password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
       DateCreated: moment().toISOString(),
       DateUpdated: moment().toISOString(),
-      RoleID: 10 // super admin role
+      RoleID: 10, // super admin role
     })
   })
   .then(() => {
@@ -43,7 +43,7 @@ db.Users.sync({ force: UsersSync })
       Password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
       DateCreated: moment().toISOString(),
       DateUpdated: moment().toISOString(),
-      RoleID: 4 // admin role
+      RoleID: 4, // admin role
     })
   })
   .then(() => {
@@ -69,22 +69,22 @@ db.UserRoles.sync({ force: UserRolesSync })
     const roles = [
       {
         id: 1,
-        description: 'Normal User'
+        description: 'Normal User',
       },
       {
         id: 4,
-        description: 'Admin User'
+        description: 'Admin User',
       },
       {
         id: 10,
-        description: 'Super Admin User'
-      }
+        description: 'Super Admin User',
+      },
     ]
 
     roles.forEach(role => {
       db.UserRoles.create({
         RoleID: role.id,
-        RoleDescription: role.description
+        RoleDescription: role.description,
       })
         .then(() => {
           console.log(`Role ${role.id} user inserted into UserRoles table.`)
@@ -135,7 +135,7 @@ db.Sales.sync({ force: SalesSync })
           ProductName: faker.commerce.productName(),
           ProductSKU: faker.random.number({ min: 1234, max: 9876 }),
           SalesValue: faker.finance.amount(100, 2000, 2),
-          SalesCount: faker.random.number({ min: 12, max: 98 })
+          SalesCount: faker.random.number({ min: 12, max: 98 }),
         })
       }
     })
@@ -159,7 +159,7 @@ db.Cars.sync({ force: CarsSync })
   .then(() => {
     return db.Cars.create({
       Model: 'Range Rover',
-      Year: 2018
+      Year: 2018,
     })
   })
   .then(() => {

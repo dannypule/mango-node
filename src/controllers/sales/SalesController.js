@@ -14,8 +14,8 @@ SalesController.getSales = (req, res) => {
 SalesController.getSalesByCompanyName = (req, res) => {
   db.Sales.findAll({
     where: {
-      CompanyName: req.body.companyName
-    }
+      CompanyName: req.body.companyName,
+    },
   }).then(sales => {
     const formatted = sales.map(formatGetSalesItemResponse)
     res.send(formatted)

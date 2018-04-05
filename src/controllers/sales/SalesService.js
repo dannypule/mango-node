@@ -6,6 +6,6 @@ export const formatGetSalesItemResponse = item => {
     productName: item.ProductName,
     productSku: item.ProductSKU,
     salesValue: item.SalesValue,
-    salesCount: item.SalesCount
+    salesCount: item.SalesCount,
   }
 }

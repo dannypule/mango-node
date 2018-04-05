@@ -29,19 +29,19 @@ CarsController.updateCar = (req, res) => {
   db.Cars.update(
     {
       Model: car.model,
-      Year: car.year
+      Year: car.year,
     },
     {
       where: {
-        CarID: car.id
-      }
-    }
+        CarID: car.id,
+      },
+    },
   )
     .then(() => {
       return db.Cars.findOne({
         where: {
-          CarID: req.body.id
-        }
+          CarID: req.body.id,
+        },
       })
     })
     .then(car => res.send(formatCarResponse(car)))
@@ -54,12 +54,12 @@ CarsController.updateCar = (req, res) => {
 CarsController.deleteCar = (req, res) => {
   db.Cars.destroy({
     where: {
-      CarID: req.body.id
-    }
+      CarID: req.body.id,
+    },
   })
     .then(() => {
       res.send({
-        message: 'Successfully deleted car.'
+        message: 'Successfully deleted car.',
       })
     })
     .catch(err => {

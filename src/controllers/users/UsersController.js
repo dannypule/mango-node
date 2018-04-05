@@ -43,8 +43,8 @@ UserController.addUser = async (req, res) => {
 UserController.deleteUser = (req, res) => {
   db.Users.destroy({
     where: {
-      Username: req.body.Username
-    }
+      Username: req.body.Username,
+    },
   })
     .then(user => {
       res.send(user)

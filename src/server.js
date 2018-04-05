@@ -43,7 +43,7 @@ app.use((req, res, next) => {
   // allowed headers
   res.header(
     'Access-Control-Allow-Headers',
-    'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json'
+    'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json',
   )
   next()
 })

@@ -6,8 +6,8 @@ const AuthController = {}
 AuthController.login = async (req, res) => {
   db.Users.findOne({
     where: {
-      Username: req.body.username
-    }
+      Username: req.body.username,
+    },
   })
     .then(user => {
       bcrypt.compare(req.body.password, user.Password, (err, r) => {
