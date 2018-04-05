@@ -17,14 +17,12 @@ module.exports = passport => {
         }
       })
         .then(user => {
-          console.log('user', user)
           if (user) {
             return done(null, user)
           }
           done(null, false)
         })
         .catch(err => {
-          debugger
           console.log(err) // @todo handle errors
         })
     })

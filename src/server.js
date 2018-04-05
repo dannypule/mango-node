@@ -31,7 +31,7 @@ const app = express()
 // setup cors
 app.use((req, res, next) => {
   // allowed sites
-  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Origin', '*') // todo - set specific domains
 
   // Set to true if you need the website to include cookies in the requests sent
   // to the API (e.g. in case you use sessions)
