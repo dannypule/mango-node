@@ -1,6 +1,6 @@
-import * as bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt'
 
-export default (sequelize: any, DataTypes: any) => {
+export default (sequelize, DataTypes) => {
   const Users = sequelize.define(
     'Users',
     {
@@ -8,57 +8,57 @@ export default (sequelize: any, DataTypes: any) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       FirstName: {
         allowNull: true,
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(50)
       },
       LastName: {
         allowNull: true,
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(50)
       },
       Email: {
         allowNull: true,
         type: DataTypes.STRING(50),
-        unique: true,
+        unique: true
       },
       Username: {
         allowNull: false,
         type: DataTypes.STRING(50),
-        unique: true,
+        unique: true
       },
       Password: {
         allowNull: false,
-        type: DataTypes.STRING(150),
+        type: DataTypes.STRING(150)
       },
       DateCreated: {
         allowNull: true,
-        type: DataTypes.DATE,
+        type: DataTypes.DATE
       },
       DateUpdated: {
         allowNull: true,
-        type: DataTypes.DATE,
+        type: DataTypes.DATE
       },
       RoleID: {
         allowNull: false,
-        type: DataTypes.INTEGER,
-      },
+        type: DataTypes.INTEGER
+      }
     },
     {
       freezeTableName: true,
       updatedAt: 'DateUpdated',
       createdAt: 'DateCreated',
       classMethods: {
-        associate(models: any) {
+        associate(models) {
           // associations can be defined here
           Users.hasMany(models.UserToken, {
-            foreignKey: 'UserID',
-          });
+            foreignKey: 'UserID'
+          })
           Users.belongsTo(models.UserRole, {
-            foreignKey: 'RoleID',
-          });
-        },
+            foreignKey: 'RoleID'
+          })
+        }
       },
       hooks: {
         // beforeCreate: (user: any, options: any, next: any) => {
@@ -132,9 +132,9 @@ export default (sequelize: any, DataTypes: any) => {
         //     }
         //   }
         // },
-      },
+      }
     }
-  );
+  )
 
-  return Users;
-};
+  return Users
+}

@@ -1,66 +1,66 @@
 {
-  "name": "ribena",
+  "name": "mango-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run serve:prod",
-    "postinstall": "npm run build-ts",
-    "serve:prod": "node dist/server.js",
-    "serve": "nodemon dist/server.js",
-    "dev": "npm run build && npm run watch",
+    "start": "node .dist/server.js",
+    "dev": "nodemon src/server.js --exec babel-node",
+    "build": "babel src -d dist",
+    "postinstall": "npm run build",
     "debug": "npm run build && npm run watch-debug",
-    "setup:db": "node dist/dev-setup/db.setup.js",
-    "build":
-      "rm -rf dist && npm run build-ts && npm run tslint && npm run copy-static-assets",
-    "watch":
-      "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve\"",
-    "test": "jest --forceExit",
-    "build-ts": "tsc",
-    "watch-ts": "tsc -w",
-    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "setup:db": "npm run build && node .dist/dev-setup/db.setup.js",
+    "jest": "jest --forceExit --coverage --verbose",
     "copy-static-assets": "node copyStaticAssets.js",
-    "serve-debug": "nodemon --inspect dist/server.js",
-    "watch-debug":
-      "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+    "serve-debug": "nodemon --inspect .dist/server.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "jest": {
+    "transform": {},
+    "verbose": true
   },
   "engines": {
     "node": "6.11.4"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dannypule/ribena.git"
+    "url": "git+https://github.com/dannypule/mango-node.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dannypule/ribena/issues"
+    "url": "https://github.com/dannypule/mango-node/issues"
   },
-  "homepage": "https://github.com/dannypule/ribena#readme",
+  "homepage": "https://github.com/dannypule/mango-node#readme",
   "dependencies": {
-    "bcrypt": "^1.0.3",
-    "cors": "^2.8.4",
-    "dotenv": "^4.0.0",
-    "express": "^4.16.2",
-    "faker": "^4.1.0",
-    "moment": "^2.19.1",
-    "pg": "^7.3.0",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^4.17.2"
+    "bcrypt": "1.0.3",
+    "cors": "2.8.4",
+    "dotenv": "4.0.0",
+    "express": "4.16.2",
+    "faker": "4.1.0",
+    "moment": "2.19.1",
+    "pg": "7.3.0",
+    "pg-hstore": "2.3.2",
+    "sequelize": "4.17.2"
   },
   "devDependencies": {
-    "@types/bcrypt": "^1.0.0",
-    "@types/cors": "^2.8.1",
-    "@types/express": "^4.0.37",
-    "@types/faker": "^4.1.1",
-    "@types/sequelize": "^4.0.77",
-    "concurrently": "^3.5.0",
-    "jest": "^21.2.1",
-    "nodemon": "^1.12.1",
-    "shelljs": "^0.7.8",
-    "supertest": "^3.0.0",
-    "tslint": "^5.8.0",
-    "typescript": "^2.5.3"
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-jest": "22.4.1",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-latest": "6.24.1",
+    "babel-register": "6.26.0",
+    "concurrently": "3.5.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "jest": "22.1.4",
+    "mocha": "5.0.4",
+    "nodemon": "1.17.1",
+    "regenerator-runtime": "0.11.1",
+    "shelljs": "0.7.8",
+    "supertest": "3.0.0"
   }
 }

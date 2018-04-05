@@ -1,40 +1,40 @@
-export default (sequelize: any, DataTypes: any) => {
+export default (sequelize, DataTypes) => {
   const UserTokens = sequelize.define(
     'UserTokens',
     {
       Token: {
         allowNull: false,
         type: DataTypes.STRING(400),
-        primaryKey: true,
+        primaryKey: true
       },
       UserID: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER
       },
       ExpiryDatetime: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.DATE
       },
       LastUsedDatetime: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
+        defaultValue: DataTypes.NOW
+      }
     },
     {
       createdAt: 'LastUsedDatetime',
       updatedAt: false,
       freezeTableName: true,
       classMethods: {
-        associate(models: any) {
+        associate(models) {
           // associations can be defined here
           UserTokens.belongsTo(models.Users, {
-            foreignKey: 'UserID',
-          });
-        },
-      },
+            foreignKey: 'UserID'
+          })
+        }
+      }
     }
-  );
+  )
 
-  return UserTokens;
-};
+  return UserTokens
+}

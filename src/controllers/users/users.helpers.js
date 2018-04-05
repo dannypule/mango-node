@@ -1,4 +1,4 @@
-export const formatGetUserResponse = (user: any) => {
+export const formatGetUserResponse = user => {
   return {
     id: user.UserID,
     firstName: user.FirstName,
@@ -7,6 +7,6 @@ export const formatGetUserResponse = (user: any) => {
     email: user.Email,
     dateCreated: user.DateCreated,
     dateUpdated: user.DateUpdated,
-    roleID: user.RoleID,
-  };
-};
+    roleID: user.RoleID
+  }
+}

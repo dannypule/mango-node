@@ -1,4 +1,4 @@
-export default (sequelize: any, DataTypes: any) => {
+export default (sequelize, DataTypes) => {
   const Sales = sequelize.define(
     'Sales',
     {
@@ -6,38 +6,38 @@ export default (sequelize: any, DataTypes: any) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       SaleDate: {
         allowNull: false,
-        type: DataTypes.DATE,
+        type: DataTypes.DATE
       },
       CompanyName: {
         allowNull: false,
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(100)
       },
       ProductName: {
         allowNull: false,
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(100)
       },
       ProductSKU: {
         allowNull: false,
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(20)
       },
       SalesValue: {
         allowNull: false,
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL
       },
       SalesCount: {
         allowNull: false,
-        type: DataTypes.INTEGER,
-      },
+        type: DataTypes.INTEGER
+      }
     },
     {
       timestamps: false,
-      freezeTableName: true,
+      freezeTableName: true
     }
-  );
+  )
 
-  return Sales;
-};
+  return Sales
+}

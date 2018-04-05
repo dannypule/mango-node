@@ -1,4 +1,4 @@
-export default (sequelize: any, DataTypes: any) => {
+export default (sequelize, DataTypes) => {
   const UserRoles = sequelize.define(
     'UserRoles',
     {
@@ -6,26 +6,26 @@ export default (sequelize: any, DataTypes: any) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         autoIncrement: false,
-        primaryKey: true,
+        primaryKey: true
       },
       RoleDescription: {
         allowNull: false,
-        type: DataTypes.STRING(100),
-      },
+        type: DataTypes.STRING(100)
+      }
     },
     {
       timestamps: false,
       freezeTableName: true,
       classMethods: {
-        associate(models: any) {
+        associate(models) {
           // associations can be defined here
           UserRoles.hasMany(models.Users, {
-            foreignKey: 'RoleID',
-          });
-        },
-      },
+            foreignKey: 'RoleID'
+          })
+        }
+      }
     }
-  );
+  )
 
-  return UserRoles;
-};
+  return UserRoles
+}

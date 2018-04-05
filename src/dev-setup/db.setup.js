@@ -1,23 +1,23 @@
-import * as moment from 'moment';
-import * as faker from 'faker';
-import db from '../db-schema';
+import moment from 'moment'
+import faker from 'faker'
+import db from '../db-schema'
 
-/////////////////////////// WARNING ///////////////////////////
-//// This script will create new tables and insert demo data
-//// Using `force: true` will nuke any existing tables so use with extreme caution
-///////////////////////////////////////////////////////////////
+// ///////////////////////// WARNING ///////////////////////////
+// // This script will create new tables and insert demo data
+// // Using `force: true` will nuke any existing tables so use with extreme caution
+// /////////////////////////////////////////////////////////////
 
 // ==================================================================
 // Create Users table
 // force: true will drop the table if it already exists
 // =================================================
-const UsersSync = false;
+const UsersSync = false
 db.Users.sync({ force: UsersSync })
   .then(() => {
-    console.log('Users table created.');
+    console.log('Users table created.')
   })
   .then(() => {
-    if (!UsersSync) return;
+    if (!UsersSync) return
 
     // Table created, now create a user
     return db.Users.create({
@@ -28,11 +28,11 @@ db.Users.sync({ force: UsersSync })
       Password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
       DateCreated: moment().toISOString(),
       DateUpdated: moment().toISOString(),
-      RoleID: 10, // super admin role
-    });
+      RoleID: 10 // super admin role
+    })
   })
   .then(() => {
-    if (!UsersSync) return;
+    if (!UsersSync) return
 
     // Table created, now create a user
     return db.Users.create({
@@ -43,88 +43,87 @@ db.Users.sync({ force: UsersSync })
       Password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
       DateCreated: moment().toISOString(),
       DateUpdated: moment().toISOString(),
-      RoleID: 4, // admin role
-    });
+      RoleID: 4 // admin role
+    })
   })
   .then(() => {
-    if (!UsersSync) return;
+    if (!UsersSync) return
 
-    console.log('Demo users inserted into Users table.');
+    console.log('Demo users inserted into Users table.')
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err))
 
 // ==================================================================
 // Create UserRoles table
 // force: true will drop the table if it already exists
 // =================================================
-const UserRolesSync = false;
+const UserRolesSync = false
 db.UserRoles.sync({ force: UserRolesSync })
-  .then((data: any) => {
-    console.log('UserRoles table created.');
+  .then(data => {
+    console.log('UserRoles table created.')
 
-    if (!UserRolesSync) return;
+    if (!UserRolesSync) return
 
     // Table created, now create the roles
     const roles = [
       {
         id: 1,
-        description: 'Normal User',
+        description: 'Normal User'
       },
       {
         id: 4,
-        description: 'Admin User',
+        description: 'Admin User'
       },
       {
         id: 10,
-        description: 'Super Admin User',
-      },
-    ];
+        description: 'Super Admin User'
+      }
+    ]
 
     roles.forEach(role => {
       db.UserRoles.create({
         RoleID: role.id,
-        RoleDescription: role.description,
+        RoleDescription: role.description
       })
         .then(() => {
-          console.log(`Role ${role.id} user inserted into UserRoles table.`);
+          console.log(`Role ${role.id} user inserted into UserRoles table.`)
         })
-        .catch((err: any) => console.log('An error occured ', err));
-    });
+        .catch(err => console.log('An error occured ', err))
+    })
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err))
 
 // ==================================================================
 // Create UserTokens table
 // force: true will drop the table if it already exists
 // =================================================
-const UserTokensSync = false;
+const UserTokensSync = false
 db.UserTokens.sync({ force: UserTokensSync })
   .then(() => {
-    console.log('UserTokens table created.');
+    console.log('UserTokens table created.')
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err))
 
-/////////////////////////// WARNING ///////////////////////////
-//// This script will create new tables and insert demo data
-//// Using `force: true` will nuke any existing tables so use with extreme caution
-///////////////////////////////////////////////////////////////
+// ///////////////////////// WARNING ///////////////////////////
+// // This script will create new tables and insert demo data
+// // Using `force: true` will nuke any existing tables so use with extreme caution
+// /////////////////////////////////////////////////////////////
 
 // ==================================================================
 // Create Sales table
 // force: true will drop the table if it already exists
 // =================================================
-const SalesSync = false;
+const SalesSync = false
 db.Sales.sync({ force: SalesSync })
   .then(() => {
-    console.log('Sales table created.');
+    console.log('Sales table created.')
   })
   .then(() => {
-    if (!SalesSync) return;
-    // Table created, now create sales items
-    // create 30 sales items
-    // let companyName: string;
-
-    ['Ribena', 'Coca Cola', 'Evian'].forEach(companyName => {
+    if (!SalesSync)
+      return // Table created, now create sales items
+      // create 30 sales items
+      // let companyName: string;
+    ;['Ribena', 'Coca Cola', 'Evian'].forEach(companyName => {
       for (let f = 0; f < 15; f++) {
         db.Sales.create({
           SaleDate: moment(faker.date.recent()).toISOString(),
@@ -132,34 +131,34 @@ db.Sales.sync({ force: SalesSync })
           ProductName: faker.commerce.productName(),
           ProductSKU: faker.random.number({ min: 1234, max: 9876 }),
           SalesValue: faker.finance.amount(100, 2000, 2),
-          SalesCount: faker.random.number({ min: 12, max: 98 }),
-        });
+          SalesCount: faker.random.number({ min: 12, max: 98 })
+        })
       }
-    });
+    })
   })
   .then(() => {
-    if (!SalesSync) return;
+    if (!SalesSync) return
 
-    console.log('Demo sales items inserted into Sales table.');
+    console.log('Demo sales items inserted into Sales table.')
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err))
 
 // ==================================================================
 // Create Cars table
 // force: true will drop the table if it already exists
 // =================================================
-const CarsSync = true;
+const CarsSync = true
 db.Cars.sync({ force: CarsSync })
   .then(() => {
-    console.log('Cars table created.');
+    console.log('Cars table created.')
   })
   .then(() => {
     return db.Cars.create({
       Model: 'Range Rover',
-      Year: 2018,
-    });
+      Year: 2018
+    })
   })
   .then(() => {
-    console.log('Demo car inserted into Cars table.');
+    console.log('Demo car inserted into Cars table.')
   })
-  .catch((err: any) => console.log('Unable to perform action ', err));
+  .catch(err => console.log('Unable to perform action ', err))
