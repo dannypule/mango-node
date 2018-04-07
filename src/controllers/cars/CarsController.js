@@ -1,4 +1,4 @@
-import db from '../../db-schema'
+import db from '../../models'
 import { formatCarResponse, formatCarDbSave } from '../../controllers/cars/CarsService'
 
 const CarsController = {}

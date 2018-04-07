@@ -3,9 +3,11 @@ import parseError from 'parse-error'
 const toPromise = promise => {
   return promise
     .then(data => {
-      return [null, data]
+      return { err: null, data }
     })
-    .catch(err => [parseError(err)])
+    .catch(err => {
+      return { err: parseError(err) }
+    })
 }
 
 const TE = (errMessage, log) => {
@@ -19,7 +21,7 @@ const TE = (errMessage, log) => {
 
 const ReS = (res, data, code) => {
   // Success Web Response
-  let sendData = { success: true }
+  let sendData = { ok: true }
 
   if (typeof data === 'object') {
     sendData = Object.assign(data, sendData) // merge the objects
@@ -38,7 +40,7 @@ const ReE = (res, err, code) => {
 
   if (typeof code !== 'undefined') res.statusCode = code
 
-  return res.json({ success: false, error: err })
+  return res.json({ ok: false, error: err })
 }
 
 // This is here to handle all the uncaught promise rejections

@@ -1,17 +1,22 @@
 import moment from 'moment'
 import faker from 'faker'
-import db from '../db-schema'
+import db from '../models'
 
 // ///////////////////////// WARNING ///////////////////////////
 // // This script will create new tables and insert demo data
 // // Using `force: true` will nuke any existing tables so use with extreme caution
 // /////////////////////////////////////////////////////////////
+const sync = false
+const UsersSync = sync
+const UserRolesSync = sync
+const UserTokensSync = sync
+const SalesSync = sync
+const CarsSync = sync
 
 // ==================================================================
 // Create Users table
 // force: true will drop the table if it already exists
 // =================================================
-const UsersSync = false
 db.Users.sync({ force: UsersSync })
   .then(() => {
     console.log('Users table created.')
@@ -57,7 +62,6 @@ db.Users.sync({ force: UsersSync })
 // Create UserRoles table
 // force: true will drop the table if it already exists
 // =================================================
-const UserRolesSync = false
 db.UserRoles.sync({ force: UserRolesSync })
   // eslint-disable-next-line
   .then(data => {
@@ -98,7 +102,6 @@ db.UserRoles.sync({ force: UserRolesSync })
 // Create UserTokens table
 // force: true will drop the table if it already exists
 // =================================================
-const UserTokensSync = false
 db.UserTokens.sync({ force: UserTokensSync })
   .then(() => {
     console.log('UserTokens table created.')
@@ -114,7 +117,6 @@ db.UserTokens.sync({ force: UserTokensSync })
 // Create Sales table
 // force: true will drop the table if it already exists
 // =================================================
-const SalesSync = false
 db.Sales.sync({ force: SalesSync })
   .then(() => {
     console.log('Sales table created.')
@@ -151,7 +153,6 @@ db.Sales.sync({ force: SalesSync })
 // Create Cars table
 // force: true will drop the table if it already exists
 // =================================================
-const CarsSync = true
 db.Cars.sync({ force: CarsSync })
   .then(() => {
     console.log('Cars table created.')

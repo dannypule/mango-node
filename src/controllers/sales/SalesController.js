@@ -1,5 +1,5 @@
 // import express from 'express'
-import db from '../../db-schema'
+import db from '../../models'
 import { formatGetSalesItemResponse } from './SalesService'
 
 const SalesController = {}

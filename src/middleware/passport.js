@@ -1,6 +1,7 @@
 import passportJWT from 'passport-jwt'
-import db from '../db-schema'
+import db from '../models'
 import config from '../config'
+// import appUtils from '../utils/appUtils'
 
 const { ExtractJwt, Strategy } = passportJWT
 
@@ -23,7 +24,7 @@ module.exports = passport => {
           done(null, false)
         })
         .catch(err => {
-          console.log(err) // @todo handle errors
+          console.log(err, 'Error setting up passport strategy') // @todo handle errors - this error would happen on app init
         })
     }),
   )

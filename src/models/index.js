@@ -3,7 +3,7 @@ import path from 'path'
 import Sequelize from 'sequelize'
 import config from '../config'
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config)
+const sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, config.db.options)
 
 sequelize
   .authenticate()

@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import db from '../../db-schema'
+import db from '../../models'
 
 const AuthController = {}
 
