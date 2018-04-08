@@ -1,6 +1,8 @@
 import moment from 'moment'
 import faker from 'faker'
 import db from '../models'
+import UsersSetup from './UsersSetup'
+import UserRolesSetup from './UserRolesSetup'
 
 // ///////////////////////// WARNING ///////////////////////////
 // // This script will create new tables and insert demo data
@@ -9,114 +11,25 @@ import db from '../models'
 const sync = true
 const UsersSyncForce = sync
 const UserRolesSyncForce = sync
-const UserTokensSyncForce = sync
 const SalesSyncForce = sync
 const CarsSyncForce = sync
 
 // ==================================================================
 // Create Users table
 // force: true will drop the table if it already exists
-// =================================================
-db.Users.sync({ force: UsersSyncForce })
-  .then(() => {
-    console.log('Users table created.')
-  })
-  .then(() => {
-    if (!UsersSyncForce) return
-
-    // Table created, now create a user
-    return db.Users.create({
-      FirstName: 'Super',
-      LastName: 'Admin',
-      Email: 'Super.Admin@fake-email.infoz',
-      Username: 'superadmin',
-      Password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
-      DateCreated: moment().toISOString(),
-      DateUpdated: moment().toISOString(),
-      RoleID: 10, // super admin role
-    })
-  })
-  .then(() => {
-    if (!UsersSyncForce) return
-
-    // Table created, now create a user
-    return db.Users.create({
-      FirstName: 'Regular',
-      LastName: 'Admin',
-      Email: 'Admin.Admin@fake-email.infoz',
-      Username: 'admin',
-      Password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
-      DateCreated: moment().toISOString(),
-      DateUpdated: moment().toISOString(),
-      RoleID: 4, // admin role
-    })
-  })
-  .then(() => {
-    if (!UsersSyncForce) return
-
-    console.log('Demo users inserted into Users table.')
-  })
-  .catch(err => console.log('Unable to perform action ', err))
+// ========
+UsersSetup(UsersSyncForce)
 
 // ==================================================================
-// Create UserRoles table
-// force: true will drop the table if it already exists
-// =================================================
-db.UserRoles.sync({ force: UserRolesSyncForce })
-  // eslint-disable-next-line
-  .then(data => {
-    console.log('UserRoles table created.')
-
-    if (!UserRolesSyncForce) return
-
-    // Table created, now create the roles
-    const roles = [
-      {
-        id: 1,
-        description: 'Normal User',
-      },
-      {
-        id: 4,
-        description: 'Admin User',
-      },
-      {
-        id: 10,
-        description: 'Super Admin User',
-      },
-    ]
-
-    roles.forEach(role => {
-      db.UserRoles.create({
-        RoleID: role.id,
-        RoleDescription: role.description,
-      })
-        .then(() => {
-          console.log(`Role ${role.id} user inserted into UserRoles table.`)
-        })
-        .catch(err => console.log('An error occured ', err))
-    })
-  })
-  .catch(err => console.log('Unable to perform action ', err))
-
-// ==================================================================
-// Create UserTokens table
-// force: true will drop the table if it already exists
-// =================================================
-db.UserTokens.sync({ force: UserTokensSyncForce })
-  .then(() => {
-    console.log('UserTokens table created.')
-  })
-  .catch(err => console.log('Unable to perform action ', err))
-
-// ///////////////////////// WARNING ///////////////////////////
-// // This script will create new tables and insert demo data
-// // Using `force: true` will nuke any existing tables so use with extreme caution
-// /////////////////////////////////////////////////////////////
+// Create UsersRoles table
+// `force: true` will drop the table if it already exists
+// ========
+UserRolesSetup(UserRolesSyncForce)
 
 // ==================================================================
 // Create Sales table
 // force: true will drop the table if it already exists
-// =================================================
+// ========
 db.Sales.sync({ force: SalesSyncForce })
   .then(() => {
     console.log('Sales table created.')
@@ -152,7 +65,7 @@ db.Sales.sync({ force: SalesSyncForce })
 // ==================================================================
 // Create Cars table
 // force: true will drop the table if it already exists
-// =================================================
+// ========
 db.Cars.sync({ force: CarsSyncForce })
   .then(() => {
     console.log('Cars table created.')

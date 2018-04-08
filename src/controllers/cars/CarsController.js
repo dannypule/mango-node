@@ -4,66 +4,67 @@ import utils from '../../utils/utils'
 
 const CarsController = {}
 
-CarsController.getCars = (req, res) => {
-  db.Cars.findAll().then(cars => {
+CarsController.getCars = async (req, res) => {
+  try {
+    console.log(null)
+    const cars = await db.Cars.findAll()
     const formatted = cars.map(formatCarResponse)
     utils.success(res, formatted)
-  })
+  } catch (err) {
+    utils.success(res, err)
+  }
 }
 
-CarsController.addCar = (req, res) => {
+CarsController.addCar = async (req, res) => {
   const formatted = formatCarDbSave(req.body)
 
-  db.Cars.create(formatted)
-    .then(car => {
-      utils.success(res, car)
-    })
-    .catch(err => {
-      utils.success(res, err)
-    })
+  try {
+    const car = await db.Cars.create(formatted)
+    utils.success(res, car)
+  } catch (err) {
+    utils.error(res, err)
+  }
 }
 
-CarsController.updateCar = (req, res) => {
+CarsController.updateCar = async (req, res) => {
   const car = req.body
 
-  db.Cars.update(
-    {
-      Model: car.model,
-      Year: car.year,
-    },
-    {
-      where: {
-        CarID: car.id,
+  try {
+    await db.Cars.update(
+      {
+        Model: car.model,
+        Year: car.year,
       },
-    },
-  )
-    .then(() => {
-      return db.Cars.findOne({
+      {
         where: {
-          CarID: req.body.id,
+          CarID: car.id,
         },
-      })
+      },
+    )
+    const _car = await db.Cars.findOne({
+      where: {
+        CarID: req.body.id,
+      },
     })
-    .then(car => utils.success(res, car))
-    .catch(err => {
-      utils.error(res, err)
-    })
+    utils.success(res, _car) // todo - format _car
+  } catch (err) {
+    utils.error(res, err)
+  }
 }
 
-CarsController.deleteCar = (req, res) => {
-  db.Cars.destroy({
-    where: {
-      CarID: req.body.id,
-    },
-  })
-    .then(() => {
-      utils.success(res, {
-        message: 'Successfully deleted car.',
-      })
+CarsController.deleteCar = async (req, res) => {
+  try {
+    await db.Cars.destroy({
+      where: {
+        CarID: req.body.id,
+      },
     })
-    .catch(err => {
-      utils.error(res, err)
+    utils.success(res, {
+      message: 'Successfully deleted car.',
     })
+  } catch (err) {
+    utils.error(res, err)
+  }
 }
 
 export default CarsController

@@ -10,8 +10,7 @@
     "build": "babel src -d dist",
     "postinstall": "npm run build",
     "setup:db": "npm run build && node dist/dev-setup/db.setup.js",
-    "setup:dblocal":
-      "npm run build && NODE_ENV=local node dist/dev-setup/db.setup.js",
+    "setup:dblocal": "npm run build && NODE_ENV=local node dist/dev-setup/db.setup.js",
     "jest": "jest --forceExit --coverage --verbose",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
@@ -55,10 +54,12 @@
     "babel-core": "6.26.0",
     "babel-eslint": "8.2.2",
     "babel-jest": "22.4.1",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "6.26.0",
-    "babel-preset-latest": "6.24.1",
+    "babel-preset-env": "^1.6.1",
     "babel-register": "6.26.0",
     "concurrently": "3.5.0",
     "eslint": "4.19.1",
