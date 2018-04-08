@@ -1,6 +1,6 @@
 # Node, Postgres, Babel starter seed project (https://github.com/dannypule)
 
-# Babel setup from https://github.com/babel/example-node-server
+### This is a work in progress. I am actively contributing to this project.
 
 ## Prereqs
 

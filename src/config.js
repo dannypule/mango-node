@@ -59,5 +59,4 @@ const configuration = {
     jwt_expiration: process.env.PROD_JWT_EXPIRATION,
   },
 }
-debugger
 export default configuration[env]
