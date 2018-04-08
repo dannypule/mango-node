@@ -11,20 +11,19 @@ module.exports = passport => {
 
   passport.use(
     new Strategy(opts, async (jwtPayload, done) => {
-      db.Users.findOne({
-        where: {
-          UserID: jwtPayload.userID,
-        },
-      })
-        .then(user => {
-          if (user) {
-            return done(null, user)
-          }
-          done(null, false)
+      try {
+        const user = await db.Users.findOne({
+          where: {
+            UserID: jwtPayload.userID,
+          },
         })
-        .catch(err => {
-          console.log(err, 'Error setting up passport strategy') // @todo handle errors - this error would happen on app init
-        })
+        if (!user) {
+          return done(null, false)
+        }
+        return done(null, user)
+      } catch (err) {
+        console.log(err, 'Error setting up passport strategy') // @todo handle errors - this error would happen on app init
+      }
     }),
   )
 }

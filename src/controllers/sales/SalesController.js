@@ -5,24 +5,28 @@ import utils from '../../utils/utils'
 
 const SalesController = {}
 
-SalesController.getSales = (req, res) => {
-  db.Sales.findAll().then(sales => {
+SalesController.getSales = async (req, res) => {
+  try {
+    const sales = await db.Sales.findAll()
     const formatted = sales.map(formatGetSalesItemResponse)
     utils.success(res, formatted)
-  })
+  } catch (err) {
+    utils.error(res, err)
+  }
 }
 
-SalesController.getSalesByCompanyName = (req, res) => {
-  db.Sales.findAll({
-    where: {
-      CompanyName: req.body.companyName,
-    },
-  })
-    .then(sales => {
-      const formatted = sales.map(formatGetSalesItemResponse)
-      utils.success(res, formatted)
+SalesController.getSalesByCompanyName = async (req, res) => {
+  try {
+    const sales = await db.Sales.findAll({
+      where: {
+        CompanyName: req.body.companyName,
+      },
     })
-    .catch(err => utils.error(res, err))
+    const formatted = sales.map(formatGetSalesItemResponse)
+    utils.success(res, formatted)
+  } catch (err) {
+    utils.error(res, err)
+  }
 }
 
 export default SalesController

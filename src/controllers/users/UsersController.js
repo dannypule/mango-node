@@ -7,10 +7,13 @@ import utils from '../../utils/utils'
 const UserController = {}
 
 UserController.getUsers = async (req, res) => {
-  db.Users.findAll().then(users => {
+  try {
+    const users = await db.Users.findAll()
     const formattedUsers = users.map(formatGetUserResponse)
     utils.success(res, formattedUsers)
-  })
+  } catch (err) {
+    utils.error(res, err)
+  }
 }
 
 UserController.addUser = async (req, res) => {
@@ -29,18 +32,17 @@ UserController.addUser = async (req, res) => {
   }
 }
 
-UserController.deleteUser = (req, res) => {
-  db.Users.destroy({
-    where: {
-      Username: req.body.Username,
-    },
-  })
-    .then(user => {
-      utils.success(res, user)
+UserController.deleteUser = async (req, res) => {
+  try {
+    const deletedUser = await db.Users.destroy({
+      where: {
+        Username: req.body.Username,
+      },
     })
-    .catch(err => {
-      utils.error(res, err)
-    })
+    utils.success(res, deletedUser)
+  } catch (err) {
+    utils.error(res, err)
+  }
 }
 
 export default UserController

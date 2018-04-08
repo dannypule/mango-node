@@ -39,7 +39,6 @@ const error = (res, err, code) => {
   }
 
   if (typeof code !== 'undefined') res.statusCode = code
-
   return res.json({ ok: false, error: err })
 }
 
