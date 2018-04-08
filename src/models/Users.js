@@ -1,4 +1,6 @@
 // import bcrypt from 'bcrypt'
+import config from '../config'
+import jwt from 'jsonwebtoken'
 
 export default (sequelize, DataTypes) => {
   const Users = sequelize.define(
@@ -8,42 +10,42 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
       FirstName: {
         allowNull: true,
-        type: DataTypes.STRING(50)
+        type: DataTypes.STRING(50),
       },
       LastName: {
         allowNull: true,
-        type: DataTypes.STRING(50)
+        type: DataTypes.STRING(50),
       },
       Email: {
         allowNull: true,
         type: DataTypes.STRING(50),
-        unique: true
+        unique: true,
       },
       Username: {
         allowNull: false,
         type: DataTypes.STRING(50),
-        unique: true
+        unique: true,
       },
       Password: {
         allowNull: false,
-        type: DataTypes.STRING(150)
+        type: DataTypes.STRING(150),
       },
       DateCreated: {
         allowNull: true,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       DateUpdated: {
         allowNull: true,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       RoleID: {
         allowNull: false,
-        type: DataTypes.INTEGER
-      }
+        type: DataTypes.INTEGER,
+      },
     },
     {
       freezeTableName: true,
@@ -53,12 +55,12 @@ export default (sequelize, DataTypes) => {
         associate(models) {
           // associations can be defined here
           Users.hasMany(models.UserToken, {
-            foreignKey: 'UserID'
+            foreignKey: 'UserID',
           })
           Users.belongsTo(models.UserRole, {
-            foreignKey: 'RoleID'
+            foreignKey: 'RoleID',
           })
-        }
+        },
       },
       hooks: {
         // beforeCreate: (user: any, options: any, next: any) => {
@@ -132,9 +134,17 @@ export default (sequelize, DataTypes) => {
         //     }
         //   }
         // },
-      }
-    }
+      },
+    },
   )
+
+  Users.prototype.getJWT = user => {
+    const expirationTime = parseInt(config.jwt_expiration, 10)
+    const token = jwt.sign({ userID: user.UserID }, config.jwt_encryption, {
+      expiresIn: expirationTime,
+    })
+    return `Bearer ${token}`
+  }
 
   return Users
 }

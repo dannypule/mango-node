@@ -7,7 +7,7 @@
         "bracketSpacing": true,
         "parser": "babylon",
         "printWidth": 120,
-        "trailingComma": "none",
+        "trailingComma": "all",
         "excludeFiles": ["*.scss"],
         "tabWidth": 2,
         "singleQuote": true

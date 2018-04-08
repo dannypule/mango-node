@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parser: "babel-eslint",
-  extends: "strongloop",
+  extends: "airbnb",
   globals: {
     process: true
   },
@@ -23,7 +23,6 @@ module.exports = {
     "object-curly-newline": 0,
     "arrow-body-style": 0,
     "class-methods-use-this": 0,
-    "comma-dangle": [2, "never"],
     "consistent-return": 0,
     "func-names": 2,
     "global-require": 0,
