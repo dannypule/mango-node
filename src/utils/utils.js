@@ -19,7 +19,7 @@ const TE = (errMessage, log) => {
   throw new Error(errMessage)
 }
 
-const ReS = (res, data, code) => {
+const success = (res, data, code) => {
   // Success Web Response
   let sendData = { ok: true }
 
@@ -32,7 +32,7 @@ const ReS = (res, data, code) => {
   return res.json(sendData)
 }
 
-const ReE = (res, err, code) => {
+const error = (res, err, code) => {
   // Error Web Response
   if (typeof err === 'object' && typeof err.message !== 'undefined') {
     err = err.message
@@ -48,11 +48,11 @@ process.on('unhandledRejection', error => {
   console.error('Uncaught Error', parseError(error))
 })
 
-const appUtils = {
+const utils = {
   toPromise,
   TE,
-  ReS,
-  ReE,
+  success,
+  error,
 }
 
-export default appUtils
+export default utils

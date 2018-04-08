@@ -2,14 +2,14 @@
 import bcrypt from 'bcrypt'
 import db from '../../models'
 import { formatGetUserResponse } from './UsersService'
-import appUtils from '../../utils/appUtils'
+import utils from '../../utils/utils'
 
 const UserController = {}
 
 UserController.getUsers = async (req, res) => {
   db.Users.findAll().then(users => {
     const formattedUsers = users.map(formatGetUserResponse)
-    res.send(formattedUsers)
+    utils.success(res, formattedUsers)
   })
 }
 
@@ -23,9 +23,9 @@ UserController.addUser = async (req, res) => {
     const hash = await bcrypt.hash(user.Password, salt, null)
     user.Password = hash
     const _user = await db.Users.create(user, { individualHooks: true })
-    appUtils.ReS(res, _user) // @todo format user response
+    utils.success(res, _user) // @todo format user response
   } catch (err) {
-    appUtils.ReE(res, err)
+    utils.error(res, err)
   }
 }
 
@@ -36,11 +36,10 @@ UserController.deleteUser = (req, res) => {
     },
   })
     .then(user => {
-      res.send(user)
+      utils.success(res, user)
     })
     .catch(err => {
-      res.status(500)
-      res.send(err)
+      utils.error(res, err)
     })
 }
 

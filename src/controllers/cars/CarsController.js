@@ -1,12 +1,13 @@
 import db from '../../models'
 import { formatCarResponse, formatCarDbSave } from '../../controllers/cars/CarsService'
+import utils from '../../utils/utils'
 
 const CarsController = {}
 
 CarsController.getCars = (req, res) => {
   db.Cars.findAll().then(cars => {
     const formatted = cars.map(formatCarResponse)
-    res.send(formatted)
+    utils.success(res, formatted)
   })
 }
 
@@ -15,11 +16,10 @@ CarsController.addCar = (req, res) => {
 
   db.Cars.create(formatted)
     .then(car => {
-      res.send(car)
+      utils.success(res, car)
     })
     .catch(err => {
-      res.status(500)
-      res.send(err)
+      utils.success(res, err)
     })
 }
 
@@ -44,10 +44,9 @@ CarsController.updateCar = (req, res) => {
         },
       })
     })
-    .then(car => res.send(formatCarResponse(car)))
+    .then(car => utils.success(res, car))
     .catch(err => {
-      res.status(500)
-      res.send(err)
+      utils.error(res, err)
     })
 }
 
@@ -58,13 +57,12 @@ CarsController.deleteCar = (req, res) => {
     },
   })
     .then(() => {
-      res.send({
+      utils.success(res, {
         message: 'Successfully deleted car.',
       })
     })
     .catch(err => {
-      res.status(500)
-      res.send(err)
+      utils.error(res, err)
     })
 }
 

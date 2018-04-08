@@ -6,9 +6,12 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon src/server.js --exec babel-node",
+    "local": "NODE_ENV=local nodemon src/server.js --exec babel-node",
     "build": "babel src -d dist",
     "postinstall": "npm run build",
     "setup:db": "npm run build && node dist/dev-setup/db.setup.js",
+    "setup:dblocal":
+      "npm run build && NODE_ENV=local node dist/dev-setup/db.setup.js",
     "jest": "jest --forceExit --coverage --verbose",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"

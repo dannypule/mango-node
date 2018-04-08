@@ -7,6 +7,23 @@ const configuration = {
   cors: {
     exposedHeaders: ['Link'],
   },
+  local: {
+    db: {
+      username: process.env.LOCAL_DB_USERNAME,
+      password: process.env.LOCAL_DB_PASSWORD,
+      database: process.env.LOCAL_DB_DATABASE,
+      options: {
+        host: process.env.LOCAL_DB_HOST,
+        dialect: 'postgres',
+        operatorsAliases: false,
+        dialectOptions: {
+          ssl: false,
+        },
+      },
+    },
+    jwt_encryption: process.env.LOCAL_JWT_ENCRYPTION,
+    jwt_expiration: process.env.LOCAL_JWT_EXPIRATION,
+  },
   development: {
     db: {
       username: process.env.DEV_DB_USERNAME,
@@ -42,5 +59,5 @@ const configuration = {
     jwt_expiration: process.env.PROD_JWT_EXPIRATION,
   },
 }
-
+debugger
 export default configuration[env]

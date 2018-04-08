@@ -6,23 +6,23 @@ import db from '../models'
 // // This script will create new tables and insert demo data
 // // Using `force: true` will nuke any existing tables so use with extreme caution
 // /////////////////////////////////////////////////////////////
-const sync = false
-const UsersSync = sync
-const UserRolesSync = sync
-const UserTokensSync = sync
-const SalesSync = sync
-const CarsSync = sync
+const sync = true
+const UsersSyncForce = sync
+const UserRolesSyncForce = sync
+const UserTokensSyncForce = sync
+const SalesSyncForce = sync
+const CarsSyncForce = sync
 
 // ==================================================================
 // Create Users table
 // force: true will drop the table if it already exists
 // =================================================
-db.Users.sync({ force: UsersSync })
+db.Users.sync({ force: UsersSyncForce })
   .then(() => {
     console.log('Users table created.')
   })
   .then(() => {
-    if (!UsersSync) return
+    if (!UsersSyncForce) return
 
     // Table created, now create a user
     return db.Users.create({
@@ -37,7 +37,7 @@ db.Users.sync({ force: UsersSync })
     })
   })
   .then(() => {
-    if (!UsersSync) return
+    if (!UsersSyncForce) return
 
     // Table created, now create a user
     return db.Users.create({
@@ -52,7 +52,7 @@ db.Users.sync({ force: UsersSync })
     })
   })
   .then(() => {
-    if (!UsersSync) return
+    if (!UsersSyncForce) return
 
     console.log('Demo users inserted into Users table.')
   })
@@ -62,12 +62,12 @@ db.Users.sync({ force: UsersSync })
 // Create UserRoles table
 // force: true will drop the table if it already exists
 // =================================================
-db.UserRoles.sync({ force: UserRolesSync })
+db.UserRoles.sync({ force: UserRolesSyncForce })
   // eslint-disable-next-line
   .then(data => {
     console.log('UserRoles table created.')
 
-    if (!UserRolesSync) return
+    if (!UserRolesSyncForce) return
 
     // Table created, now create the roles
     const roles = [
@@ -102,7 +102,7 @@ db.UserRoles.sync({ force: UserRolesSync })
 // Create UserTokens table
 // force: true will drop the table if it already exists
 // =================================================
-db.UserTokens.sync({ force: UserTokensSync })
+db.UserTokens.sync({ force: UserTokensSyncForce })
   .then(() => {
     console.log('UserTokens table created.')
   })
@@ -117,12 +117,12 @@ db.UserTokens.sync({ force: UserTokensSync })
 // Create Sales table
 // force: true will drop the table if it already exists
 // =================================================
-db.Sales.sync({ force: SalesSync })
+db.Sales.sync({ force: SalesSyncForce })
   .then(() => {
     console.log('Sales table created.')
   })
   .then(() => {
-    if (!SalesSync) {
+    if (!SalesSyncForce) {
       return // Table created, now create sales items
     }
 
@@ -143,7 +143,7 @@ db.Sales.sync({ force: SalesSync })
     })
   })
   .then(() => {
-    if (!SalesSync) return
+    if (!SalesSyncForce) return
 
     console.log('Demo sales items inserted into Sales table.')
   })
@@ -153,7 +153,7 @@ db.Sales.sync({ force: SalesSync })
 // Create Cars table
 // force: true will drop the table if it already exists
 // =================================================
-db.Cars.sync({ force: CarsSync })
+db.Cars.sync({ force: CarsSyncForce })
   .then(() => {
     console.log('Cars table created.')
   })

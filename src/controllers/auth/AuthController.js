@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import db from '../../models'
+import utils from '../../utils/utils'
 
 const AuthController = {}
 
@@ -12,21 +13,18 @@ AuthController.login = async (req, res) => {
     .then(user => {
       bcrypt.compare(req.body.password, user.Password, (err, r) => {
         if (err) {
-          res.status(500)
-          res.send(err)
+          utils.success(res)
           return
         }
         if (r) {
-          res.send({ token: user.getJWT(user) })
+          utils.success(res, { token: user.getJWT(user) })
         } else {
-          res.status(500)
-          res.send({ status: `Couldn't log in` })
+          utils.error(res, { status: `Couldn't log in` })
         }
       })
     })
     .catch(err => {
-      res.status(500)
-      res.send(err)
+      utils.error(err, { status: `Couldn't log in` })
     })
 }
 
