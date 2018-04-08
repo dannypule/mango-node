@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import logger from 'morgan'
 import passport from 'passport'
 // import cors from 'cors'
+import utils from './utils/utils'
 
 import apiRoutes from './routes/routes'
 
@@ -43,7 +44,7 @@ app.use((req, res, next) => {
   // allowed headers
   res.header(
     'Access-Control-Allow-Headers',
-    'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json'
+    'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json',
   )
   next()
 })
@@ -61,7 +62,7 @@ app.use(passport.initialize())
 app.use('/api', apiRoutes)
 
 app.use('/', (req, res) => {
-  res.send('up')
+  utils.success(res, 'api up')
 })
 
 app.listen(port, () => {

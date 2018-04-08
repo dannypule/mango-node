@@ -1,23 +1,28 @@
 import moment from 'moment'
 import faker from 'faker'
-import db from '../db-schema'
+import db from '../models'
 
 // ///////////////////////// WARNING ///////////////////////////
 // // This script will create new tables and insert demo data
 // // Using `force: true` will nuke any existing tables so use with extreme caution
 // /////////////////////////////////////////////////////////////
+const sync = true
+const UsersSyncForce = sync
+const UserRolesSyncForce = sync
+const UserTokensSyncForce = sync
+const SalesSyncForce = sync
+const CarsSyncForce = sync
 
 // ==================================================================
 // Create Users table
 // force: true will drop the table if it already exists
 // =================================================
-const UsersSync = false
-db.Users.sync({ force: UsersSync })
+db.Users.sync({ force: UsersSyncForce })
   .then(() => {
     console.log('Users table created.')
   })
   .then(() => {
-    if (!UsersSync) return
+    if (!UsersSyncForce) return
 
     // Table created, now create a user
     return db.Users.create({
@@ -28,11 +33,11 @@ db.Users.sync({ force: UsersSync })
       Password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
       DateCreated: moment().toISOString(),
       DateUpdated: moment().toISOString(),
-      RoleID: 10 // super admin role
+      RoleID: 10, // super admin role
     })
   })
   .then(() => {
-    if (!UsersSync) return
+    if (!UsersSyncForce) return
 
     // Table created, now create a user
     return db.Users.create({
@@ -43,11 +48,11 @@ db.Users.sync({ force: UsersSync })
       Password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
       DateCreated: moment().toISOString(),
       DateUpdated: moment().toISOString(),
-      RoleID: 4 // admin role
+      RoleID: 4, // admin role
     })
   })
   .then(() => {
-    if (!UsersSync) return
+    if (!UsersSyncForce) return
 
     console.log('Demo users inserted into Users table.')
   })
@@ -57,34 +62,33 @@ db.Users.sync({ force: UsersSync })
 // Create UserRoles table
 // force: true will drop the table if it already exists
 // =================================================
-const UserRolesSync = false
-db.UserRoles.sync({ force: UserRolesSync })
+db.UserRoles.sync({ force: UserRolesSyncForce })
   // eslint-disable-next-line
   .then(data => {
     console.log('UserRoles table created.')
 
-    if (!UserRolesSync) return
+    if (!UserRolesSyncForce) return
 
     // Table created, now create the roles
     const roles = [
       {
         id: 1,
-        description: 'Normal User'
+        description: 'Normal User',
       },
       {
         id: 4,
-        description: 'Admin User'
+        description: 'Admin User',
       },
       {
         id: 10,
-        description: 'Super Admin User'
-      }
+        description: 'Super Admin User',
+      },
     ]
 
     roles.forEach(role => {
       db.UserRoles.create({
         RoleID: role.id,
-        RoleDescription: role.description
+        RoleDescription: role.description,
       })
         .then(() => {
           console.log(`Role ${role.id} user inserted into UserRoles table.`)
@@ -98,8 +102,7 @@ db.UserRoles.sync({ force: UserRolesSync })
 // Create UserTokens table
 // force: true will drop the table if it already exists
 // =================================================
-const UserTokensSync = false
-db.UserTokens.sync({ force: UserTokensSync })
+db.UserTokens.sync({ force: UserTokensSyncForce })
   .then(() => {
     console.log('UserTokens table created.')
   })
@@ -114,13 +117,12 @@ db.UserTokens.sync({ force: UserTokensSync })
 // Create Sales table
 // force: true will drop the table if it already exists
 // =================================================
-const SalesSync = false
-db.Sales.sync({ force: SalesSync })
+db.Sales.sync({ force: SalesSyncForce })
   .then(() => {
     console.log('Sales table created.')
   })
   .then(() => {
-    if (!SalesSync) {
+    if (!SalesSyncForce) {
       return // Table created, now create sales items
     }
 
@@ -135,13 +137,13 @@ db.Sales.sync({ force: SalesSync })
           ProductName: faker.commerce.productName(),
           ProductSKU: faker.random.number({ min: 1234, max: 9876 }),
           SalesValue: faker.finance.amount(100, 2000, 2),
-          SalesCount: faker.random.number({ min: 12, max: 98 })
+          SalesCount: faker.random.number({ min: 12, max: 98 }),
         })
       }
     })
   })
   .then(() => {
-    if (!SalesSync) return
+    if (!SalesSyncForce) return
 
     console.log('Demo sales items inserted into Sales table.')
   })
@@ -151,15 +153,14 @@ db.Sales.sync({ force: SalesSync })
 // Create Cars table
 // force: true will drop the table if it already exists
 // =================================================
-const CarsSync = true
-db.Cars.sync({ force: CarsSync })
+db.Cars.sync({ force: CarsSyncForce })
   .then(() => {
     console.log('Cars table created.')
   })
   .then(() => {
     return db.Cars.create({
       Model: 'Range Rover',
-      Year: 2018
+      Year: 2018,
     })
   })
   .then(() => {
