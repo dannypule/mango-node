@@ -3,65 +3,43 @@ import config from '../config'
 import jwt from 'jsonwebtoken'
 
 export default (sequelize, DataTypes) => {
-  const Users = sequelize.define(
-    'Users',
+  const User = sequelize.define(
+    'User',
     {
-      UserID: {
+      id: {
         allowNull: false,
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      FirstName: {
+      first_name: {
         allowNull: true,
         type: DataTypes.STRING(50),
       },
-      LastName: {
+      last_name: {
         allowNull: true,
         type: DataTypes.STRING(50),
       },
-      Email: {
+      phone: {
+        allowNull: true,
+        type: DataTypes.STRING(50),
+      },
+      email: {
         allowNull: true,
         type: DataTypes.STRING(50),
         unique: true,
       },
-      Username: {
+      username: {
         allowNull: false,
         type: DataTypes.STRING(50),
         unique: true,
       },
-      Password: {
+      password: {
         allowNull: false,
         type: DataTypes.STRING(150),
       },
-      DateCreated: {
-        allowNull: true,
-        type: DataTypes.DATE,
-      },
-      DateUpdated: {
-        allowNull: true,
-        type: DataTypes.DATE,
-      },
-      RoleID: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-      },
     },
     {
-      freezeTableName: true,
-      updatedAt: 'DateUpdated',
-      createdAt: 'DateCreated',
-      classMethods: {
-        associate(models) {
-          // associations can be defined here
-          Users.hasMany(models.UserToken, {
-            foreignKey: 'UserID',
-          })
-          Users.belongsTo(models.UserRole, {
-            foreignKey: 'RoleID',
-          })
-        },
-      },
       hooks: {
         // beforeCreate: (user: any, options: any, next: any) => {
         //   const saltFactor = 6;
@@ -138,13 +116,17 @@ export default (sequelize, DataTypes) => {
     },
   )
 
-  Users.prototype.getJWT = user => {
+  User.associate = models => {
+    User.belongsTo(models.UserRole)
+  }
+
+  User.prototype.getJWT = user => {
     const expirationTime = parseInt(config.jwt_expiration, 10)
-    const token = jwt.sign({ userID: user.UserID }, config.jwt_encryption, {
+    const token = jwt.sign({ userID: user.id }, config.jwt_encryption, {
       expiresIn: expirationTime,
     })
     return `Bearer ${token}`
   }
 
-  return Users
+  return User
 }

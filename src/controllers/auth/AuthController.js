@@ -6,7 +6,7 @@ const AuthController = {}
 
 AuthController.login = async (req, res) => {
   try {
-    const user = await db.Users.findOne({
+    const user = await db.User.findOne({
       where: {
         Username: req.body.username,
       },

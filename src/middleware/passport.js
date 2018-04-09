@@ -12,7 +12,7 @@ module.exports = passport => {
   passport.use(
     new Strategy(opts, async (jwtPayload, done) => {
       try {
-        const user = await db.Users.findOne({
+        const user = await db.User.findOne({
           where: {
             UserID: jwtPayload.userID,
           },

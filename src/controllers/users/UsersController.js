@@ -8,7 +8,7 @@ const UserController = {}
 
 UserController.getUsers = async (req, res) => {
   try {
-    const users = await db.Users.findAll()
+    const users = await db.User.findAll()
     const formattedUsers = users.map(formatGetUserResponse)
     utils.success(res, formattedUsers)
   } catch (err) {
@@ -25,7 +25,7 @@ UserController.addUser = async (req, res) => {
     const salt = await bcrypt.genSalt(saltFactor)
     const hash = await bcrypt.hash(user.Password, salt, null)
     user.Password = hash
-    const _user = await db.Users.create(user, { individualHooks: true })
+    const _user = await db.User.create(user, { individualHooks: true })
     utils.success(res, _user) // @todo format user response
   } catch (err) {
     utils.error(res, err)
@@ -34,7 +34,7 @@ UserController.addUser = async (req, res) => {
 
 UserController.deleteUser = async (req, res) => {
   try {
-    const deletedUser = await db.Users.destroy({
+    const deletedUser = await db.User.destroy({
       where: {
         Username: req.body.Username,
       },
