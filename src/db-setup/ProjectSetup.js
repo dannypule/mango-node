@@ -1,13 +1,8 @@
 import db from '../models'
 
-export default async syncForce => {
+export default () => {
   return new Promise(async (resolve, reject) => {
     try {
-      // await db.Project.sync({ force: syncForce }) // force: true will drop the table if it already exists
-      // console.log('Project table created.')
-
-      if (!syncForce) return resolve()
-
       await db.Project.create({
         title: 'New Mobile App Project',
         project_owner: 1,

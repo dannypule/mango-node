@@ -1,38 +1,23 @@
 import db from '../models'
 
-export default async syncForce => {
+export default () => {
   return new Promise(async (resolve, reject) => {
     try {
-      // await db.UserRole.sync({ force: syncForce }) // `force: true` will drop the table if it already exists
-      // console.log('UserRole table created.')
-      if (!syncForce) return resolve()
-
-      // Table created, now create the roles
-      const roles = [
-        {
-          code: 30,
-          description: 'Employee User Type 1',
-        },
-        {
-          code: 40,
-          description: 'Employee User Type 2',
-        },
-        {
-          code: 100,
-          description: 'Admin User',
-        },
-        {
-          code: 107,
-          description: 'Super Admin User',
-        },
-      ]
-
-      roles.forEach(async role => {
-        await db.UserRole.create({
-          code: role.code,
-          description: role.description,
-        })
-        console.log(`Role ${role.code} inserted into UserRole table.`)
+      await db.UserRole.create({
+        code: 30,
+        description: 'Employee User Type 1',
+      })
+      await db.UserRole.create({
+        code: 40,
+        description: 'Employee User Type 2',
+      })
+      await db.UserRole.create({
+        code: 100,
+        description: 'Admin User',
+      })
+      await db.UserRole.create({
+        code: 107,
+        description: 'Super Admin User',
       })
 
       resolve()

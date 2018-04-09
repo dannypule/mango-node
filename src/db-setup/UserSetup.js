@@ -1,17 +1,8 @@
 import db from '../models'
 
-export default syncForce => {
+export default () => {
   return new Promise(async (resolve, reject) => {
-    // ==================================================================
-    // Create User table
-    // force: true will drop the table if it already exists
-    // ========
     try {
-      // await db.User.sync({ force: syncForce })
-      // console.log('User table created.')
-
-      if (!syncForce) return resolve()
-
       await db.User.create({
         first_name: 'Super',
         last_name: 'Admin',
