@@ -2,7 +2,7 @@ import express from 'express'
 import passport from 'passport'
 
 import AuthController from '../controllers/auth/AuthController'
-import CarsController from '../controllers/cars/CarsController'
+import CompaniesController from '../controllers/companies/CompaniesController'
 import UsersController from '../controllers/users/UsersController'
 import SalesController from '../controllers/sales/SalesController'
 
@@ -17,12 +17,12 @@ const authenticateViaToken = passport.authenticate('jwt', { session: false })
 router.post('/auth/login', AuthController.login)
 
 // ===================================================
-// '/cars'
+// '/companies'
 // =========================
-router.get('/cars', CarsController.getCars) // only supser admins
-router.post('/cars', authenticateViaToken, CarsController.addCar) // only super admins
-router.put('/cars', authenticateViaToken, CarsController.updateCar) // only super admins
-router.delete('/cars', authenticateViaToken, CarsController.deleteCar) // only super admins
+router.get('/companies', authenticateViaToken, CompaniesController.getCompanies) // only supser admins
+router.post('/companies', authenticateViaToken, CompaniesController.addCompany) // only super admins
+router.put('/companies', authenticateViaToken, CompaniesController.updateCompany) // only super admins
+router.delete('/companies', authenticateViaToken, CompaniesController.deleteCompany) // only super admins
 
 // ===================================================
 // '/users'

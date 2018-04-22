@@ -14,7 +14,7 @@ module.exports = passport => {
       try {
         const user = await db.User.findOne({
           where: {
-            UserID: jwtPayload.userID,
+            id: jwtPayload.userID,
           },
         })
         if (!user) {

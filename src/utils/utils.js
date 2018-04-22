@@ -38,7 +38,11 @@ const error = (res, err, code) => {
     err = err.message
   }
 
-  if (typeof code !== 'undefined') res.statusCode = code
+  if (typeof code !== 'undefined') {
+    res.statusCode = code
+  } else {
+    res.statusCode = 401
+  }
   return res.json({ ok: false, error: err })
 }
 
