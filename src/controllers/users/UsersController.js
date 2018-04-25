@@ -1,7 +1,5 @@
-// import express from 'express'
-import bcrypt from 'bcrypt'
 import db from '../../models'
-import { formatGetUserResponse } from './UsersService'
+import { formatGetUserResponse, addUser } from './UsersService'
 import utils from '../../utils/utils'
 
 const UserController = {}
@@ -16,30 +14,20 @@ UserController.getUsers = async (req, res) => {
   }
 }
 
-UserController.addUser = async (req, res) => {
+UserController.addUser = (req, res) => {
   const user = req.body
 
-  const saltFactor = 13
-
-  try {
-    const salt = await bcrypt.genSalt(saltFactor)
-    const hash = await bcrypt.hash(user.Password, salt, null)
-    user.Password = hash
-    const _user = await db.User.create(user, { individualHooks: true })
-    utils.success(res, _user) // @todo format user response
-  } catch (err) {
-    utils.error(res, err)
-  }
+  addUser(req, res, user)
 }
 
 UserController.deleteUser = async (req, res) => {
   try {
     const deletedUser = await db.User.destroy({
       where: {
-        Username: req.body.Username,
+        email: req.body.email,
       },
     })
-    utils.success(res, deletedUser)
+    utils.success(res, deletedUser) // todo - still returns ok even if can't find the user
   } catch (err) {
     utils.error(res, err)
   }

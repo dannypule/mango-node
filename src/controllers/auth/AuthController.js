@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import db from '../../models'
 import utils from '../../utils/utils'
+import { addUser } from '../users/UsersService'
 
 const AuthController = {}
 
@@ -8,7 +9,7 @@ AuthController.login = async (req, res) => {
   try {
     const user = await db.User.findOne({
       where: {
-        username: req.body.username,
+        email: req.body.email,
       },
     })
 
@@ -28,6 +29,20 @@ AuthController.login = async (req, res) => {
   } catch (err) {
     utils.error(res, { err, status: `Couldn't log in.` })
   }
+}
+
+AuthController.register = (req, res) => {
+  const user = req.body
+
+  addUser(req, res, {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    phone: user.phone,
+    password: user.password,
+    companyId: 1, // todo - make dynamic
+    userRoleCode: 30, // basic user
+  })
 }
 
 export default AuthController

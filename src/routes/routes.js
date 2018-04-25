@@ -15,6 +15,7 @@ const authenticateViaToken = passport.authenticate('jwt', { session: false })
 // '/auth'
 // =========================
 router.post('/auth/login', AuthController.login)
+router.post('/auth/register', AuthController.register)
 
 // ===================================================
 // '/companies'
