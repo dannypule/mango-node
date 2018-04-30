@@ -38,7 +38,6 @@ AuthController.register = (req, res) => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    phone: user.phone,
     password: user.password,
     companyId: 1, // todo - make dynamic
     userRoleCode: 30, // basic user

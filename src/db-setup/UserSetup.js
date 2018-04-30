@@ -7,7 +7,6 @@ export default () => {
         first_name: 'Super',
         last_name: 'Admin',
         email: 'Super.Admin@fake-email.infoz',
-        phone: '333-222-1111',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 107, // super admin role
         company_id: 1,
@@ -17,7 +16,6 @@ export default () => {
         first_name: 'Regular',
         last_name: 'Admin',
         email: 'Admin.Admin@fake-email.infoz',
-        phone: '333-222-1111',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 100, // admin role
         company_id: 2,
@@ -27,7 +25,6 @@ export default () => {
         first_name: 'Normie',
         last_name: 'McNorm',
         email: 'normie@fake-email.infoz',
-        phone: '333-222-1111',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 30, // regular role
         company_id: 1,

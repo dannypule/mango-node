@@ -8,7 +8,6 @@ export const formatGetUserResponse = user => {
     firstName: user.first_name,
     lastName: user.last_name,
     email: user.email,
-    phone: user.phone,
     createdAt: user.created_at,
     updatedAt: user.updated_at,
     userRoleCode: user.user_role_code,
@@ -21,7 +20,6 @@ export const addUser = async (req, res, user) => {
     first_name: user.firstName,
     last_name: user.lastName,
     email: user.email,
-    phone: user.phone,
     password: user.password,
     company_id: user.companyId, // todo - remove hard coded
     user_role_code: user.userRoleCode, //

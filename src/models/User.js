@@ -20,14 +20,14 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
         type: DataTypes.STRING(50),
       },
-      phone: {
-        allowNull: true,
-        type: DataTypes.STRING(50),
-      },
       email: {
         allowNull: true,
         type: DataTypes.STRING(50),
-        unique: true,
+        unique: {
+          args: true,
+          msg: 'Email address already in use.',
+          // fields: [sequelize.fn('lower', sequelize.col('email'))],
+        },
       },
       password: {
         allowNull: false,
