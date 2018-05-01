@@ -10,8 +10,7 @@
     "build": "rm -rf dist && babel src -d dist",
     "postinstall": "npm run build",
     "setup:db": "npm run build && node dist/db-setup/db.setup.js",
-    "setup:dblocal":
-      "npm run build && NODE_ENV=local node dist/db-setup/db.setup.js",
+    "setup:dblocal": "npm run build && NODE_ENV=local node dist/db-setup/db.setup.js",
     "jest": "jest --forceExit --coverage --verbose",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
@@ -48,7 +47,8 @@
     "passport-jwt": "4.0.0",
     "pg": "7.3.0",
     "pg-hstore": "2.3.2",
-    "sequelize": "4.17.2"
+    "sequelize": "4.17.2",
+    "yup": "^0.24.1"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",

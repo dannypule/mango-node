@@ -4,7 +4,8 @@ import Sequelize from 'sequelize'
 import config from '../config'
 
 const sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, config.db.options)
-
+console.log('DATABASE: ', config.db.database)
+console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
 sequelize
   .authenticate()
   .then(() => {

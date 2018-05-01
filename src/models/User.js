@@ -26,7 +26,6 @@ export default (sequelize, DataTypes) => {
         unique: {
           args: true,
           msg: 'Email address already in use.',
-          // fields: [sequelize.fn('lower', sequelize.col('email'))],
         },
       },
       password: {
