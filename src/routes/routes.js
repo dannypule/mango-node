@@ -1,10 +1,10 @@
 import express from 'express'
 import passport from 'passport'
 
-import AuthController from '../features/auth/AuthController'
-import CompaniesController from '../features/companies/CompaniesController'
-import UsersController from '../features/users/UsersController'
-import SalesController from '../features/sales/SalesController'
+import AuthController from '../components/auth/AuthController'
+import CompaniesController from '../components/companies/CompaniesController'
+import UsersController from '../components/users/UsersController'
+import SalesController from '../components/sales/SalesController'
 
 require('./../middleware/passport')(passport)
 

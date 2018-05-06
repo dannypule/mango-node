@@ -11,7 +11,7 @@ SalesController.getSales = async (req, res) => {
     const formatted = sales.map(formatGetSalesItemResponse)
     utils.success(res, formatted)
   } catch (err) {
-    utils.error(res, err)
+    utils.fail(res, err)
   }
 }
 
@@ -25,7 +25,7 @@ SalesController.getSalesByCompanyName = async (req, res) => {
     const formatted = sales.map(formatGetSalesItemResponse)
     utils.success(res, formatted)
   } catch (err) {
-    utils.error(res, err)
+    utils.fail(res, err)
   }
 }
 

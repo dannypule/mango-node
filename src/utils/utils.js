@@ -28,12 +28,7 @@ const TE = (errMessage, log) => {
 // success web response
 // //////////////////////////////
 const success = (res, data, code) => {
-  let sendData = { ok: true }
-
-  if (typeof data === 'object') {
-    sendData = { ...data, ...sendData } // merge the objects
-  }
-
+  const sendData = { data, ok: true }
   res.statusCode = code || 200
 
   return res.json(sendData)
@@ -44,11 +39,9 @@ const success = (res, data, code) => {
 // //////////////////////////////
 const fail = (res, data, code) => {
   let sendData = { ok: false }
-
-  if (typeof data === 'object') {
-    sendData = { ...data, ...sendData } // merge the objects
+  if (typeof data === 'object' && typeof data.message !== 'undefined') {
+    sendData = { ...sendData, message: data.message }
   }
-
   res.statusCode = code || 200
 
   return res.json(sendData)
@@ -58,13 +51,15 @@ const fail = (res, data, code) => {
 // error web response
 // //////////////////////////////
 const error = (res, err, code) => {
+  let message
   if (typeof err === 'object' && typeof err.message !== 'undefined') {
-    err = err.message
+    // eslint-disable-next-line
+    message = err.message
   }
 
   res.statusCode = code || 400
 
-  return res.json({ ok: false, error: err })
+  return res.json({ ok: false, message })
 }
 
 // //////////////////////////////

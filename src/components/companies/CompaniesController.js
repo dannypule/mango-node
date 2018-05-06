@@ -22,7 +22,7 @@ CompaniesController.addCompany = async (req, res) => {
     const company = await db.Company.create(formatted)
     utils.success(res, company)
   } catch (err) {
-    utils.error(res, err)
+    utils.fail(res, err)
   }
 }
 
@@ -47,7 +47,7 @@ CompaniesController.updateCompany = async (req, res) => {
     })
     utils.success(res, formatCompanyResponse(_company)) // todo - format _car
   } catch (err) {
-    utils.error(res, err)
+    utils.fail(res, err)
   }
 }
 
@@ -62,7 +62,7 @@ CompaniesController.deleteCompany = async (req, res) => {
       message: 'Successfully deleted company.',
     })
   } catch (err) {
-    utils.error(res, err)
+    utils.fail(res, err)
   }
 }
 

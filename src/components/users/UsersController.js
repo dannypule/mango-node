@@ -10,7 +10,7 @@ UserController.getUsers = async (req, res) => {
     const formattedUsers = users.map(formatGetUserResponse)
     utils.success(res, formattedUsers)
   } catch (err) {
-    utils.error(res, err)
+    utils.fail(res, err)
   }
 }
 
@@ -29,7 +29,7 @@ UserController.deleteUser = async (req, res) => {
     })
     utils.success(res, deletedUser) // todo - still returns ok even if can't find the user
   } catch (err) {
-    utils.error(res, err)
+    utils.fail(res, err)
   }
 }
 
