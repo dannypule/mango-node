@@ -43,7 +43,7 @@ Login at `http://localhost:5566/api/users` using:
 You will receive a Bearer token. Use this token in Postman or a similar application to add the following header:
 `Authorization: Bearer token.goes.here`
 
-View users this test command `http://localhost:5566/api/users`
+View mock users using this test command `http://localhost:5566/api/users`
 
 ## Heroku support
 
