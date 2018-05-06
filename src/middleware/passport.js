@@ -1,5 +1,5 @@
 import passportJWT from 'passport-jwt'
-import db from '../models'
+import db from '../db-models'
 import config from '../config'
 
 const { ExtractJwt, Strategy } = passportJWT

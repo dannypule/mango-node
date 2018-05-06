@@ -1,5 +1,5 @@
 // import express from 'express'
-import db from '../../models'
+import db from '../../db-models'
 import { formatGetSalesItemResponse } from './SalesService'
 import utils from '../../utils/utils'
 

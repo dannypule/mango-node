@@ -1,4 +1,4 @@
-import db from '../models'
+import db from '../db-models'
 import UserSetup from './UserSetup'
 import UserRoleSetup from './UserRoleSetup'
 import ProjectSetup from './ProjectSetup'

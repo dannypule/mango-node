@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
-import db from '../../models'
+import db from '../../db-models'
 import utils from '../../utils/utils'
-import { validateUser } from '../../models-validation/User.validation'
+import { validateUser } from '../../validation-models/User.validation'
 
 export const formatGetUserResponse = user => {
   return {
@@ -20,7 +20,7 @@ export const addUser = async (req, res, user) => {
   try {
     await validateUser(req, res, user)
 
-    const formattedUser = {
+    const dbFormattedUser = {
       first_name: user.firstName,
       last_name: user.lastName,
       email: user.email,
@@ -32,9 +32,9 @@ export const addUser = async (req, res, user) => {
     const saltFactor = 13
 
     const salt = await bcrypt.genSalt(saltFactor)
-    const hash = await bcrypt.hash(formattedUser.password, salt, null)
-    formattedUser.password = hash
-    const _user = await db.User.create(formattedUser, { individualHooks: true })
+    const hash = await bcrypt.hash(dbFormattedUser.password, salt, null)
+    dbFormattedUser.password = hash
+    const _user = await db.User.create(dbFormattedUser, { individualHooks: true })
     utils.success(res, _user) // @todo format user response
   } catch (err) {
     debugger

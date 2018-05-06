@@ -1,4 +1,4 @@
-import db from '../../models'
+import db from '../../db-models'
 import { formatGetUserResponse, addUser } from './UsersService'
 import utils from '../../utils/utils'
 

@@ -9,8 +9,8 @@
     "dev:local": "NODE_ENV=local nodemon src/server.js --exec babel-node",
     "build": "rm -rf dist && babel src -d dist",
     "postinstall": "npm run build",
-    "setup:db": "npm run build && node dist/db-setup/db.setup.js",
-    "setup:dblocal": "npm run build && NODE_ENV=local node dist/db-setup/db.setup.js",
+    "setup:db": "npm run build && node dist/db-setup",
+    "setup:dblocal": "npm run build && NODE_ENV=local node dist/db-setup",
     "jest": "jest --forceExit --coverage --verbose",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"

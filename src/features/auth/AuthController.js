@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import db from '../../models'
+import db from '../../db-models'
 import utils from '../../utils/utils'
 import { addUser } from '../users/UsersService'
 
@@ -13,21 +13,21 @@ AuthController.login = async (req, res) => {
       },
     })
 
-    if (!user) utils.error(res, { status: `Couldn't log in.` })
+    if (!user) utils.fail(res, { message: `Couldn't log in.` })
 
     bcrypt.compare(req.body.password, user.password, (err, r) => {
       if (err) {
-        utils.error(res)
+        utils.fail(res, err)
         return
       }
       if (r) {
         utils.success(res, { token: user.getJWT(user) })
       } else {
-        utils.error(res, { status: `Couldn't log in.` })
+        utils.fail(res, { message: `Couldn't log in.` }, 403)
       }
     })
   } catch (err) {
-    utils.error(res, { err, status: `Couldn't log in.` })
+    utils.fail(res, err)
   }
 }
 

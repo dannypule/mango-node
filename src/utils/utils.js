@@ -1,5 +1,8 @@
 import parseError from 'parse-error'
 
+// //////////////////////////////
+// convert to promise
+// //////////////////////////////
 const toPromise = promise => {
   return promise
     .then(data => {
@@ -10,8 +13,10 @@ const toPromise = promise => {
     })
 }
 
+// //////////////////////////////
+// TE stands for Throw Error
+// //////////////////////////////
 const TE = (errMessage, log) => {
-  // TE stands for Throw Error
   if (log === true) {
     console.error(errMessage)
   }
@@ -19,34 +24,52 @@ const TE = (errMessage, log) => {
   throw new Error(errMessage)
 }
 
+// //////////////////////////////
+// success web response
+// //////////////////////////////
 const success = (res, data, code) => {
-  // Success Web Response
   let sendData = { ok: true }
 
   if (typeof data === 'object') {
-    sendData = Object.assign(data, sendData) // merge the objects
+    sendData = { ...data, ...sendData } // merge the objects
   }
 
-  if (typeof code !== 'undefined') res.statusCode = code
+  res.statusCode = code || 200
 
   return res.json(sendData)
 }
 
+// //////////////////////////////
+// fail web response
+// //////////////////////////////
+const fail = (res, data, code) => {
+  let sendData = { ok: false }
+
+  if (typeof data === 'object') {
+    sendData = { ...data, ...sendData } // merge the objects
+  }
+
+  res.statusCode = code || 200
+
+  return res.json(sendData)
+}
+
+// //////////////////////////////
+// error web response
+// //////////////////////////////
 const error = (res, err, code) => {
-  // Error Web Response
   if (typeof err === 'object' && typeof err.message !== 'undefined') {
     err = err.message
   }
 
-  if (typeof code !== 'undefined') {
-    res.statusCode = code
-  } else {
-    res.statusCode = 400
-  }
+  res.statusCode = code || 400
+
   return res.json({ ok: false, error: err })
 }
 
+// //////////////////////////////
 // This is here to handle all the uncaught promise rejections
+// //////////////////////////////
 process.on('unhandledRejection', error => {
   console.error('Uncaught Error', parseError(error))
 })
@@ -55,6 +78,7 @@ const utils = {
   toPromise,
   TE,
   success,
+  fail,
   error,
 }
 
