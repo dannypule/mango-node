@@ -22,12 +22,16 @@ UserController.addUser = (req, res) => {
 
 UserController.deleteUser = async (req, res) => {
   try {
-    const deletedUser = await db.User.destroy({
+    const userWasDeleted = await db.User.destroy({
       where: {
         email: req.body.email,
       },
     })
-    utils.success(res, deletedUser) // todo - still returns ok even if can't find the user
+    if (userWasDeleted === 1) {
+      utils.success(res)
+    } else {
+      utils.fail(res, { message: 'No user found.' })
+    }
   } catch (err) {
     utils.fail(res, err)
   }
