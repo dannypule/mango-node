@@ -1,6 +1,6 @@
 import db from '../../db-models'
 import { formatGetUserResponse, addUser } from './UsersService'
-import utils from '../../utils/utils'
+import utils from '../../utils'
 
 const UserController = {}
 

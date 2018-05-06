@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import db from '../../db-models'
-import utils from '../../utils/utils'
+import utils from '../../utils'
 import { validateUser } from '../../validation-models/User.validation'
 
 export const formatGetUserResponse = user => {

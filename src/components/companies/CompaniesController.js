@@ -1,6 +1,6 @@
 import db from '../../db-models'
 import { formatCompanyResponse, formatCompanyDbSave } from './CompaniesService'
-import utils from '../../utils/utils'
+import utils from '../../utils'
 
 const CompaniesController = {}
 

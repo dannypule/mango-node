@@ -1,7 +1,7 @@
 // import express from 'express'
 import db from '../../db-models'
 import { formatGetSalesItemResponse } from './SalesService'
-import utils from '../../utils/utils'
+import utils from '../../utils'
 
 const SalesController = {}
 
