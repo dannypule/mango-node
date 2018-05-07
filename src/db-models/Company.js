@@ -9,7 +9,6 @@ export default (sequelize, DataTypes) => {
     name: {
       allowNull: false,
       type: DataTypes.STRING(40),
-      primaryKey: true,
     },
   })
 

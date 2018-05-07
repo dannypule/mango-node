@@ -4,13 +4,19 @@ export default () => {
   return new Promise(async (resolve, reject) => {
     try {
       await db.Project.create({
-        title: 'New Mobile App Project',
+        title: 'May 2018 - Virtual Reality Project',
         project_owner: 1,
         company_id: 1,
       })
 
       await db.Project.create({
-        title: 'Marketing Project',
+        title: 'April 2019 - China Telecomms Installation Project',
+        project_owner: 2,
+        company_id: 2,
+      })
+
+      await db.Project.create({
+        title: 'September 2018 - New iPhone Launch Project',
         project_owner: 2,
         company_id: 2,
       })

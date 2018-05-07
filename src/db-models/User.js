@@ -23,10 +23,7 @@ export default (sequelize, DataTypes) => {
       email: {
         allowNull: true,
         type: DataTypes.STRING(50),
-        unique: {
-          args: true,
-          msg: 'Email address already in use.',
-        },
+        unique: true,
       },
       password: {
         allowNull: false,

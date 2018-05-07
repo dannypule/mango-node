@@ -8,7 +8,7 @@ export default () => {
         last_name: 'Admin',
         email: 'Super.Admin@fake-email.infoz',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
-        user_role_code: 107, // super admin role
+        user_role_code: 110, // super admin role
         company_id: 1,
       })
 

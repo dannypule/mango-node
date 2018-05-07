@@ -13,9 +13,9 @@ export default (sequelize, DataTypes) => {
   })
 
   Project.associate = models => {
-    Project.belongsToMany(models.User, {
-      through: 'EmployeeProject',
-    })
+    // Project.belongsToMany(models.User, {
+    //   through: 'user_project',
+    // })
     Project.belongsTo(models.User, {
       foreignKey: 'project_owner',
     })
