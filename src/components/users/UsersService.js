@@ -16,26 +16,30 @@ export const formatGetUserResponse = user => {
   }
 }
 
+export const formatUserForDb = user => {
+  return {
+    first_name: user.firstName,
+    last_name: user.lastName,
+    email: user.email,
+    password: user.password,
+    company_id: user.companyId,
+    user_role_code: user.userRoleCode,
+  }
+}
+
 export const addUser = async (req, res, user) => {
   try {
     await validateUser(req, res, user)
 
-    const dbFormattedUser = {
-      first_name: user.firstName,
-      last_name: user.lastName,
-      email: user.email,
-      password: user.password,
-      company_id: user.companyId, // todo - remove hard coded
-      user_role_code: user.userRoleCode, //
-    }
+    const formatted = formatUserForDb(user)
 
     const saltFactor = 13
 
     const salt = await bcrypt.genSalt(saltFactor)
-    const hash = await bcrypt.hash(dbFormattedUser.password, salt, null)
-    dbFormattedUser.password = hash
-    const _user = await db.User.create(dbFormattedUser, { individualHooks: true })
-    utils.success(res, formatGetUserResponse(_user)) // @todo format user response
+    const hash = await bcrypt.hash(formatted.password, salt, null)
+    formatted.password = hash
+    const _user = await db.User.create(formatted, { individualHooks: true })
+    utils.success(res, formatGetUserResponse(_user))
   } catch (err) {
     utils.fail(res, err)
   }

@@ -7,7 +7,7 @@ export const formatCompanyResponse = item => {
   }
 }
 
-export const formatCompanyDbSave = item => {
+export const formatCompanyForDb = item => {
   return {
     name: item.name,
   }

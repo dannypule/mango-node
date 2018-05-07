@@ -4,7 +4,7 @@ import passport from 'passport'
 import AuthController from '../components/auth/AuthController'
 import CompaniesController from '../components/companies/CompaniesController'
 import UsersController from '../components/users/UsersController'
-import SalesController from '../components/sales/SalesController'
+import ProjectsController from '../components/projects/ProjectsController'
 
 require('./../middleware/passport')(passport)
 
@@ -33,9 +33,9 @@ router.post('/users', authenticateViaToken, UsersController.addUser) // only sup
 router.delete('/users', authenticateViaToken, UsersController.deleteUser) // only super admins
 
 // ===================================================
-// '/api/sales'
+// '/api/projects'
 // =========================
-router.get('/sales', authenticateViaToken, SalesController.getSales) // only super admins
-router.post('/sales', authenticateViaToken, SalesController.getSalesByCompanyName) // @todo convert to get/:companyName // only super admins
+router.get('/projects', authenticateViaToken, ProjectsController.getProjects) // only super admins
+router.post('/projects', authenticateViaToken, ProjectsController.getProjectsByCompanyId) // @todo convert to get/:companyId // only super admins
 
 export default router

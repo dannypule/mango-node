@@ -1,14 +1,13 @@
 import db from '../../db-models'
-import { formatCompanyResponse, formatCompanyDbSave } from './CompaniesService'
+import { formatCompanyResponse, formatCompanyForDb } from './CompaniesService'
 import utils from '../../utils'
 
 const CompaniesController = {}
 
 CompaniesController.getCompanies = async (req, res) => {
   try {
-    console.log(null)
-    const Companies = await db.Company.findAll()
-    const formatted = Companies.map(formatCompanyResponse)
+    const companies = await db.Company.findAll()
+    const formatted = companies.map(formatCompanyResponse)
     utils.success(res, formatted)
   } catch (err) {
     utils.success(res, err)
@@ -16,7 +15,7 @@ CompaniesController.getCompanies = async (req, res) => {
 }
 
 CompaniesController.addCompany = async (req, res) => {
-  const formatted = formatCompanyDbSave(req.body)
+  const formatted = formatCompanyForDb(req.body)
 
   try {
     const company = await db.Company.create(formatted)
@@ -53,14 +52,18 @@ CompaniesController.updateCompany = async (req, res) => {
 
 CompaniesController.deleteCompany = async (req, res) => {
   try {
-    await db.Company.destroy({
+    const result = await db.Company.destroy({
       where: {
         id: req.body.id,
       },
     })
-    utils.success(res, {
-      message: 'Successfully deleted company.',
-    })
+    if (result === 1) {
+      utils.success(res, {
+        message: 'Successfully deleted company.',
+      })
+    } else {
+      utils.fail(res, { message: 'Unable to delete this company.' })
+    }
   } catch (err) {
     utils.fail(res, err)
   }
