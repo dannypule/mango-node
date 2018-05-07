@@ -1,5 +1,5 @@
 import db from '../../db-models'
-import { formatCompanyResponse, formatCompanyForDb } from './CompaniesService'
+import { formatDbResponse, formatForDb } from './CompaniesService'
 import utils from '../../utils'
 
 const CompaniesController = {}
@@ -7,7 +7,7 @@ const CompaniesController = {}
 CompaniesController.getCompanies = async (req, res) => {
   try {
     const companies = await db.Company.findAll()
-    const formatted = companies.map(formatCompanyResponse)
+    const formatted = companies.map(formatDbResponse)
     utils.success(res, formatted)
   } catch (err) {
     utils.success(res, err)
@@ -15,7 +15,7 @@ CompaniesController.getCompanies = async (req, res) => {
 }
 
 CompaniesController.addCompany = async (req, res) => {
-  const formatted = formatCompanyForDb(req.body)
+  const formatted = formatForDb(req.body)
 
   try {
     const company = await db.Company.create(formatted)
@@ -44,9 +44,9 @@ CompaniesController.updateCompany = async (req, res) => {
         id: req.body.id,
       },
     })
-    utils.success(res, formatCompanyResponse(_company)) // todo - format _car
+    utils.success(res, formatDbResponse(_company))
   } catch (err) {
-    utils.fail(res, err)
+    utils.fail(res, { message: 'Unable to update this company.' })
   }
 }
 

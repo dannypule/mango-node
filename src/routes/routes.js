@@ -36,6 +36,9 @@ router.delete('/users', authenticateViaToken, UsersController.deleteUser) // onl
 // '/api/projects'
 // =========================
 router.get('/projects', authenticateViaToken, ProjectsController.getProjects) // only super admins
-router.post('/projects', authenticateViaToken, ProjectsController.getProjectsByCompanyId) // @todo convert to get/:companyId // only super admins
+router.get('/projects/:companyId', authenticateViaToken, ProjectsController.getProjectsByCompanyId) // only super admins
+router.post('/projects', authenticateViaToken, ProjectsController.addProject) // only super admins
+router.put('/projects', authenticateViaToken, ProjectsController.updateProject) // only super admins
+router.delete('/projects', authenticateViaToken, ProjectsController.deleteProject) // only super admins
 
 export default router

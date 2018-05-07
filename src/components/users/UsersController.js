@@ -1,5 +1,5 @@
 import db from '../../db-models'
-import { formatGetUserResponse, addUser } from './UsersService'
+import { formatDbResponse, addUser } from './UsersService'
 import utils from '../../utils'
 
 const UserController = {}
@@ -7,7 +7,7 @@ const UserController = {}
 UserController.getUsers = async (req, res) => {
   try {
     const users = await db.User.findAll()
-    const formattedUsers = users.map(formatGetUserResponse)
+    const formattedUsers = users.map(formatDbResponse)
     utils.success(res, formattedUsers)
   } catch (err) {
     utils.fail(res, err)

@@ -1,4 +1,4 @@
-export const formatCompanyResponse = item => {
+export const formatDbResponse = item => {
   return {
     id: item.id,
     name: item.name,
@@ -7,7 +7,7 @@ export const formatCompanyResponse = item => {
   }
 }
 
-export const formatCompanyForDb = item => {
+export const formatForDb = item => {
   return {
     name: item.name,
   }
