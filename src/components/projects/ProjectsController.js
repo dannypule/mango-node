@@ -1,30 +1,49 @@
 import db from '../../db-models'
-import { formatDbResponse, formatForDb } from './ProjectsService'
+import { formatFromDb, formatForDb } from './ProjectsService'
 import utils from '../../utils'
 
 const ProjectsController = {}
 
 ProjectsController.getProjects = async (req, res) => {
   try {
-    const projects = await db.Project.findAll()
-    const formatted = projects.map(formatDbResponse)
-    utils.success(res, formatted)
+    const limit = 15 // number of records per page
+
+    const {
+      page = 1, // page 1 default
+      companyId = undefined, // undefined by default
+      projectOwner = undefined, // undefined by default
+    } = req.query
+
+    const offset = limit * (page - 1) // define offset
+
+    // default db query
+    const dbQuery = {
+      limit,
+      offset,
+      $sort: { id: 1 },
+    }
+
+    // ability to search by companyId
+    if (companyId) {
+      dbQuery.where = {
+        company_id: parseInt(companyId, 10),
+      }
+    }
+
+    // ability to search by projectOwner
+    if (projectOwner) {
+      dbQuery.where = {
+        project_owner: parseInt(projectOwner, 10),
+      }
+    }
+
+    const projects = await db.Project.findAndCountAll(dbQuery)
+
+    const pages = Math.ceil(projects.count / limit)
+    const formatted = projects.rows.map(formatFromDb)
+    utils.success(res, { projects: formatted, count: projects.count, pages, page })
   } catch (err) {
     utils.success(res, err)
-  }
-}
-
-ProjectsController.getProjectsByCompanyId = async (req, res) => {
-  try {
-    const Projects = await db.Project.findAll({
-      where: {
-        company_id: parseInt(req.params.companyId, 10),
-      },
-    })
-    const formatted = Projects.map(formatDbResponse)
-    utils.success(res, formatted)
-  } catch (err) {
-    utils.fail(res, err)
   }
 }
 
@@ -55,7 +74,7 @@ ProjectsController.updateProject = async (req, res) => {
         id: req.body.id,
       },
     })
-    utils.success(res, formatDbResponse(updated))
+    utils.success(res, formatFromDb(updated))
   } catch (err) {
     utils.fail(res, { message: 'Unable to update this project.' })
   }

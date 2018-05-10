@@ -1,4 +1,4 @@
-export const formatDbResponse = item => {
+export const formatFromDb = item => {
   return {
     id: item.id,
     name: item.name,

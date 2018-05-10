@@ -1,9 +1,11 @@
-export const formatDbResponse = item => {
+export const formatFromDb = item => {
   return {
     id: item.id,
     title: item.title,
     projectOwner: item.project_owner,
     companyId: item.company_id,
+    createdAt: item.created_at,
+    updatedAt: item.updated_at,
   }
 }
 

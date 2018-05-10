@@ -1,5 +1,13 @@
 import db from '../db-models'
 
+// eslint-disable-next-line
+// export const createUserProject = ({ user_id, project_id }) => {
+//   db.UserProject.create({
+//     user_id,
+//     project_id,
+//   })
+// }
+
 export default () => {
   return new Promise(async (resolve, reject) => {
     try {

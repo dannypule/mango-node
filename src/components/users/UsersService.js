@@ -3,7 +3,7 @@ import db from '../../db-models'
 import utils from '../../utils'
 import { validateUser } from '../../validation-models/User.validation'
 
-export const formatDbResponse = user => {
+export const formatFromDb = user => {
   return {
     id: user.id,
     firstName: user.first_name,
@@ -39,7 +39,7 @@ export const addUser = async (req, res, user) => {
     const hash = await bcrypt.hash(formatted.password, salt, null)
     formatted.password = hash
     const _user = await db.User.create(formatted, { individualHooks: true })
-    utils.success(res, formatDbResponse(_user))
+    utils.success(res, formatFromDb(_user))
   } catch (err) {
     utils.fail(res, err)
   }
