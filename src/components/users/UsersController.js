@@ -10,30 +10,32 @@ UserController.getUsers = async (req, res) => {
 
     const {
       page = 1, // page 1 default
-      userId = undefined, // undefined by default
+      id = undefined, // undefined by default
     } = req.query
 
     const offset = limit * (page - 1) // define offset
 
     // default db query
     const dbQuery = {
+      where: {},
       limit,
       offset,
       $sort: { id: 1 },
     }
 
-    // ability to search by userId
-    if (userId) {
+    // ability to search by id
+    if (id) {
       dbQuery.where = {
-        id: parseInt(userId, 10),
+        ...dbQuery.where,
+        id: parseInt(id, 10),
       }
     }
 
-    const users = await db.User.findAndCountAll(dbQuery)
+    const data = await db.User.findAndCountAll(dbQuery)
 
-    const pages = Math.ceil(users.count / limit)
-    const formatted = users.rows.map(formatFromDb)
-    utils.success(res, { users: formatted, count: users.count, pages, page })
+    const pages = Math.ceil(data.count / limit)
+    const formatted = data.rows.map(formatFromDb)
+    utils.success(res, { data: formatted, count: data.count, pages, page })
   } catch (err) {
     utils.success(res, err)
   }

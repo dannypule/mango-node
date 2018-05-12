@@ -6,9 +6,36 @@ const CompaniesController = {}
 
 CompaniesController.getCompanies = async (req, res) => {
   try {
-    const companies = await db.Company.findAll()
-    const formatted = companies.map(formatFromDb)
-    utils.success(res, formatted)
+    const limit = 15 // number of records per page
+
+    const {
+      page = 1, // page 1 default
+      id = undefined, // undefined by default
+    } = req.query
+
+    const offset = limit * (page - 1) // define offset
+
+    // default db query
+    const dbQuery = {
+      where: {},
+      limit,
+      offset,
+      $sort: { id: 1 },
+    }
+
+    // ability to search by id
+    if (id) {
+      dbQuery.where = {
+        ...dbQuery.where,
+        id: parseInt(id, 10),
+      }
+    }
+
+    const data = await db.Company.findAndCountAll(dbQuery)
+
+    const pages = Math.ceil(data.count / limit)
+    const formatted = data.rows.map(formatFromDb)
+    utils.success(res, { data: formatted, count: data.count, pages, page })
   } catch (err) {
     utils.success(res, err)
   }

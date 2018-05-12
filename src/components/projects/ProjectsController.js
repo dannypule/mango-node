@@ -18,6 +18,7 @@ ProjectsController.getProjects = async (req, res) => {
 
     // default db query
     const dbQuery = {
+      where: {},
       limit,
       offset,
       $sort: { id: 1 },
@@ -26,6 +27,7 @@ ProjectsController.getProjects = async (req, res) => {
     // ability to search by companyId
     if (companyId) {
       dbQuery.where = {
+        ...dbQuery.where,
         company_id: parseInt(companyId, 10),
       }
     }
@@ -33,6 +35,7 @@ ProjectsController.getProjects = async (req, res) => {
     // ability to search by projectOwner
     if (projectOwner) {
       dbQuery.where = {
+        ...dbQuery.where,
         project_owner: parseInt(projectOwner, 10),
       }
     }
