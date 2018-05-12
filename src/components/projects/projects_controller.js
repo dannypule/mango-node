@@ -1,18 +1,21 @@
 import db from '../../db_models'
-import { formatFromDb, formatForDb } from './ProjectsService'
+import { formatFromDb, formatForDb } from './projects_service'
 import utils from '../../utils'
 
 const ProjectsController = {}
+const model = db.Project
 
 ProjectsController.getProjects = async (req, res) => {
   try {
     const limit = 15 // number of records per page
 
     const {
-      page = 1, // page 1 default
+      id = undefined, // undefined by default
       companyId = undefined, // undefined by default
       projectOwner = undefined, // undefined by default
     } = req.query
+
+    const page = parseInt(req.query.page, 10) || 1 // page 1 default
 
     const offset = limit * (page - 1) // define offset
 
@@ -22,6 +25,14 @@ ProjectsController.getProjects = async (req, res) => {
       limit,
       offset,
       $sort: { id: 1 },
+    }
+
+    // ability to search by id
+    if (id) {
+      dbQuery.where = {
+        ...dbQuery.where,
+        id: parseInt(id, 10),
+      }
     }
 
     // ability to search by companyId
@@ -40,7 +51,7 @@ ProjectsController.getProjects = async (req, res) => {
       }
     }
 
-    const projects = await db.Project.findAndCountAll(dbQuery)
+    const projects = await model.findAndCountAll(dbQuery)
 
     const pages = Math.ceil(projects.count / limit)
     const formatted = projects.rows.map(formatFromDb)
@@ -54,7 +65,7 @@ ProjectsController.addProject = async (req, res) => {
   const formatted = formatForDb(req.body)
 
   try {
-    const project = await db.Project.create(formatted)
+    const project = await model.create(formatted)
     utils.success(res, project)
   } catch (err) {
     utils.fail(res, err)
@@ -67,12 +78,12 @@ ProjectsController.updateProject = async (req, res) => {
   const formattedForDb = formatForDb(project)
 
   try {
-    await db.Project.update(formattedForDb, {
+    await model.update(formattedForDb, {
       where: {
         id: project.id,
       },
     })
-    const updated = await db.Project.findOne({
+    const updated = await model.findOne({
       where: {
         id: req.body.id,
       },
@@ -85,7 +96,7 @@ ProjectsController.updateProject = async (req, res) => {
 
 ProjectsController.deleteProject = async (req, res) => {
   try {
-    const result = await db.Project.destroy({
+    const result = await model.destroy({
       where: {
         id: req.body.id,
       },

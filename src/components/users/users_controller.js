@@ -1,17 +1,19 @@
 import db from '../../db_models'
-import { formatFromDb, addUser } from './UsersService'
+import { formatFromDb, addUser } from './users_service'
 import utils from '../../utils'
 
 const UserController = {}
+const model = db.User
 
 UserController.getUsers = async (req, res) => {
   try {
     const limit = 15 // number of records per page
 
     const {
-      page = 1, // page 1 default
       id = undefined, // undefined by default
     } = req.query
+
+    const page = parseInt(req.query.page, 10) || 1 // page 1 default
 
     const offset = limit * (page - 1) // define offset
 
@@ -31,11 +33,11 @@ UserController.getUsers = async (req, res) => {
       }
     }
 
-    const data = await db.User.findAndCountAll(dbQuery)
+    const data = await model.findAndCountAll(dbQuery)
 
     const pages = Math.ceil(data.count / limit)
     const formatted = data.rows.map(formatFromDb)
-    utils.success(res, { data: formatted, count: data.count, pages, page })
+    utils.success(res, { users: formatted, count: data.count, pages, page })
   } catch (err) {
     utils.success(res, err)
   }
@@ -49,7 +51,7 @@ UserController.addUser = (req, res) => {
 
 UserController.deleteUser = async (req, res) => {
   try {
-    const result = await db.User.destroy({
+    const result = await model.destroy({
       where: {
         email: req.body.email,
       },

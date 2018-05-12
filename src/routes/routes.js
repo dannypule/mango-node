@@ -1,10 +1,11 @@
 import express from 'express'
 import passport from 'passport'
 
-import AuthController from '../components/auth/AuthController'
-import CompaniesController from '../components/companies/CompaniesController'
-import UsersController from '../components/users/UsersController'
-import ProjectsController from '../components/projects/ProjectsController'
+import AuthController from '../components/auth/auth_controller'
+import CompaniesController from '../components/companies/companies_controller'
+import UsersController from '../components/users/users_controller'
+import ProjectsController from '../components/projects/projects_controller'
+import UserProjectsController from '../components/user_projects/user_projects_controller'
 
 require('./../middleware/passport')(passport)
 
@@ -39,5 +40,13 @@ router.get('/projects', authenticateViaToken, ProjectsController.getProjects) //
 router.post('/projects', authenticateViaToken, ProjectsController.addProject) // only super admins
 router.put('/projects', authenticateViaToken, ProjectsController.updateProject) // only super admins
 router.delete('/projects', authenticateViaToken, ProjectsController.deleteProject) // only super admins
+
+// ===================================================
+// '/api/user_projects'
+// =========================
+router.get('/user_projects', authenticateViaToken, UserProjectsController.getUserProjects) // only super admins
+router.post('/user_projects', authenticateViaToken, UserProjectsController.addUserProject) // only super admins
+router.put('/user_projects', authenticateViaToken, UserProjectsController.updateUserProject) // only super admins
+router.delete('/user_projects', authenticateViaToken, UserProjectsController.deleteUserProject) // only super admins
 
 export default router

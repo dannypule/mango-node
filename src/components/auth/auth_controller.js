@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import db from '../../db_models'
 import utils from '../../utils'
-import { addUser } from '../users/UsersService'
+import { addUser } from '../users/users_service'
 
 const AuthController = {}
 
