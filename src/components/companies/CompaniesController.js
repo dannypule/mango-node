@@ -1,4 +1,4 @@
-import db from '../../db-models'
+import db from '../../db_models'
 import { formatFromDb, formatForDb } from './CompaniesService'
 import utils from '../../utils'
 

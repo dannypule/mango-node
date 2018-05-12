@@ -5,12 +5,12 @@
 * This script will also insert demo data when `freshMockData` is set to `true`
 *
 */
-import db from '../db-models'
-import UserSetup from './UserSetup'
-import UserRoleSetup from './UserRoleSetup'
-import ProjectSetup from './ProjectSetup'
-import CompanySetup from './CompanySetup'
-import UserProject from './UserProject'
+import db from '../db_models'
+import UserSetup from './User_setup'
+import UserRoleSetup from './UserRole_setup'
+import ProjectSetup from './Project_setup'
+import CompanySetup from './Company_setup'
+import UserProject from './UserProject_setup'
 
 const performSync = async () => {
   // ///////////////////////////////////////////////////////////////////////////////////////

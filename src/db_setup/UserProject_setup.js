@@ -1,4 +1,4 @@
-import db from '../db-models'
+import db from '../db_models'
 
 export default () => {
   return new Promise(async (resolve, reject) => {
