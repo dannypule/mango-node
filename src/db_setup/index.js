@@ -11,6 +11,10 @@ import UserRoleSetup from './UserRole_setup'
 import ProjectSetup from './Project_setup'
 import CompanySetup from './Company_setup'
 import UserProject from './UserProject_setup'
+import CompanyAddress from './CompanyAddress_setup'
+import CompanyPhoneNumber from './CompanyPhoneNumber_setup'
+import UserAddress from './UserAddress_setup'
+import UserPhoneNumber from './UserPhoneNumber_setup'
 
 const performSync = async () => {
   // ///////////////////////////////////////////////////////////////////////////////////////
@@ -34,6 +38,10 @@ const performSync = async () => {
   await UserSetup()
   await ProjectSetup()
   await UserProject()
+  await CompanyAddress()
+  await CompanyPhoneNumber()
+  await UserAddress()
+  await UserPhoneNumber()
 }
 
 performSync()

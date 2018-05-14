@@ -9,11 +9,7 @@ UserProjectsController.getUserProjects = async (req, res) => {
   try {
     const limit = 15 // number of records per page
 
-    const {
-      id = undefined, // undefined by default
-      projectId = undefined, // undefined by default
-      userId = undefined, // undefined by default
-    } = req.query
+    const { id, projectId, userId } = req.query
 
     const page = parseInt(req.query.page, 10) || 1 // page 1 default
 
@@ -24,11 +20,11 @@ UserProjectsController.getUserProjects = async (req, res) => {
       where: {},
       limit,
       offset,
-      // $sort: { id: 1 },
+      order: [['id', 'DESC']],
     }
 
     // ability to search by id
-    if (id) {
+    if (id !== undefined) {
       dbQuery.where = {
         ...dbQuery.where,
         id: parseInt(id, 10),
@@ -36,7 +32,7 @@ UserProjectsController.getUserProjects = async (req, res) => {
     }
 
     // ability to search by projectId
-    if (projectId) {
+    if (projectId !== undefined) {
       dbQuery.where = {
         ...dbQuery.where,
         project_id: parseInt(projectId, 10),
@@ -44,7 +40,7 @@ UserProjectsController.getUserProjects = async (req, res) => {
     }
 
     // ability to search by userId
-    if (userId) {
+    if (userId !== undefined) {
       dbQuery.where = {
         ...dbQuery.where,
         user_id: parseInt(userId, 10),

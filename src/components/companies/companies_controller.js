@@ -9,9 +9,7 @@ CompaniesController.getCompanies = async (req, res) => {
   try {
     const limit = 15 // number of records per page
 
-    const {
-      id = undefined, // undefined by default
-    } = req.query
+    const { id } = req.query
 
     const page = parseInt(req.query.page, 10) || 1 // page 1 default
 
@@ -22,11 +20,11 @@ CompaniesController.getCompanies = async (req, res) => {
       where: {},
       limit,
       offset,
-      $sort: { id: 1 },
+      order: [['id', 'DESC']],
     }
 
     // ability to search by id
-    if (id) {
+    if (id !== undefined) {
       dbQuery.where = {
         ...dbQuery.where,
         id: parseInt(id, 10),
