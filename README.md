@@ -8,9 +8,8 @@ Node 8.9.4 or a higher LTS release
 
 NPM 5.6.0 or higher
 
-An `.env` file - speak to your project's maintainter or setup your
-configuration. An example `.env-example` file is included with this project for
-your reference.
+Setup your `.env` file. An example `.env-example` file is included with this project for
+your reference. Assign values to the properties prefixed with `DEV_DB_`.
 
 ## Getting started
 
@@ -20,7 +19,7 @@ your reference.
 
 `npm run debug` (run in debug mode)
 
-## Setting up the database
+## Setting up the database with mock data
 
 This project is configured to run with an external Postgres database. Heroku
 have a free add-on which you can use with an existing application.
@@ -30,8 +29,21 @@ file.
 
 To seed the db with demo data, run this command `npm run setup:db`
 
-View your database data using this test command
-`http://localhost:5566/api/users`
+## Using the mock data
+
+Login at `http://localhost:5566/api/users` using:
+
+```
+{
+  "email": "Super.Admin@fake-email.infoz",
+  "password": "supersecure"
+}
+```
+
+You will receive a Bearer token. Use this token in Postman or a similar application to add the following header:
+`Authorization: Bearer token.goes.here`
+
+View mock users using this test command `http://localhost:5566/api/users`
 
 ## Heroku support
 
@@ -53,6 +65,9 @@ PROD_DB_USERNAME=yourdbusername
 PROD_DB_PASSWORD=yourdbpassword
 PROD_DB_DATABASE=yourdb
 PROD_DB_HOST=yourdbhost
+PROD_DB_SECRET=supersecret
+PROD_JWT_ENCRYPTION=jwt_please_change
+PROD_JWT_EXPIRATION=2592000000
 ```
 
 If you have heroku installed you can view the logs of your app by typing
