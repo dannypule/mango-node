@@ -1,10 +1,11 @@
 import express from 'express'
 import passport from 'passport'
 
-import AuthController from '../controllers/auth/AuthController'
-import CarsController from '../controllers/cars/CarsController'
-import UsersController from '../controllers/users/UsersController'
-import SalesController from '../controllers/sales/SalesController'
+import AuthController from '../components/auth/auth_controller'
+import CompaniesController from '../components/companies/companies_controller'
+import UsersController from '../components/users/users_controller'
+import ProjectsController from '../components/projects/projects_controller'
+import UserProjectsController from '../components/user_projects/user_projects_controller'
 
 require('./../middleware/passport')(passport)
 
@@ -12,29 +13,40 @@ const router = express.Router()
 const authenticateViaToken = passport.authenticate('jwt', { session: false })
 
 // ===================================================
-// '/auth'
+// '/api/auth'
 // =========================
 router.post('/auth/login', AuthController.login)
+router.post('/auth/register', AuthController.register)
 
 // ===================================================
-// '/cars'
+// '/api/companies'
 // =========================
-router.get('/cars', CarsController.getCars) // only supser admins
-router.post('/cars', authenticateViaToken, CarsController.addCar) // only super admins
-router.put('/cars', authenticateViaToken, CarsController.updateCar) // only super admins
-router.delete('/cars', authenticateViaToken, CarsController.deleteCar) // only super admins
+router.get('/companies', authenticateViaToken, CompaniesController.getCompanies) // only super admins
+router.post('/companies', authenticateViaToken, CompaniesController.addCompany) // only super admins
+router.put('/companies', authenticateViaToken, CompaniesController.updateCompany) // only super admins
+router.delete('/companies', authenticateViaToken, CompaniesController.deleteCompany) // only super admins
 
 // ===================================================
-// '/users'
+// '/api/users'
 // =========================
 router.get('/users', authenticateViaToken, UsersController.getUsers) // only super admins
 router.post('/users', authenticateViaToken, UsersController.addUser) // only super admins
 router.delete('/users', authenticateViaToken, UsersController.deleteUser) // only super admins
 
 // ===================================================
-// '/sales'
+// '/api/projects'
 // =========================
-router.get('/sales', authenticateViaToken, SalesController.getSales) // only super admins
-router.post('/sales', authenticateViaToken, SalesController.getSalesByCompanyName) // @todo convert to get/:companyName // only super admins
+router.get('/projects', authenticateViaToken, ProjectsController.getProjects) // only super admins
+router.post('/projects', authenticateViaToken, ProjectsController.addProject) // only super admins
+router.put('/projects', authenticateViaToken, ProjectsController.updateProject) // only super admins
+router.delete('/projects', authenticateViaToken, ProjectsController.deleteProject) // only super admins
+
+// ===================================================
+// '/api/user_projects'
+// =========================
+router.get('/user_projects', authenticateViaToken, UserProjectsController.getUserProjects) // only super admins
+router.post('/user_projects', authenticateViaToken, UserProjectsController.addUserProject) // only super admins
+router.put('/user_projects', authenticateViaToken, UserProjectsController.updateUserProject) // only super admins
+router.delete('/user_projects', authenticateViaToken, UserProjectsController.deleteUserProject) // only super admins
 
 export default router

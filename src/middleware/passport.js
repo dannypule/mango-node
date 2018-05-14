@@ -1,5 +1,5 @@
 import passportJWT from 'passport-jwt'
-import db from '../models'
+import db from '../db_models'
 import config from '../config'
 
 const { ExtractJwt, Strategy } = passportJWT
@@ -12,9 +12,9 @@ module.exports = passport => {
   passport.use(
     new Strategy(opts, async (jwtPayload, done) => {
       try {
-        const user = await db.Users.findOne({
+        const user = await db.User.findOne({
           where: {
-            UserID: jwtPayload.userID,
+            id: jwtPayload.userID,
           },
         })
         if (!user) {

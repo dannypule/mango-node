@@ -19,6 +19,7 @@ const configuration = {
         dialectOptions: {
           ssl: false,
         },
+        define: { underscored: true },
       },
     },
     jwt_encryption: process.env.LOCAL_JWT_ENCRYPTION,
@@ -36,6 +37,7 @@ const configuration = {
         dialectOptions: {
           ssl: true,
         },
+        define: { underscored: true },
       },
     },
     jwt_encryption: process.env.DEV_JWT_ENCRYPTION,
@@ -53,6 +55,7 @@ const configuration = {
         dialectOptions: {
           ssl: true,
         },
+        define: { underscored: true },
       },
     },
     jwt_encryption: process.env.PROD_JWT_ENCRYPTION,
