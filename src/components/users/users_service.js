@@ -39,7 +39,7 @@ export const addUser = async (req, res, user) => {
     const hash = await bcrypt.hash(formatted.password, salt, null)
     formatted.password = hash
     const _user = await db.User.create(formatted, { individualHooks: true })
-    utils.success(res, formatFromDb(_user))
+    utils.success(res, { user: formatFromDb(_user) })
   } catch (err) {
     utils.fail(res, err)
   }

@@ -46,7 +46,7 @@ CompaniesController.addCompany = async (req, res) => {
 
   try {
     const company = await model.create(formatted)
-    utils.success(res, company)
+    utils.success(res, { company: formatFromDb(company) })
   } catch (err) {
     utils.fail(res, err)
   }
@@ -56,22 +56,17 @@ CompaniesController.updateCompany = async (req, res) => {
   const company = req.body
 
   try {
-    await model.update(
-      {
-        name: company.name,
+    await model.update(formatForDb(company), {
+      where: {
+        id: company.id,
       },
-      {
-        where: {
-          id: company.id,
-        },
-      },
-    )
+    })
     const _company = await model.findOne({
       where: {
         id: req.body.id,
       },
     })
-    utils.success(res, formatFromDb(_company))
+    utils.success(res, { company: formatFromDb(_company) })
   } catch (err) {
     utils.fail(res, { message: 'Unable to update this company.' })
   }
