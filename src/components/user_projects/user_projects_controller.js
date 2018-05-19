@@ -61,7 +61,7 @@ UserProjectsController.addUserProject = async (req, res) => {
 
   try {
     const userProject = await model.create(formatted)
-    utils.success(res, userProject)
+    utils.success(res, { userProject: formatFromDb(userProject) })
   } catch (err) {
     utils.fail(res, err)
   }
@@ -70,10 +70,8 @@ UserProjectsController.addUserProject = async (req, res) => {
 UserProjectsController.updateUserProject = async (req, res) => {
   const userProject = req.body
 
-  const formattedForDb = formatForDb(userProject)
-
   try {
-    await model.update(formattedForDb, {
+    await model.update(formatForDb(userProject), {
       where: {
         id: userProject.id,
       },
@@ -83,7 +81,7 @@ UserProjectsController.updateUserProject = async (req, res) => {
         id: req.body.id,
       },
     })
-    utils.success(res, formatFromDb(updated))
+    utils.success(res, { userProject: formatFromDb(updated) })
   } catch (err) {
     utils.fail(res, { message: 'Unable to update this project.' })
   }
