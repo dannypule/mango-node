@@ -7,7 +7,7 @@ const model = db.User
 
 UserController.getUsers = async (req, res) => {
   try {
-    const limit = 1500 // number of records per page
+    const limit = 15 // number of records per page
 
     const { id } = req.query
 
