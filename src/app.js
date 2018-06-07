@@ -1,17 +1,17 @@
-import 'babel-polyfill'
-import express from 'express'
-import bodyParser from 'body-parser'
-import logger from 'morgan'
-import passport from 'passport'
+import 'babel-polyfill';
+import express from 'express';
+import bodyParser from 'body-parser';
+import logger from 'morgan';
+import passport from 'passport';
 // import cors from 'cors'
-import utils from './utils'
+import utils from './utils';
 
-import apiRoutes from './routes/routes'
+import apiRoutes from './routes/routes';
 
 // ////////////////////////////////////////
 // create app
 // ////////////////////////////////////////
-const app = express()
+const app = express();
 
 // setup cors in prod
 // if (node_env === 'production') {
@@ -34,49 +34,49 @@ const app = express()
 // ////////////////////////////////////////
 app.use((req, res, next) => {
   // allowed sites
-  res.header('Access-Control-Allow-Origin', '*') // todo - set specific domains
+  res.header('Access-Control-Allow-Origin', '*'); // todo - set specific domains
 
   // Set to true if you need the website to include cookies in the requests sent
   // to the API (e.g. in case you use sessions)
-  res.header('Access-Control-Allow-Credentials', 'true')
+  res.header('Access-Control-Allow-Credentials', 'true');
 
   // allowed request methods
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 
   // allowed headers
   res.header(
     'Access-Control-Allow-Headers',
     'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization',
-  )
-  next()
-})
+  );
+  next();
+});
 
 // ////////////////////////////////////////
 // logger
 // ////////////////////////////////////////
-app.use(logger('dev'))
+app.use(logger('dev'));
 
 // ////////////////////////////////////////
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 // ////////////////////////////////////////
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // ////////////////////////////////////////
 // Passport
 // ////////////////////////////////////////
-app.use(passport.initialize())
+app.use(passport.initialize());
 
 // ////////////////////////////////////////
 // setup routes
 // ////////////////////////////////////////
-app.use('/api', apiRoutes)
+app.use('/api', apiRoutes);
 
 // ////////////////////////////////////////
 // ping endpoint
 // ////////////////////////////////////////
 app.use('/', (req, res) => {
-  utils.success(res, 'PONG')
-})
+  utils.success(res, 'PONG');
+});
 
-export default app
+export default app;
