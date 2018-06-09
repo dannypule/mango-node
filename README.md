@@ -11,7 +11,7 @@ NPM 5.6.0 or higher
 Setup your `.env` file. An example `.env-example` file is included with this project for
 your reference. Assign values to the properties prefixed with `DEV_DB_`.
 
-## Getting started
+## Getting started 
 
 `npm install`
 
