@@ -15,11 +15,11 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
-  })
+  });
 
   UserPhoneNumber.associate = models => {
-    UserPhoneNumber.belongsTo(models.User)
-  }
+    UserPhoneNumber.belongsTo(models.User);
+  };
 
-  return UserPhoneNumber
-}
+  return UserPhoneNumber;
+};

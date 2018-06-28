@@ -43,11 +43,11 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
-  })
+  });
 
   UserAddress.associate = models => {
-    UserAddress.belongsTo(models.User)
-  }
+    UserAddress.belongsTo(models.User);
+  };
 
-  return UserAddress
-}
+  return UserAddress;
+};

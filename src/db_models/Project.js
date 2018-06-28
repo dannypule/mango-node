@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(100),
     },
-  })
+  });
 
   Project.associate = models => {
     // Project.belongsToMany(models.User, {
@@ -18,11 +18,11 @@ export default (sequelize, DataTypes) => {
     // })
     Project.belongsTo(models.User, {
       foreignKey: 'project_owner',
-    })
+    });
     Project.belongsTo(models.Company, {
       foreignKey: 'company_id',
-    })
-  }
+    });
+  };
 
-  return Project
-}
+  return Project;
+};

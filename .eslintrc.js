@@ -18,6 +18,7 @@ module.exports = {
     jest: true
   },
   rules: {
+    semi: 2,
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
     "object-curly-newline": 0,

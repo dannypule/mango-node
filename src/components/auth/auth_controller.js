@@ -1,9 +1,9 @@
-import bcrypt from 'bcrypt'
-import db from '../../db_models'
-import utils from '../../utils'
-import { addUser } from '../users/users_service'
+import bcrypt from 'bcrypt';
+import db from '../../db_models';
+import utils from '../../utils';
+import { addUser } from '../users/users_service';
 
-const AuthController = {}
+const AuthController = {};
 
 AuthController.login = async (req, res) => {
   try {
@@ -11,28 +11,28 @@ AuthController.login = async (req, res) => {
       where: {
         email: req.body.email,
       },
-    })
+    });
 
-    if (!user) utils.fail(res, { message: `Couldn't log in.` })
+    if (!user) utils.fail(res, { message: `Couldn't log in.` });
 
     bcrypt.compare(req.body.password, user.password, (err, r) => {
       if (err) {
-        utils.fail(res, err)
-        return
+        utils.fail(res, err);
+        return;
       }
       if (r) {
-        utils.success(res, { token: user.getJWT(user) })
+        utils.success(res, { token: user.getJWT(user) });
       } else {
-        utils.fail(res, { message: `Couldn't log in.` }, 403)
+        utils.fail(res, { message: `Couldn't log in.` }, 403);
       }
-    })
+    });
   } catch (err) {
-    utils.fail(res, err)
+    utils.fail(res, err);
   }
-}
+};
 
 AuthController.register = (req, res) => {
-  const user = req.body
+  const user = req.body;
 
   addUser(req, res, {
     firstName: user.firstName,
@@ -41,7 +41,7 @@ AuthController.register = (req, res) => {
     password: user.password,
     companyId: 1, // todo - make dynamic
     userRoleCode: 30, // basic user
-  })
-}
+  });
+};
 
-export default AuthController
+export default AuthController;

@@ -15,11 +15,11 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
-  })
+  });
 
   CompanyPhoneNumber.associate = models => {
-    CompanyPhoneNumber.belongsTo(models.Company)
-  }
+    CompanyPhoneNumber.belongsTo(models.Company);
+  };
 
-  return CompanyPhoneNumber
-}
+  return CompanyPhoneNumber;
+};

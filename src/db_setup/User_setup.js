@@ -1,5 +1,5 @@
-import db from '../db_models'
-import faker from 'faker'
+import db from '../db_models';
+import faker from 'faker';
 
 export default () => {
   return new Promise(async (resolve, reject) => {
@@ -11,7 +11,7 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 110, // super admin role
         company_id: 1,
-      })
+      });
 
       await db.User.create({
         first_name: 'Regular',
@@ -20,7 +20,7 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 100, // admin role
         company_id: 2,
-      })
+      });
 
       for (let i = 0; i < 400; i++) {
         db.User.create({
@@ -30,14 +30,14 @@ export default () => {
           password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
           user_role_code: 30, // regular role
           company_id: 2,
-        })
+        });
       }
 
-      console.log('Demo users inserted into User table.')
-      resolve()
+      console.log('Demo users inserted into User table.');
+      resolve();
     } catch (err) {
-      console.log('Unable to perform action ', err)
-      reject(err)
+      console.log('Unable to perform action ', err);
+      reject(err);
     }
-  })
-}
+  });
+};

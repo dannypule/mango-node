@@ -43,11 +43,11 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
-  })
+  });
 
   CompanyAddress.associate = models => {
-    CompanyAddress.belongsTo(models.Company)
-  }
+    CompanyAddress.belongsTo(models.Company);
+  };
 
-  return CompanyAddress
-}
+  return CompanyAddress;
+};

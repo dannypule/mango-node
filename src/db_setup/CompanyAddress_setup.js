@@ -1,5 +1,5 @@
-import db from '../db_models'
-import faker from 'faker'
+import db from '../db_models';
+import faker from 'faker';
 
 export default () => {
   return new Promise(async (resolve, reject) => {
@@ -16,14 +16,14 @@ export default () => {
           post_code: faker.address.zipCode(),
           type_code: Math.floor(Math.random() * 3) + 1,
           company_id: Math.floor(Math.random() * 50) + 1,
-        })
+        });
       }
 
-      console.log('Demo items inserted into CompanyAddress table.')
-      resolve()
+      console.log('Demo items inserted into CompanyAddress table.');
+      resolve();
     } catch (err) {
-      console.log('Unable to perform action ', err)
-      reject(err)
+      console.log('Unable to perform action ', err);
+      reject(err);
     }
-  })
-}
+  });
+};
