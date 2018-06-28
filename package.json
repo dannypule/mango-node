@@ -12,7 +12,6 @@
     "db:setup": "npm run build && node dist/db_setup",
     "db:setup:local": "npm run build && NODE_ENV=local node dist/db_setup",
     "db:docker": "docker-compose -f docker-compose.yml up && npm run db:setup:local",
-    "db": "npm run db:docker && npm run db:setup:local",
     "test": "jest --forceExit --coverage --verbose",
     "test:watch": "jest --watch",
     "lint": "eslint src",
@@ -38,6 +37,7 @@
   "homepage": "https://github.com/dannypule/mango-node#readme",
   "dependencies": {
     "bcrypt": "1.0.3",
+    "colors": "^1.3.0",
     "cors": "2.8.4",
     "dotenv": "4.0.0",
     "express": "4.16.2",

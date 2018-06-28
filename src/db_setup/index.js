@@ -5,6 +5,7 @@
 * This script will also insert demo data when `freshMockData` is set to `true`
 *
 */
+import colors from 'colors/safe';
 import db from '../db_models';
 import UserSetup from './User_setup';
 import UserRoleSetup from './UserRole_setup';
@@ -19,8 +20,6 @@ import UserPhoneNumber from './UserPhoneNumber_setup';
 const performSync = async () => {
   // ///////////////////////////////////////////////////////////////////////////////////////
   // WARNING: When `freshMockData` is `true` it will nuke any existing tables and all their data
-  //
-  // `freshMockData` should usually be `false`
   // ///////////////////////////////////////////////////////////////////////////////////////
   const freshMockData = true;
 
@@ -42,6 +41,8 @@ const performSync = async () => {
   await CompanyPhoneNumber();
   await UserAddress();
   await UserPhoneNumber();
+
+  console.log(colors.green('DB setup complete. Bye!'));
   process.exit();
 };
 

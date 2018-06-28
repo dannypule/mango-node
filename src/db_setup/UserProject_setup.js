@@ -1,3 +1,4 @@
+import colors from 'colors/safe';
 import db from '../db_models';
 
 export default () => {
@@ -18,10 +19,10 @@ export default () => {
         project_id: 3,
       });
 
-      console.log('Demo items inserted into UserProject table.');
+      console.log(colors.green('Demo items inserted into UserProject table.'));
       resolve();
     } catch (err) {
-      console.log('Unable to perform action ', err);
+      console.log(colors.red('Unable to perform action', err));
       reject(err);
     }
   });

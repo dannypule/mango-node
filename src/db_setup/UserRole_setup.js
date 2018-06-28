@@ -1,3 +1,4 @@
+import colors from 'colors/safe';
 import db from '../db_models';
 
 export default () => {
@@ -20,9 +21,10 @@ export default () => {
         description: 'Super Admin Role',
       });
 
+      console.log(colors.green('Demo items inserted into UserRole table.'));
       resolve();
     } catch (err) {
-      console.log('Unable to perform action ', err);
+      console.log(colors.red('Unable to perform action', err));
       reject(err);
     }
   });

@@ -1,3 +1,4 @@
+import colors from 'colors/safe';
 import db from '../db_models';
 import faker from 'faker';
 
@@ -30,13 +31,15 @@ export default () => {
           password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
           user_role_code: 30, // regular role
           company_id: 2,
+        }).then(() => {
+          if (i === 199) {
+            console.log(colors.green('Demo items inserted into User table.'));
+            resolve();
+          }
         });
       }
-
-      console.log('Demo users inserted into User table.');
-      resolve();
     } catch (err) {
-      console.log('Unable to perform action ', err);
+      console.log(colors.red('Unable to perform action', err));
       reject(err);
     }
   });

@@ -14,15 +14,15 @@ export default (sequelize, DataTypes) => {
       },
       first_name: {
         allowNull: true,
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(100),
       },
       last_name: {
         allowNull: true,
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(100),
       },
       email: {
         allowNull: true,
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(100),
         unique: true,
       },
       password: {

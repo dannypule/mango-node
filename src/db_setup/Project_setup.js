@@ -1,3 +1,4 @@
+import colors from 'colors/safe';
 import db from '../db_models';
 import faker from 'faker';
 
@@ -37,14 +38,16 @@ export default () => {
           db.UserProject.create({
             user_id: Math.floor(Math.random() * 200) + 1,
             project_id: Math.floor(Math.random() * 200) + 1,
+          }).then(() => {
+            if (i === 399) {
+              console.log(colors.green('Demo items inserted into Project table.'));
+              resolve();
+            }
           });
         });
       }
-
-      console.log('Demo items inserted into Project table.');
-      resolve();
     } catch (err) {
-      console.log('Unable to perform action ', err);
+      console.log(colors.red('Unable to perform action', err));
       reject(err);
     }
   });

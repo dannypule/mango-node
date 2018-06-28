@@ -1,3 +1,4 @@
+import colors from 'colors/safe';
 import db from '../db_models';
 import faker from 'faker';
 
@@ -16,13 +17,15 @@ export default () => {
           post_code: faker.address.zipCode(),
           type_code: Math.floor(Math.random() * 3) + 1,
           company_id: Math.floor(Math.random() * 50) + 1,
+        }).then(() => {
+          if (i === 199) {
+            console.log(colors.green('Demo items inserted into CompanyAddress table.'));
+            resolve();
+          }
         });
       }
-
-      console.log('Demo items inserted into CompanyAddress table.');
-      resolve();
     } catch (err) {
-      console.log('Unable to perform action ', err);
+      console.log(colors.red('Unable to perform action', err));
       reject(err);
     }
   });
