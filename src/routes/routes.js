@@ -1,21 +1,22 @@
 import express from 'express';
 import passport from 'passport';
 
-import AuthController from '../components/auth/auth_controller';
-import CompaniesController from '../components/companies/companies_controller';
-import UsersController from '../components/users/users_controller';
-import ProjectsController from '../components/projects/projects_controller';
-import UserProjectsController from '../components/user_projects/user_projects_controller';
-import CompanyAddressesController from '../components/company_addresses/company_addresses_controller';
-import CompanyPhoneNumbersController from '../components/company_phone_numbers/company_phone_numbers_controller';
-import UserAddressesController from '../components/user_addresses/user_addresses_controller';
-import UserPhoneNumbersController from '../components/user_phone_numbers/user_phone_numbers_controller';
+import AuthController from '../components/auth';
+import CompaniesController from '../components/companies';
+import UsersController from '../components/users';
+import ProjectsController from '../components/projects';
+import UserProjectsController from '../components/user_projects';
+import CompanyAddressesController from '../components/company_addresses';
+import CompanyPhoneNumbersController from '../components/company_phone_numbers';
+import UserAddressesController from '../components/user_addresses';
+import UserPhoneNumbersController from '../components/user_phone_numbers';
 
 require('./../middleware/passport')(passport);
 
 const router = express.Router();
 const authenticateViaToken = passport.authenticate('jwt', { session: false });
-
+// const foo = CompaniesController;
+// debugger;
 // ===================================================
 // '/api/auth'
 // =========================

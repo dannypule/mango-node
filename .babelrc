@@ -3,7 +3,8 @@
   "plugins": [
     "transform-object-rest-spread",
     "transform-runtime",
-    "transform-async-to-generator"
+    "transform-async-to-generator",
+    "transform-class-properties"
   ]
 
   // "transform-object-rest-spread" for object spread
