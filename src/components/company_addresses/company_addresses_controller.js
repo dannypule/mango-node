@@ -1,9 +1,9 @@
 import { formatFromDb, formatForDb } from './company_addresses_service';
-import utils from '../../utils';
 
 export default class CompanyAddressesController {
-  constructor(model) {
+  constructor(model, utils) {
     this.model = model;
+    this.utils = utils;
   }
 
   getCompanyAddresses = async (req, res) => {
@@ -44,9 +44,9 @@ export default class CompanyAddressesController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      utils.success(res, { companyAddresses: formatted, count: data.count, pages, page });
+      this.utils.success(res, { companyAddresses: formatted, count: data.count, pages, page });
     } catch (err) {
-      utils.success(res, err);
+      this.utils.success(res, err);
     }
   };
 
@@ -55,9 +55,9 @@ export default class CompanyAddressesController {
 
     try {
       const companyAddress = await this.model.create(formatted);
-      utils.success(res, { companyAddress: formatFromDb(companyAddress) });
+      this.utils.success(res, { companyAddress: formatFromDb(companyAddress) });
     } catch (err) {
-      utils.fail(res, err);
+      this.utils.fail(res, err);
     }
   };
 
@@ -75,9 +75,9 @@ export default class CompanyAddressesController {
           id: req.body.id,
         },
       });
-      utils.success(res, { companyAddress: formatFromDb(_companyAddress) });
+      this.utils.success(res, { companyAddress: formatFromDb(_companyAddress) });
     } catch (err) {
-      utils.fail(res, { message: 'Unable to update address.' });
+      this.utils.fail(res, { message: 'Unable to update address.' });
     }
   };
 
@@ -89,14 +89,14 @@ export default class CompanyAddressesController {
         },
       });
       if (result === 1) {
-        utils.success(res, {
+        this.utils.success(res, {
           message: 'Successfully delete address.',
         });
       } else {
-        utils.fail(res, { message: 'Unable to delete address.' });
+        this.utils.fail(res, { message: 'Unable to delete address.' });
       }
     } catch (err) {
-      utils.fail(res, err);
+      this.utils.fail(res, err);
     }
   };
 }
