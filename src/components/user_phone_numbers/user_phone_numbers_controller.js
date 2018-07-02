@@ -44,7 +44,7 @@ export default class UserPhoneNumbersController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      utils.success(res, { userPhoneNumbers: formatted, count: data.count, pages, page });
+      utils.success(res, { content: formatted, count: data.count, pages, page });
     } catch (err) {
       utils.success(res, err);
     }
@@ -55,7 +55,7 @@ export default class UserPhoneNumbersController {
 
     try {
       const userPhoneNumber = await this.model.create(formatted);
-      utils.success(res, { userPhoneNumber: formatFromDb(userPhoneNumber) });
+      utils.success(res, { content: formatFromDb(userPhoneNumber) });
     } catch (err) {
       utils.fail(res, err);
     }
@@ -75,7 +75,7 @@ export default class UserPhoneNumbersController {
           id: req.body.id,
         },
       });
-      utils.success(res, { userPhoneNumber: formatFromDb(_userPhoneNumber) });
+      utils.success(res, { content: formatFromDb(_userPhoneNumber) });
     } catch (err) {
       utils.fail(res, { message: 'Unable to update phone number.' });
     }

@@ -44,7 +44,7 @@ export default class UserAddressesController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      utils.success(res, { userAddresses: formatted, count: data.count, pages, page });
+      utils.success(res, { content: formatted, count: data.count, pages, page });
     } catch (err) {
       utils.success(res, err);
     }
@@ -55,7 +55,7 @@ export default class UserAddressesController {
 
     try {
       const userAddress = await this.model.create(formatted);
-      utils.success(res, { userAddress: formatFromDb(userAddress) });
+      utils.success(res, { content: formatFromDb(userAddress) });
     } catch (err) {
       utils.fail(res, err);
     }
@@ -75,7 +75,7 @@ export default class UserAddressesController {
           id: req.body.id,
         },
       });
-      utils.success(res, { userAddress: formatFromDb(_userAddress) });
+      utils.success(res, { content: formatFromDb(_userAddress) });
     } catch (err) {
       utils.fail(res, { message: 'Unable to update user address.' });
     }

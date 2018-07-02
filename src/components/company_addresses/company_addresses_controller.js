@@ -44,7 +44,7 @@ export default class CompanyAddressesController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      this.utils.success(res, { companyAddresses: formatted, count: data.count, pages, page });
+      this.utils.success(res, { content: formatted, count: data.count, pages, page });
     } catch (err) {
       this.utils.success(res, err);
     }
@@ -55,7 +55,7 @@ export default class CompanyAddressesController {
 
     try {
       const companyAddress = await this.model.create(formatted);
-      this.utils.success(res, { companyAddress: formatFromDb(companyAddress) });
+      this.utils.success(res, { content: formatFromDb(companyAddress) });
     } catch (err) {
       this.utils.fail(res, err);
     }
@@ -75,7 +75,7 @@ export default class CompanyAddressesController {
           id: req.body.id,
         },
       });
-      this.utils.success(res, { companyAddress: formatFromDb(_companyAddress) });
+      this.utils.success(res, { content: formatFromDb(_companyAddress) });
     } catch (err) {
       this.utils.fail(res, { message: 'Unable to update address.' });
     }

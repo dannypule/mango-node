@@ -44,7 +44,7 @@ export default class CompanyPhoneNumbersController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      utils.success(res, { companyPhoneNumbers: formatted, count: data.count, pages, page });
+      utils.success(res, { content: formatted, count: data.count, pages, page });
     } catch (err) {
       utils.success(res, err);
     }
@@ -55,7 +55,7 @@ export default class CompanyPhoneNumbersController {
 
     try {
       const companyPhoneNumber = await this.model.create(formatted);
-      utils.success(res, { companyPhoneNumber: formatFromDb(companyPhoneNumber) });
+      utils.success(res, { content: formatFromDb(companyPhoneNumber) });
     } catch (err) {
       utils.fail(res, err);
     }
@@ -75,7 +75,7 @@ export default class CompanyPhoneNumbersController {
           id: req.body.id,
         },
       });
-      utils.success(res, { companyPhoneNumber: formatFromDb(_companyPhoneNumber) });
+      utils.success(res, { content: formatFromDb(_companyPhoneNumber) });
     } catch (err) {
       utils.fail(res, { message: 'Unable to update phone number.' });
     }

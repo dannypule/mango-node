@@ -36,7 +36,7 @@ export default class CompaniesController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      utils.success(res, { companies: formatted, count: data.count, pages, page });
+      utils.success(res, { content: formatted, count: data.count, pages, page });
     } catch (err) {
       utils.success(res, err);
     }
@@ -47,7 +47,7 @@ export default class CompaniesController {
 
     try {
       const company = await this.model.create(formatted);
-      utils.success(res, { company: formatFromDb(company) });
+      utils.success(res, { content: formatFromDb(company) });
     } catch (err) {
       utils.fail(res, err);
     }
@@ -67,7 +67,7 @@ export default class CompaniesController {
           id: req.body.id,
         },
       });
-      utils.success(res, { company: formatFromDb(_company) });
+      utils.success(res, { content: formatFromDb(_company) });
     } catch (err) {
       utils.fail(res, { message: 'Unable to update this company.' });
     }

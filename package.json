@@ -12,8 +12,8 @@
     "db:setup": "npm run build && node dist/db_setup",
     "db:setup:local": "npm run build && NODE_ENV=local node dist/db_setup",
     "db:docker": "docker-compose -f docker-compose.yml up && npm run db:setup:local",
-    "test": "jest --forceExit --coverage --verbose",
-    "test:watch": "jest --watch",
+    "test": "jest --watch",
+    "test:c": "jest --forceExit --coverage --verbose",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
   },

@@ -3,7 +3,7 @@ import passport from 'passport';
 
 import AuthController from '../components/auth';
 import CompaniesController from '../components/companies';
-import UsersController from '../components/users';
+import { usersController } from '../components/users';
 import ProjectsController from '../components/projects';
 import UserProjectsController from '../components/user_projects';
 import CompanyAddressesController from '../components/company_addresses';
@@ -34,9 +34,9 @@ router.delete('/companies', authenticateViaToken, CompaniesController.deleteComp
 // ===================================================
 // '/api/users'
 // =========================
-router.get('/users', authenticateViaToken, UsersController.getUsers); // only super admins
-router.post('/users', authenticateViaToken, UsersController.addUser); // only super admins
-router.delete('/users', authenticateViaToken, UsersController.deleteUser); // only super admins
+router.get('/users', authenticateViaToken, usersController.getUsers); // only super admins
+router.post('/users', authenticateViaToken, usersController.addUser); // only super admins
+router.delete('/users', authenticateViaToken, usersController.deleteUser); // only super admins
 
 // ===================================================
 // '/api/projects'

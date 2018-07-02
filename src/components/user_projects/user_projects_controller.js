@@ -51,7 +51,7 @@ export default class UserProjectsController {
 
       const pages = Math.ceil(userProjects.count / limit);
       const formatted = userProjects.rows.map(formatFromDb);
-      utils.success(res, { userProjects: formatted, count: userProjects.count, pages, page });
+      utils.success(res, { content: formatted, count: userProjects.count, pages, page });
     } catch (err) {
       utils.success(res, err);
     }
@@ -62,7 +62,7 @@ export default class UserProjectsController {
 
     try {
       const userProject = await this.model.create(formatted);
-      utils.success(res, { userProject: formatFromDb(userProject) });
+      utils.success(res, { content: formatFromDb(userProject) });
     } catch (err) {
       utils.fail(res, err);
     }
@@ -82,7 +82,7 @@ export default class UserProjectsController {
           id: req.body.id,
         },
       });
-      utils.success(res, { userProject: formatFromDb(updated) });
+      utils.success(res, { content: formatFromDb(updated) });
     } catch (err) {
       utils.fail(res, { message: 'Unable to update this project.' });
     }

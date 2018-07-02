@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import db from '../../db_models';
 import utils from '../../utils';
 import { validateUser } from '../../validation_models/User_validation';
 
@@ -27,20 +26,28 @@ export const formatUserForDb = user => {
   };
 };
 
-export const addUser = async (req, res, user) => {
-  try {
-    await validateUser(req, res, user);
-
-    const formatted = formatUserForDb(user);
-
-    const saltFactor = 13;
-
-    const salt = await bcrypt.genSalt(saltFactor);
-    const hash = await bcrypt.hash(formatted.password, salt, null);
-    formatted.password = hash;
-    const _user = await db.User.create(formatted, { individualHooks: true });
-    utils.success(res, { user: formatFromDb(_user) });
-  } catch (err) {
-    utils.fail(res, err);
+class UsersService {
+  constructor(model) {
+    this.model = model;
   }
-};
+
+  addUser = async (req, res, user) => {
+    try {
+      await validateUser(req, res, user);
+
+      const formatted = formatUserForDb(user);
+
+      const saltFactor = 13;
+
+      const salt = await bcrypt.genSalt(saltFactor);
+      const hash = await bcrypt.hash(formatted.password, salt, null);
+      formatted.password = hash;
+      const _user = await this.model.create(formatted, { individualHooks: true });
+      utils.success(res, { user: formatFromDb(_user) });
+    } catch (err) {
+      utils.fail(res, err);
+    }
+  };
+}
+
+export default UsersService;

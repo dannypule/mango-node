@@ -1,9 +1,10 @@
-import { formatFromDb, addUser } from './users_service';
-import utils from '../../utils';
+import { formatFromDb } from './users_service';
 
-export default class UserController {
-  constructor(model) {
+export default class UsersController {
+  constructor(model, utils, usersService) {
     this.model = model;
+    this.utils = utils;
+    this.usersService = usersService;
   }
 
   getUsers = async (req, res) => {
@@ -36,16 +37,16 @@ export default class UserController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      utils.success(res, { users: formatted, count: data.count, pages, page, length: formatted.length });
+      this.utils.success(res, { content: formatted, count: data.count, pages, page, length: formatted.length });
     } catch (err) {
-      utils.success(res, err);
+      this.utils.fail(res, err);
     }
   };
 
   addUser = (req, res) => {
     const user = req.body;
 
-    addUser(req, res, user);
+    this.usersService.addUser(req, res, user);
   };
 
   deleteUser = async (req, res) => {
@@ -56,12 +57,12 @@ export default class UserController {
         },
       });
       if (result === 1) {
-        utils.success(res);
+        this.utils.success(res);
       } else {
-        utils.fail(res, { message: 'Unable to delete this user.' });
+        this.utils.fail(res, { message: 'Unable to delete this user.' });
       }
     } catch (err) {
-      utils.fail(res, err);
+      this.utils.fail(res, err);
     }
   };
 }

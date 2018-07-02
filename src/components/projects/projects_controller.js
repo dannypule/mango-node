@@ -52,7 +52,7 @@ export default class ProjectsController {
 
       const pages = Math.ceil(projects.count / limit);
       const formatted = projects.rows.map(formatFromDb);
-      utils.success(res, { projects: formatted, count: projects.count, pages, page });
+      utils.success(res, { content: formatted, count: projects.count, pages, page });
     } catch (err) {
       utils.success(res, err);
     }
@@ -63,7 +63,7 @@ export default class ProjectsController {
 
     try {
       const project = await this.model.create(formatted);
-      utils.success(res, { project: formatFromDb(project) });
+      utils.success(res, { content: formatFromDb(project) });
     } catch (err) {
       utils.fail(res, err);
     }
