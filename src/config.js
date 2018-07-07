@@ -7,14 +7,14 @@ const configuration = {
   cors: {
     exposedHeaders: ['Link'],
   },
-  local: {
+  development: {
     db: {
-      username: process.env.LOCAL_DB_USERNAME,
-      password: process.env.LOCAL_DB_PASSWORD,
-      database: process.env.LOCAL_DB_DATABASE,
+      username: process.env.DEVELOPMENT_DB_USERNAME,
+      password: process.env.DEVELOPMENT_DB_PASSWORD,
+      database: process.env.DEVELOPMENT_DB_DATABASE,
       options: {
-        port: process.env.LOCAL_DB_PORT,
-        host: process.env.LOCAL_DB_HOST,
+        port: process.env.DEVELOPMENT_DB_PORT,
+        host: process.env.DEVELOPMENT_DB_HOST,
         dialect: 'postgres',
         operatorsAliases: false,
         dialectOptions: {
@@ -24,8 +24,8 @@ const configuration = {
         logging: false,
       },
     },
-    jwt_encryption: process.env.LOCAL_JWT_ENCRYPTION,
-    jwt_expiration: process.env.LOCAL_JWT_EXPIRATION,
+    jwt_encryption: process.env.DEVELOPMENT_JWT_ENCRYPTION,
+    jwt_expiration: process.env.DEVELOPMENT_JWT_EXPIRATION,
   },
   staging: {
     db: {

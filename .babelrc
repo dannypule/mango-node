@@ -6,8 +6,4 @@
     "transform-async-to-generator",
     "transform-class-properties"
   ]
-
-  // "transform-object-rest-spread" for object spread
-  // "transform-runtime", for async await
-  // "transform-async-to-generator" for async await
 }
