@@ -9,7 +9,7 @@ Node v8.11.2 or a higher LTS release
 NPM 5.6.0 or higher
 
 Setup your `.env` file. An example `.env-example` file is included with this project for
-your reference. Assign values to the properties prefixed with `DEV_DB_`.
+your reference. Assign values to the properties prefixed with `STAGING_DB_`.
 
 ## Getting started 
 

@@ -27,13 +27,13 @@ const configuration = {
     jwt_encryption: process.env.LOCAL_JWT_ENCRYPTION,
     jwt_expiration: process.env.LOCAL_JWT_EXPIRATION,
   },
-  development: {
+  staging: {
     db: {
-      username: process.env.DEV_DB_USERNAME,
-      password: process.env.DEV_DB_PASSWORD,
-      database: process.env.DEV_DB_DATABASE,
+      username: process.env.STAGING_DB_USERNAME,
+      password: process.env.STAGING_DB_PASSWORD,
+      database: process.env.STAGING_DB_DATABASE,
       options: {
-        host: process.env.DEV_DB_HOST,
+        host: process.env.STAGING_DB_HOST,
         dialect: 'postgres',
         operatorsAliases: false,
         dialectOptions: {
@@ -43,8 +43,8 @@ const configuration = {
         logging: false,
       },
     },
-    jwt_encryption: process.env.DEV_JWT_ENCRYPTION,
-    jwt_expiration: process.env.DEV_JWT_EXPIRATION,
+    jwt_encryption: process.env.STAGING_JWT_ENCRYPTION,
+    jwt_expiration: process.env.STAGING_JWT_EXPIRATION,
   },
   production: {
     db: {
