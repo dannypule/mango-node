@@ -10,13 +10,13 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(40),
     },
-  })
+  });
 
   Company.associate = models => {
     Company.hasMany(models.User, {
       foreignKey: 'company_id',
-    })
-  }
+    });
+  };
 
-  return Company
-}
+  return Company;
+};

@@ -1,17 +1,15 @@
 {
-  "overrides": [
-    {
-      "files": "*.js",
-      "options": {
-        "semi": false,
-        "bracketSpacing": true,
-        "parser": "babylon",
-        "printWidth": 120,
-        "trailingComma": "all",
-        "excludeFiles": ["*.scss"],
-        "tabWidth": 2,
-        "singleQuote": true
-      }
+  "overrides": [{
+    "files": "*.js",
+    "options": {
+      "semi": true,
+      "bracketSpacing": true,
+      "parser": "babylon",
+      "printWidth": 120,
+      "trailingComma": "all",
+      "excludeFiles": ["*.scss"],
+      "tabWidth": 2,
+      "singleQuote": true
     }
-  ]
+  }]
 }

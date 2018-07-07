@@ -6,12 +6,12 @@ export default (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
-  })
+  });
 
   UserProject.associate = models => {
-    UserProject.belongsTo(models.User)
-    UserProject.belongsTo(models.Project)
-  }
+    UserProject.belongsTo(models.User);
+    UserProject.belongsTo(models.Project);
+  };
 
-  return UserProject
-}
+  return UserProject;
+};

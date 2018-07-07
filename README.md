@@ -1,10 +1,10 @@
-# Node, Postgres, Babel starter seed project (https://github.com/dannypule)
+# Node, Postgres, Babel project starter (https://github.com/dannypule)
 
 ### This is a work in progress. I am actively contributing to this project.
 
 ## Prereqs
 
-Node 8.9.4 or a higher LTS release
+Node v8.11.2 or a higher LTS release
 
 NPM 5.6.0 or higher
 
@@ -17,21 +17,25 @@ your reference. Assign values to the properties prefixed with `DEV_DB_`.
 
 `npm run dev` (run in dev mode)
 
-`npm run debug` (run in debug mode)
+`npm run dev:local` (run in local dev mode)
+
+## Setup Postgres DB in Docker
+
+This command sets up a docker container then populates the db with mock data `npm run db:docker`
 
 ## Setting up the database with mock data
 
 This project is configured to run with an external Postgres database. Heroku
 have a free add-on which you can use with an existing application.
 
-When you have your postgres database details ready, enter them into the .env
+When you have your postgres database details, enter them into the .env
 file.
 
 To seed the db with demo data, run this command `npm run setup:db`
 
 ## Using the mock data
 
-Login at `http://localhost:5566/api/users` using:
+Login at `http://localhost:5566/api/auth/login` using:
 
 ```
 {
@@ -44,6 +48,13 @@ You will receive a Bearer token. Use this token in Postman or a similar applicat
 `Authorization: Bearer token.goes.here`
 
 View mock users using this test command `http://localhost:5566/api/users`
+
+## Running the example tests
+
+This application does not have full test coverage by any stretch but some unit and integrations tests have been setup to provide a baseline for further test coverage.
+
+`npm run test` to run unit and jest tests in watch mode
+`npm run test:c` to run unit and jest tests and generate a coverage report
 
 ## Heroku support
 

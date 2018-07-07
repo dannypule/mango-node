@@ -15,7 +15,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(200),
     },
-  })
+  });
 
   // UserRole.associate = models => {
   //   UserRole.hasMany(models.User, {
@@ -23,5 +23,5 @@ export default (sequelize, DataTypes) => {
   //   })
   // }
 
-  return UserRole
-}
+  return UserRole;
+};

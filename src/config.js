@@ -1,6 +1,6 @@
-require('dotenv').load({ silent: true })
+require('dotenv').load({ silent: true });
 
-const env = process.env.NODE_ENV || 'development'
+const env = process.env.NODE_ENV || 'development';
 
 const configuration = {
   port: 5566,
@@ -13,6 +13,7 @@ const configuration = {
       password: process.env.LOCAL_DB_PASSWORD,
       database: process.env.LOCAL_DB_DATABASE,
       options: {
+        port: process.env.LOCAL_DB_PORT,
         host: process.env.LOCAL_DB_HOST,
         dialect: 'postgres',
         operatorsAliases: false,
@@ -20,6 +21,7 @@ const configuration = {
           ssl: false,
         },
         define: { underscored: true },
+        logging: false,
       },
     },
     jwt_encryption: process.env.LOCAL_JWT_ENCRYPTION,
@@ -38,6 +40,7 @@ const configuration = {
           ssl: true,
         },
         define: { underscored: true },
+        logging: false,
       },
     },
     jwt_encryption: process.env.DEV_JWT_ENCRYPTION,
@@ -61,5 +64,5 @@ const configuration = {
     jwt_encryption: process.env.PROD_JWT_ENCRYPTION,
     jwt_expiration: process.env.PROD_JWT_EXPIRATION,
   },
-}
-export default configuration[env]
+};
+export default configuration[env];

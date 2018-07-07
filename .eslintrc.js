@@ -18,6 +18,7 @@ module.exports = {
     jest: true
   },
   rules: {
+    semi: 2,
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
     "object-curly-newline": 0,
@@ -38,7 +39,6 @@ module.exports = {
     "no-shadow": 0,
     "no-underscore-dangle": 0,
     quotes: [2, "single", { avoidEscape: true, allowTemplateLiterals: true }],
-    semi: [2, "never"],
     "import/first": 0,
     "import/prefer-default-export": 0,
     "import/newline-after-import": 0,
