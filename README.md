@@ -17,7 +17,7 @@ your reference. Assign values to the properties prefixed with `STAGING_DB_`.
 
 `npm run dev` (run in dev mode)
 
-`npm run dev:local` (run in local dev mode)
+`npm run staging` (run in staging mode)
 
 ## Setup Postgres DB in Docker
 
@@ -31,7 +31,7 @@ have a free add-on which you can use with an existing application.
 When you have your postgres database details, enter them into the .env
 file.
 
-To seed the db with demo data, run this command `npm run setup:db`
+To seed the db with demo data, run this command `npm run db:setup`
 
 ## Using the mock data
 
