@@ -21,7 +21,7 @@ your reference. Assign values to the properties prefixed with `STAGING_DB_`.
 
 ## Setup Postgres DB in Docker
 
-This command sets up a docker container then populates the db with mock data `npm run db:docker`
+This command sets up a docker container then populates the db with mock data `npm run db`
 
 ## Setting up the database with mock data
 
