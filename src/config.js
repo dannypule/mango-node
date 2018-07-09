@@ -1,47 +1,50 @@
-require('dotenv').load({ silent: true })
+require('dotenv').load({ silent: true });
 
-const env = process.env.NODE_ENV || 'development'
+const env = process.env.NODE_ENV || 'development';
 
 const configuration = {
   port: 5566,
   cors: {
     exposedHeaders: ['Link'],
   },
-  local: {
+  development: {
     db: {
-      username: process.env.LOCAL_DB_USERNAME,
-      password: process.env.LOCAL_DB_PASSWORD,
-      database: process.env.LOCAL_DB_DATABASE,
+      username: process.env.DEVELOPMENT_DB_USERNAME,
+      password: process.env.DEVELOPMENT_DB_PASSWORD,
+      database: process.env.DEVELOPMENT_DB_DATABASE,
       options: {
-        host: process.env.LOCAL_DB_HOST,
+        port: process.env.DEVELOPMENT_DB_PORT,
+        host: process.env.DEVELOPMENT_DB_HOST,
         dialect: 'postgres',
         operatorsAliases: false,
         dialectOptions: {
           ssl: false,
         },
         define: { underscored: true },
+        logging: false,
       },
     },
-    jwt_encryption: process.env.LOCAL_JWT_ENCRYPTION,
-    jwt_expiration: process.env.LOCAL_JWT_EXPIRATION,
+    jwt_encryption: process.env.DEVELOPMENT_JWT_ENCRYPTION,
+    jwt_expiration: process.env.DEVELOPMENT_JWT_EXPIRATION,
   },
-  development: {
+  staging: {
     db: {
-      username: process.env.DEV_DB_USERNAME,
-      password: process.env.DEV_DB_PASSWORD,
-      database: process.env.DEV_DB_DATABASE,
+      username: process.env.STAGING_DB_USERNAME,
+      password: process.env.STAGING_DB_PASSWORD,
+      database: process.env.STAGING_DB_DATABASE,
       options: {
-        host: process.env.DEV_DB_HOST,
+        host: process.env.STAGING_DB_HOST,
         dialect: 'postgres',
         operatorsAliases: false,
         dialectOptions: {
           ssl: true,
         },
         define: { underscored: true },
+        logging: false,
       },
     },
-    jwt_encryption: process.env.DEV_JWT_ENCRYPTION,
-    jwt_expiration: process.env.DEV_JWT_EXPIRATION,
+    jwt_encryption: process.env.STAGING_JWT_ENCRYPTION,
+    jwt_expiration: process.env.STAGING_JWT_EXPIRATION,
   },
   production: {
     db: {
@@ -61,5 +64,5 @@ const configuration = {
     jwt_encryption: process.env.PROD_JWT_ENCRYPTION,
     jwt_expiration: process.env.PROD_JWT_EXPIRATION,
   },
-}
-export default configuration[env]
+};
+export default configuration[env];

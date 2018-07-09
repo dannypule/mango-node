@@ -1,4 +1,4 @@
-import parseError from 'parse-error'
+import parseError from 'parse-error';
 
 // //////////////////////////////
 // convert to promise
@@ -6,68 +6,68 @@ import parseError from 'parse-error'
 const toPromise = promise => {
   return promise
     .then(data => {
-      return { err: null, data }
+      return { err: null, data };
     })
     .catch(err => {
-      return { err: parseError(err) }
-    })
-}
+      return { err: parseError(err) };
+    });
+};
 
 // //////////////////////////////
 // TE stands for Throw Error
 // //////////////////////////////
 const TE = (errMessage, log) => {
   if (log === true) {
-    console.error(errMessage)
+    console.error(errMessage);
   }
 
-  throw new Error(errMessage)
-}
+  throw new Error(errMessage);
+};
 
 // //////////////////////////////
 // success web response
 // //////////////////////////////
 const success = (res, data, code) => {
-  const sendData = { data, ok: true }
-  res.statusCode = code || 200
+  const sendData = { data, ok: true };
+  res.statusCode = code || 200;
 
-  return res.json(sendData)
-}
+  return res.json(sendData);
+};
 
 // //////////////////////////////
 // fail web response
 // //////////////////////////////
 const fail = (res, data, code) => {
-  let sendData = { ok: false }
+  let sendData = { ok: false };
   if (typeof data === 'object' && typeof data.message !== 'undefined') {
-    sendData = { ...sendData, message: data.message }
+    sendData = { ...sendData, message: data.message };
   }
-  res.statusCode = code || 200
+  res.statusCode = code || 200;
 
-  return res.json(sendData)
-}
+  return res.json(sendData);
+};
 
 // //////////////////////////////
 // error web response
 // //////////////////////////////
 const error = (res, err, code) => {
-  let message
+  let message;
   if (typeof err === 'object' && typeof err.message !== 'undefined') {
     // eslint-disable-next-line
     message = err.message
   }
 
-  res.statusCode = code || 400
+  res.statusCode = code || 400;
 
-  return res.json({ ok: false, message })
-}
+  return res.json({ ok: false, message });
+};
 
 // //////////////////////////////
 // This is here to handle all the uncaught promise rejections
 // //////////////////////////////
 process.on('unhandledRejection', error => {
-  console.error('Uncaught Error', parseError(error))
-})
+  console.error('Uncaught Error', parseError(error));
+});
 
 const utils = {
   toPromise,
@@ -75,6 +75,6 @@ const utils = {
   success,
   fail,
   error,
-}
+};
 
-export default utils
+export default utils;

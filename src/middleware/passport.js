@@ -1,13 +1,13 @@
-import passportJWT from 'passport-jwt'
-import db from '../db_models'
-import config from '../config'
+import passportJWT from 'passport-jwt';
+import db from '../db_models';
+import config from '../config';
 
-const { ExtractJwt, Strategy } = passportJWT
+const { ExtractJwt, Strategy } = passportJWT;
 
 module.exports = passport => {
-  const opts = {}
-  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-  opts.secretOrKey = config.jwt_encryption
+  const opts = {};
+  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+  opts.secretOrKey = config.jwt_encryption;
 
   passport.use(
     new Strategy(opts, async (jwtPayload, done) => {
@@ -16,14 +16,14 @@ module.exports = passport => {
           where: {
             id: jwtPayload.userID,
           },
-        })
+        });
         if (!user) {
-          return done(null, false)
+          return done(null, false);
         }
-        return done(null, user)
+        return done(null, user);
       } catch (err) {
-        console.log(err, 'Error setting up passport strategy') // @todo handle errors - this error would happen on app init
+        console.log(err, 'Error setting up passport strategy'); // @todo handle errors - this error would happen on app init
       }
     }),
-  )
-}
+  );
+};

@@ -8,18 +8,18 @@ export default (sequelize, DataTypes) => {
     },
     phone: {
       allowNull: false,
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(100),
     },
     type_code: {
       allowNull: false,
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
-  })
+  });
 
   CompanyPhoneNumber.associate = models => {
-    CompanyPhoneNumber.belongsTo(models.Company)
-  }
+    CompanyPhoneNumber.belongsTo(models.Company);
+  };
 
-  return CompanyPhoneNumber
-}
+  return CompanyPhoneNumber;
+};
