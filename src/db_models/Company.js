@@ -10,13 +10,12 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(40),
     },
+    status: {
+      allowNull: false,
+      type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
+      defaultValue: 'ACTIVE',
+    },
   });
-
-  Company.associate = models => {
-    Company.hasMany(models.User, {
-      foreignKey: 'company_id',
-    });
-  };
 
   return Company;
 };

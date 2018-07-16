@@ -15,6 +15,11 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(200),
     },
+    status: {
+      allowNull: false,
+      type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
+      defaultValue: 'ACTIVE',
+    },
   });
 
   // UserRole.associate = models => {

@@ -10,7 +10,7 @@
     "build": "rm -rf dist && babel src -d dist",
     "postinstall": "npm run build",
     "db:setup": "npm run build && NODE_ENV=development node dist/db_setup",
-    "db:setup:staging": "npm run build && node dist/db_setup",
+    "db:setup:staging": "npm run build && NODE_ENV=staging node dist/db_setup",
     "db": "docker-compose -f docker-compose.yml up",
     "test": "jest --watch",
     "test:c": "jest --forceExit --coverage --verbose",

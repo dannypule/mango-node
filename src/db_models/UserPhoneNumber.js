@@ -15,6 +15,11 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
+    status: {
+      allowNull: false,
+      type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
+      defaultValue: 'ACTIVE',
+    },
   });
 
   UserPhoneNumber.associate = models => {

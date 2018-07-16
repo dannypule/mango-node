@@ -10,6 +10,11 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(100),
     },
+    status: {
+      allowNull: false,
+      type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
+      defaultValue: 'ACTIVE',
+    },
   });
 
   Project.associate = models => {

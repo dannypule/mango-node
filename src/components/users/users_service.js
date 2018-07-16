@@ -11,6 +11,7 @@ export const formatFromDb = user => {
     createdAt: user.created_at,
     updatedAt: user.updated_at,
     userRoleCode: user.user_role_code,
+    status: user.status,
   };
 };
 
@@ -21,6 +22,7 @@ export const formatUserForDb = user => {
     email: user.email,
     password: user.password,
     user_role_code: user.userRoleCode,
+    status: user.status,
   };
 };
 
