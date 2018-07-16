@@ -1,10 +1,10 @@
 import { formatFromDb, formatForDb } from './companies_service';
-import utils from '../../utils/utils';
 
 export default class CompaniesController {
-  constructor({ model, modelUserCompany }) {
+  constructor({ model, modelUserCompany, utils }) {
     this.model = model;
     this.modelUserCompany = modelUserCompany;
+    this.utils = utils;
   }
 
   getCompanies = async (req, res) => {
@@ -37,21 +37,22 @@ export default class CompaniesController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      utils.success(res, { content: formatted, count: data.count, pages, page });
+      this.utils.success(res, { content: formatted, count: data.count, pages, page });
     } catch (err) {
-      utils.success(res, err);
+      this.utils.success(res, err);
     }
   };
 
   addCompany = async (req, res) => {
     const formatted = formatForDb(req.body);
+    const userId = this.utils.ifAdminGetUserIdFromRequest(req);
 
     try {
       const company = await this.model.create(formatted);
-      const userCompany = await this.modelUserCompany.create({ user_id: req.body.userId, company_id: company.id });
-      utils.success(res, { company: formatFromDb(company), userCompany });
+      await this.modelUserCompany.create({ user_id: userId, company_id: company.id });
+      this.utils.success(res, { company: formatFromDb(company), user: req.user, userId });
     } catch (err) {
-      utils.fail(res, err);
+      this.utils.fail(res, err);
     }
   };
 
@@ -69,9 +70,9 @@ export default class CompaniesController {
           id: req.body.id,
         },
       });
-      utils.success(res, { content: formatFromDb(_company) });
+      this.utils.success(res, { content: formatFromDb(_company) });
     } catch (err) {
-      utils.fail(res, { message: 'Unable to update this company.' });
+      this.utils.fail(res, { message: 'Unable to update this company.' });
     }
   };
 
@@ -83,14 +84,14 @@ export default class CompaniesController {
         },
       });
       if (result === 1) {
-        utils.success(res, {
+        this.utils.success(res, {
           message: 'Successfully deleted company.',
         });
       } else {
-        utils.fail(res, { message: 'Unable to delete this company.' });
+        this.utils.fail(res, { message: 'Unable to delete this company.' });
       }
     } catch (err) {
-      utils.fail(res, err);
+      this.utils.fail(res, err);
     }
   };
 }
