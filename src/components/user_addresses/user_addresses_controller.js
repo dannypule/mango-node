@@ -1,8 +1,8 @@
 import { formatFromDb, formatForDb } from './user_addresses_service';
-import utils from '../../utils';
+import utils from '../../utils/utils';
 
 export default class UserAddressesController {
-  constructor(model) {
+  constructor({ model }) {
     this.model = model;
   }
 
@@ -55,7 +55,7 @@ export default class UserAddressesController {
 
     try {
       const userAddress = await this.model.create(formatted);
-      utils.success(res, { content: formatFromDb(userAddress) });
+      utils.success(res, formatFromDb(userAddress));
     } catch (err) {
       utils.fail(res, err);
     }

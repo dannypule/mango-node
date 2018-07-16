@@ -1,8 +1,8 @@
 import { formatFromDb, formatForDb } from './company_phone_numbers_service';
-import utils from '../../utils';
+import utils from '../../utils/utils';
 
 export default class CompanyPhoneNumbersController {
-  constructor(model) {
+  constructor({ model }) {
     this.model = model;
   }
 
@@ -55,7 +55,7 @@ export default class CompanyPhoneNumbersController {
 
     try {
       const companyPhoneNumber = await this.model.create(formatted);
-      utils.success(res, { content: formatFromDb(companyPhoneNumber) });
+      utils.success(res, formatFromDb(companyPhoneNumber));
     } catch (err) {
       utils.fail(res, err);
     }
