@@ -2,8 +2,9 @@ import { formatFromDb, formatForDb } from './companies_service';
 import utils from '../../utils/utils';
 
 export default class CompaniesController {
-  constructor({ model }) {
+  constructor({ model, modelUserCompany }) {
     this.model = model;
+    this.modelUserCompany = modelUserCompany;
   }
 
   getCompanies = async (req, res) => {
@@ -47,7 +48,8 @@ export default class CompaniesController {
 
     try {
       const company = await this.model.create(formatted);
-      utils.success(res, formatFromDb(company));
+      const userCompany = await this.modelUserCompany.create({ user_id: req.body.userId, company_id: company.id });
+      utils.success(res, { company: formatFromDb(company), userCompany });
     } catch (err) {
       utils.fail(res, err);
     }

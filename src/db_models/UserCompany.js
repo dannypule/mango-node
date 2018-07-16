@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const UserProject = sequelize.define('UserProject', {
+  const UserCompany = sequelize.define('UserCompany', {
     id: {
       allowNull: false,
       type: DataTypes.INTEGER,
@@ -13,10 +13,10 @@ export default (sequelize, DataTypes) => {
     },
   });
 
-  UserProject.associate = models => {
-    UserProject.belongsTo(models.User);
-    UserProject.belongsTo(models.Project);
+  UserCompany.associate = models => {
+    UserCompany.belongsTo(models.User);
+    UserCompany.belongsTo(models.Company);
   };
 
-  return UserProject;
+  return UserCompany;
 };
