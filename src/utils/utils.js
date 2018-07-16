@@ -62,6 +62,20 @@ const error = (res, err, code) => {
   return res.json({ ok: false, message });
 };
 
+const isAdmin = (req) => {
+  if (req.user && req.user.userRoleCode >= 100) {
+    return true;
+  }
+  return false;
+};
+
+const ifAdminGetUserIdFromRequest = (req) => {
+  if (isAdmin(req)) {
+    return req.body.userId;
+  }
+  return req.user.id;
+};
+
 // //////////////////////////////
 // This is here to handle all the uncaught promise rejections
 // //////////////////////////////
@@ -75,6 +89,8 @@ const utils = {
   success,
   fail,
   error,
+  isAdmin,
+  ifAdminGetUserIdFromRequest,
 };
 
 export default utils;

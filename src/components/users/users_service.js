@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import utils from '../../utils';
-import { validateUser } from '../../validation_models/User_validation';
+import utils from '../../utils/utils';
+import { validateUser } from '../../validation_models/user_validation';
 
 export const formatFromDb = user => {
   return {
@@ -11,7 +11,7 @@ export const formatFromDb = user => {
     createdAt: user.created_at,
     updatedAt: user.updated_at,
     userRoleCode: user.user_role_code,
-    companyId: user.company_id,
+    status: user.status,
   };
 };
 
@@ -21,8 +21,8 @@ export const formatUserForDb = user => {
     last_name: user.lastName,
     email: user.email,
     password: user.password,
-    company_id: user.companyId,
     user_role_code: user.userRoleCode,
+    status: user.status,
   };
 };
 
@@ -43,7 +43,7 @@ class UsersService {
       const hash = await bcrypt.hash(formatted.password, salt, null);
       formatted.password = hash;
       const _user = await this.model.create(formatted, { individualHooks: true });
-      utils.success(res, { user: formatFromDb(_user) });
+      utils.success(res, formatFromDb(_user));
     } catch (err) {
       utils.fail(res, err);
     }

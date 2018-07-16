@@ -1,7 +1,7 @@
 import { formatFromDb } from './users_service';
 
 export default class UsersController {
-  constructor(model, utils, usersService) {
+  constructor({ model, utils, usersService }) {
     this.model = model;
     this.utils = utils;
     this.usersService = usersService;

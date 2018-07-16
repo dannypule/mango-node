@@ -11,7 +11,6 @@ export default () => {
         email: 'Super.Admin@fake-email.infoz',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 110, // super admin role
-        company_id: 1,
       });
 
       await db.User.create({
@@ -20,7 +19,6 @@ export default () => {
         email: 'Admin.Admin@fake-email.infoz',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 100, // admin role
-        company_id: 2,
       });
 
       for (let i = 0; i < 400; i++) {
@@ -30,7 +28,6 @@ export default () => {
           email: faker.internet.email(),
           password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
           user_role_code: 30, // regular role
-          company_id: 2,
         }).then(() => {
           if (i === 199) {
             console.log(colors.green('Demo items inserted into User table.'));

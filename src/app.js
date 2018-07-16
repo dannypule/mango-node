@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import passport from 'passport';
 // import cors from 'cors'
-import utils from './utils';
+import utils from './utils/utils';
 
 import apiRoutes from './routes/routes';
 
@@ -70,6 +70,7 @@ app.use(passport.initialize());
 // ////////////////////////////////////////
 // setup routes
 // ////////////////////////////////////////
+// const addUserRole = (req, res);
 app.use('/api', apiRoutes);
 
 // ////////////////////////////////////////
