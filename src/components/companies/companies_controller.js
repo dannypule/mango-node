@@ -1,8 +1,8 @@
 import { formatFromDb, formatForDb } from './companies_service';
-import utils from '../../utils';
+import utils from '../../utils/utils';
 
 export default class CompaniesController {
-  constructor(model) {
+  constructor({ model }) {
     this.model = model;
   }
 
@@ -47,7 +47,7 @@ export default class CompaniesController {
 
     try {
       const company = await this.model.create(formatted);
-      utils.success(res, { content: formatFromDb(company) });
+      utils.success(res, formatFromDb(company));
     } catch (err) {
       utils.fail(res, err);
     }

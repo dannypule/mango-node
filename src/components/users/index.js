@@ -1,7 +1,7 @@
 import db from '../../db_models';
-import utils from '../../utils';
+import utils from '../../utils/utils';
 import UsersController from './users_controller';
 import UsersService from './users_service';
 
 export const usersService = new UsersService(db.User);
-export const usersController = new UsersController(db.User, utils, usersService);
+export const usersController = new UsersController({ model: db.User, utils, usersService });

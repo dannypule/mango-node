@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
-import utils from '../../utils';
-import { addUser } from '../users/users_service';
+import utils from '../../utils/utils';
 
 export default class AuthController {
-  constructor(model) {
+  constructor({ model, usersService }) {
     this.model = model;
+    this.usersService = usersService;
   }
 
   login = async (req, res) => {
@@ -36,13 +36,13 @@ export default class AuthController {
   register = (req, res) => {
     const user = req.body;
 
-    addUser(req, res, {
+    this.usersService.addUser(req, res, {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
       password: user.password,
-      companyId: 1, // todo - make dynamic
-      userRoleCode: 30, // basic user
+      companyId: user.companyId,
+      userRoleCode: 30, // todo basic user - should use constants file
     });
   };
 }

@@ -1,8 +1,8 @@
 import { formatFromDb, formatForDb } from './user_phone_numbers_service';
-import utils from '../../utils';
+import utils from '../../utils/utils';
 
 export default class UserPhoneNumbersController {
-  constructor(model) {
+  constructor({ model }) {
     this.model = model;
   }
 

@@ -1,8 +1,8 @@
 import { formatFromDb, formatForDb } from './user_projects_service';
-import utils from '../../utils';
+import utils from '../../utils/utils';
 
 export default class UserProjectsController {
-  constructor(model) {
+  constructor({ model }) {
     this.model = model;
   }
 
@@ -62,7 +62,7 @@ export default class UserProjectsController {
 
     try {
       const userProject = await this.model.create(formatted);
-      utils.success(res, { content: formatFromDb(userProject) });
+      utils.success(res, formatFromDb(userProject));
     } catch (err) {
       utils.fail(res, err);
     }
