@@ -49,6 +49,52 @@ export default class UsersController {
     this.usersService.addUser(req, res, user);
   };
 
+  updateName = async (req, res) => {
+    const user = req.body;
+
+    const objectToUpdate = {
+      first_name: user.firstName,
+      last_name: user.lastName,
+    };
+
+    this.usersService.updateUser(req, res, user.id, objectToUpdate);
+  };
+
+  updateEmail = async (req, res) => {
+    const user = req.body;
+
+    const objectToUpdate = {
+      email: user.email,
+    };
+
+    this.usersService.updateUser(req, res, user.id, objectToUpdate);
+  };
+
+  updatePassword = async (req, res) => {
+    const user = req.body;
+
+    const saltAndHashPassword = await this.usersService.saltAndHashPassword(user.password);
+
+    const objectToUpdate = {
+      password: saltAndHashPassword,
+    };
+
+    this.usersService.updateUser(req, res, user.id, objectToUpdate);
+  };
+
+  updateUser = async (req, res) => {
+    const user = req.body;
+    const objectToUpdate = {
+      first_name: user.firstName,
+      last_name: user.lastName,
+      email: user.email,
+      user_role_code: user.userRoleCode,
+      status: user.status,
+    };
+
+    this.usersService.updateUser(req, res, user.id, objectToUpdate);
+  };
+
   deleteUser = async (req, res) => {
     try {
       const result = await this.model.destroy({

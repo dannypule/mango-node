@@ -10,7 +10,7 @@ export default () => {
       });
       await db.UserRole.create({
         code: 40,
-        description: 'Role Type 2',
+        description: 'Main Account Holder',
       });
       await db.UserRole.create({
         code: 100,
