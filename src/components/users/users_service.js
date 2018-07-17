@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import utils from '../../utils/utils';
 import { validateUser } from '../../validation_models/user_validation';
 
 export const formatFromDb = user => {
@@ -15,37 +14,59 @@ export const formatFromDb = user => {
   };
 };
 
-export const formatUserForDb = user => {
-  return {
-    first_name: user.firstName,
-    last_name: user.lastName,
-    email: user.email,
-    password: user.password,
-    user_role_code: user.userRoleCode,
-    status: user.status,
-  };
-};
-
 class UsersService {
-  constructor(model) {
+  constructor({ model, utils }) {
     this.model = model;
+    this.utils = utils;
   }
 
   addUser = async (req, res, user) => {
     try {
       await validateUser(req, res, user);
 
-      const formatted = formatUserForDb(user);
+      const formatted = {
+        first_name: user.firstName,
+        last_name: user.lastName,
+        email: user.email,
+        password: user.password,
+        user_role_code: user.userRoleCode,
+        status: user.status,
+      };
 
-      const saltFactor = 13;
+      formatted.password = this.saltAndHashPassword(formatted.password);
 
-      const salt = await bcrypt.genSalt(saltFactor);
-      const hash = await bcrypt.hash(formatted.password, salt, null);
-      formatted.password = hash;
       const _user = await this.model.create(formatted, { individualHooks: true });
-      utils.success(res, formatFromDb(_user));
+      this.utils.success(res, formatFromDb(_user));
     } catch (err) {
-      utils.fail(res, err);
+      this.utils.fail(res, err);
+    }
+  };
+
+  saltAndHashPassword = async (plainTextPassword) => {
+    const saltFactor = 13;
+    const salt = await bcrypt.genSalt(saltFactor);
+    const hash = await bcrypt.hash(plainTextPassword, salt, null);
+    return hash;
+  }
+
+  updateUser = async (req, res, userId, objectToUpdate) => {
+    try {
+      const result = await this.model.update(objectToUpdate, {
+        where: {
+          id: userId,
+        },
+      });
+      if (result[0] !== 1) {
+        this.utils.fail(res, { message: 'Unable to update this user.' });
+      }
+      const _user = await this.model.findOne({
+        where: {
+          id: req.body.id,
+        },
+      });
+      this.utils.success(res, { content: formatFromDb(_user) });
+    } catch (err) {
+      this.utils.fail(res, { message: 'Unable to update this user.' });
     }
   };
 }

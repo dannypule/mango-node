@@ -26,64 +26,68 @@ router.post('/auth/register', AuthController.register);
 // ===================================================
 // '/api/companies'
 // =========================
-router.get('/companies', authenticateViaToken, CompaniesController.getCompanies); // only super admins
-router.post('/companies', authenticateViaToken, CompaniesController.addCompany); // only super admins
-router.put('/companies', authenticateViaToken, CompaniesController.updateCompany); // only super admins
-router.delete('/companies', authenticateViaToken, CompaniesController.deleteCompany); // only super admins
+router.get('/companies', authenticateViaToken, CompaniesController.getCompanies);
+router.post('/companies', authenticateViaToken, CompaniesController.addCompany);
+router.put('/companies', authenticateViaToken, CompaniesController.updateCompany);
+router.delete('/companies', authenticateViaToken, CompaniesController.deleteCompany);
 
 // ===================================================
 // '/api/users'
 // =========================
-router.get('/users', authenticateViaToken, usersController.getUsers); // only super admins
-router.post('/users', authenticateViaToken, usersController.addUser); // only super admins
-router.delete('/users', authenticateViaToken, usersController.deleteUser); // only super admins
+router.get('/users', authenticateViaToken, usersController.getUsers);
+router.post('/users', authenticateViaToken, usersController.addUser);
+router.put('/users', authenticateViaToken, usersController.updateUser);
+router.put('/users/update_email', authenticateViaToken, usersController.updateEmail);
+router.put('/users/update_name', authenticateViaToken, usersController.updateName);
+router.put('/users/update_password', authenticateViaToken, usersController.updatePassword);
+router.delete('/users', authenticateViaToken, usersController.deleteUser);
 
 // ===================================================
 // '/api/projects'
 // =========================
-router.get('/projects', authenticateViaToken, ProjectsController.getProjects); // only super admins
-router.post('/projects', authenticateViaToken, ProjectsController.addProject); // only super admins
-router.put('/projects', authenticateViaToken, ProjectsController.updateProject); // only super admins
-router.delete('/projects', authenticateViaToken, ProjectsController.deleteProject); // only super admins
+router.get('/projects', authenticateViaToken, ProjectsController.getProjects);
+router.post('/projects', authenticateViaToken, ProjectsController.addProject);
+router.put('/projects', authenticateViaToken, ProjectsController.updateProject);
+router.delete('/projects', authenticateViaToken, ProjectsController.deleteProject);
 
 // ===================================================
 // '/api/user_projects'
 // =========================
-router.get('/user_projects', authenticateViaToken, UserProjectsController.getUserProjects); // only super admins
-router.post('/user_projects', authenticateViaToken, UserProjectsController.addUserProject); // only super admins
-router.put('/user_projects', authenticateViaToken, UserProjectsController.updateUserProject); // only super admins
-router.delete('/user_projects', authenticateViaToken, UserProjectsController.deleteUserProject); // only super admins
+router.get('/user_projects', authenticateViaToken, UserProjectsController.getUserProjects);
+router.post('/user_projects', authenticateViaToken, UserProjectsController.addUserProject);
+router.put('/user_projects', authenticateViaToken, UserProjectsController.updateUserProject);
+router.delete('/user_projects', authenticateViaToken, UserProjectsController.deleteUserProject);
 
 // ===================================================
 // '/api/company_addresses'
 // =========================
-router.get('/company_addresses', authenticateViaToken, CompanyAddressesController.getCompanyAddresses); // only super admins
-router.post('/company_addresses', authenticateViaToken, CompanyAddressesController.addCompanyAddress); // only super admins
-router.put('/company_addresses', authenticateViaToken, CompanyAddressesController.updateCompanyAddress); // only super admins
-router.delete('/company_addresses', authenticateViaToken, CompanyAddressesController.deleteCompanyAddress); // only super admins
+router.get('/company_addresses', authenticateViaToken, CompanyAddressesController.getCompanyAddresses);
+router.post('/company_addresses', authenticateViaToken, CompanyAddressesController.addCompanyAddress);
+router.put('/company_addresses', authenticateViaToken, CompanyAddressesController.updateCompanyAddress);
+router.delete('/company_addresses', authenticateViaToken, CompanyAddressesController.deleteCompanyAddress);
 
 // ===================================================
 // '/api/company_phone_numbers'
 // =========================
-router.get('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.getCompanyPhoneNumbers); // only super admins
-router.post('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.addCompanyPhoneNumber); // only super admins
-router.put('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.updateCompanyPhoneNumber); // only super admins
-router.delete('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.deleteCompanyPhoneNumber); // only super admins
+router.get('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.getCompanyPhoneNumbers);
+router.post('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.addCompanyPhoneNumber);
+router.put('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.updateCompanyPhoneNumber);
+router.delete('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.deleteCompanyPhoneNumber);
 
 // ===================================================
 // '/api/user_addresses'
 // =========================
-router.get('/user_addresses', authenticateViaToken, UserAddressesController.getUserAddresses); // only super admins
-router.post('/user_addresses', authenticateViaToken, UserAddressesController.addUserAddress); // only super admins
-router.put('/user_addresses', authenticateViaToken, UserAddressesController.updateUserAddress); // only super admins
-router.delete('/user_addresses', authenticateViaToken, UserAddressesController.deleteUserAddress); // only super admins
+router.get('/user_addresses', authenticateViaToken, UserAddressesController.getUserAddresses);
+router.post('/user_addresses', authenticateViaToken, UserAddressesController.addUserAddress);
+router.put('/user_addresses', authenticateViaToken, UserAddressesController.updateUserAddress);
+router.delete('/user_addresses', authenticateViaToken, UserAddressesController.deleteUserAddress);
 
 // ===================================================
 // '/api/user_phone_numbers'
 // =========================
-router.get('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.getUserPhoneNumbers); // only super admins
-router.post('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.addUserPhoneNumber); // only super admins
-router.put('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.updateUserPhoneNumber); // only super admins
-router.delete('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.deleteUserPhoneNumber); // only super admins
+router.get('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.getUserPhoneNumbers);
+router.post('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.addUserPhoneNumber);
+router.put('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.updateUserPhoneNumber);
+router.delete('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.deleteUserPhoneNumber);
 
 export default router;
