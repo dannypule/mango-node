@@ -50,6 +50,10 @@ class UsersService {
   }
 
   updateUser = async (req, res, userId, objectToUpdate) => {
+    if (req.body.id !== req.user.id) { // todo - or if user is not manager of these users or if user is not admin
+      return this.utils.fail(res, { message: 'Unable to update this user.' });
+    }
+
     try {
       const result = await this.model.update(objectToUpdate, {
         where: {
