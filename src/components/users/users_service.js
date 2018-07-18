@@ -33,7 +33,7 @@ class UsersService {
         status: user.status,
       };
 
-      formatted.password = this.saltAndHashPassword(formatted.password);
+      formatted.password = await this.saltAndHashPassword(formatted.password);
 
       const _user = await this.model.create(formatted, { individualHooks: true });
       this.utils.success(res, formatFromDb(_user));
@@ -49,11 +49,21 @@ class UsersService {
     return hash;
   }
 
-  updateUser = async (req, res, userId, objectToUpdate) => {
-    if (req.body.id !== req.user.id) { // todo - or if user is not manager of these users or if user is not admin
-      return this.utils.fail(res, { message: 'Unable to update this user.' });
+  isPermitted(req, allowedUsers) {
+    if (allowedUsers.includes('OWNER')) {
+      if (req.body.id === req.user.id) {
+        return true;
+      }
     }
+    if (allowedUsers.includes('ADMIN')) {
+      if (req.user.userRoleCode >= 100) {
+        return true;
+      }
+    }
+    return false;
+  }
 
+  updateUser = async (req, res, userId, objectToUpdate) => {
     try {
       const result = await this.model.update(objectToUpdate, {
         where: {

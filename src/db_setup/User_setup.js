@@ -14,11 +14,27 @@ export default () => {
       });
 
       await db.User.create({
-        first_name: 'Regular',
+        first_name: 'Admin',
         last_name: 'Admin',
         email: 'Admin.Admin@fake-email.infoz',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 100, // admin role
+      });
+
+      await db.User.create({
+        first_name: 'Regular',
+        last_name: 'User',
+        email: 'Regular.User@fake-email.infoz',
+        password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
+        user_role_code: 40, // admin role
+      });
+
+      await db.User.create({
+        first_name: 'Another',
+        last_name: 'User',
+        email: 'Another.User@fake-email.infoz',
+        password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
+        user_role_code: 30, // admin role
       });
 
       for (let i = 0; i < 400; i++) {
