@@ -49,7 +49,7 @@ class UsersService {
     return hash;
   }
 
-  isPermitted(req, allowedUsers) {
+  isPermitted = (req, allowedUsers) => {
     if (allowedUsers.includes('OWNER')) {
       if (req.body.id === req.user.id) {
         return true;

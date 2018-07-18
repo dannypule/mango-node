@@ -50,10 +50,6 @@ export default class UsersController {
   };
 
   updateName = async (req, res) => {
-    if (!this.usersService.isPermitted(req, ['OWNER', 'ADMIN'])) {
-      return this.utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-    }
-
     const user = req.body;
 
     const objectToUpdate = {
@@ -65,10 +61,6 @@ export default class UsersController {
   };
 
   updateEmail = async (req, res) => {
-    if (!this.usersService.isPermitted(req, ['OWNER', 'ADMIN'])) {
-      return this.utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-    }
-
     const user = req.body;
 
     const objectToUpdate = {
@@ -79,10 +71,6 @@ export default class UsersController {
   };
 
   updatePassword = async (req, res) => {
-    if (!this.usersService.isPermitted(req, ['OWNER', 'ADMIN'])) {
-      return this.utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-    }
-
     const user = req.body;
 
     const saltAndHashPassword = await this.usersService.saltAndHashPassword(user.password);
@@ -95,10 +83,6 @@ export default class UsersController {
   };
 
   updateWholeUser = async (req, res) => {
-    if (!this.usersService.isPermitted(req, ['ADMIN'])) {
-      return this.utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-    }
-
     const user = req.body;
     const objectToUpdate = {
       first_name: user.firstName,
@@ -112,10 +96,6 @@ export default class UsersController {
   };
 
   deleteUser = async (req, res) => {
-    if (!this.usersService.isPermitted(req, ['OWNER', 'ADMIN'])) {
-      return this.utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-    }
-
     const user = req.body;
 
     const objectToUpdate = {
@@ -126,10 +106,6 @@ export default class UsersController {
   }
 
   removeUserFromDatabase = async (req, res) => {
-    if (!this.isPermitted(req, ['ADMIN'])) {
-      return this.utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-    }
-
     try {
       const result = await this.model.destroy({
         where: {
