@@ -43,6 +43,7 @@ export default class AuthController {
       password: user.password,
       companyId: user.companyId,
       userRoleCode: 30, // todo basic user - should use constants file
+      status: 'ACTIVE',
     });
   };
 }

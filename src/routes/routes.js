@@ -34,9 +34,9 @@ router.delete('/companies', authenticateViaToken, CompaniesController.deleteComp
 // ===================================================
 // '/api/users'
 // =========================
-router.get('/users', authenticateViaToken, usersController.getUsers);
+router.get('/users', authenticateViaToken, usersController.getUsers); // request should start off not permitted
 router.post('/users', authenticateViaToken, usersController.addUser);
-router.put('/users', authenticateViaToken, usersController.updateUser);
+router.put('/users/update_user', authenticateViaToken, usersController.updateWholeUser);
 router.put('/users/update_email', authenticateViaToken, usersController.updateEmail);
 router.put('/users/update_name', authenticateViaToken, usersController.updateName);
 router.put('/users/update_password', authenticateViaToken, usersController.updatePassword);
