@@ -5,6 +5,10 @@ export default () => {
   return new Promise(async (resolve, reject) => {
     try {
       await db.UserRole.create({
+        code: 20,
+        description: 'Company Regular',
+      });
+      await db.UserRole.create({
         code: 30,
         description: 'Company Viewer',
       });

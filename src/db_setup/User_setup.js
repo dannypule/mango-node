@@ -11,7 +11,7 @@ export default () => {
       user = await db.User.create({
         first_name: 'super',
         last_name: 'admin',
-        email: 'super.admin@fake-email.infoz',
+        email: 'super.admin@email.infoz',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 110, // super admin role
       });
@@ -37,7 +37,7 @@ export default () => {
       user = await db.User.create({
         first_name: 'admin',
         last_name: 'admin',
-        email: 'admin@fake-email.infoz',
+        email: 'admin@email.infoz',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 100, // admin role
       });
@@ -137,13 +137,39 @@ export default () => {
         user_id: user.id,
       });
 
+      // *** USER 6 - company regular ***
+      user = await db.User.create({
+        first_name: 'company',
+        last_name: 'regular',
+        email: 'company.regular@email.infoz',
+        password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
+        user_role_code: 20,
+      });
+      await db.UserPhoneNumber.create({
+        phone: faker.phone.phoneNumber(),
+        type_code: Math.floor(Math.random() * 3) + 1,
+        user_id: user.id,
+      });
+      await db.UserAddress.create({
+        address_line_1: faker.address.streetAddress(),
+        address_line_2: faker.company.bsAdjective(),
+        address_line_3: faker.company.bsAdjective(),
+        address_line_4: faker.company.bsAdjective(),
+        town: faker.address.city(),
+        county: faker.address.county(),
+        country: faker.address.country(),
+        post_code: faker.address.zipCode(),
+        type_code: Math.floor(Math.random() * 3) + 1,
+        user_id: user.id,
+      });
+
       for (let i = 0; i < 400; i++) {
         db.User.create({
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
           email: faker.internet.email(),
           password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
-          user_role_code: [50, 40, 30][Math.floor(Math.random() * 3)],
+          user_role_code: [50, 40, 30, 20][Math.floor(Math.random() * 3)],
         }).then(() => {
           if (i === 199) {
             console.log(colors.green('Demo items inserted into User table.'));

@@ -10,7 +10,7 @@ import CompanyAddressesController from '../components/company_addresses';
 import CompanyPhoneNumbersController from '../components/company_phone_numbers';
 import UserAddressesController from '../components/user_addresses';
 import UserPhoneNumbersController from '../components/user_phone_numbers';
-// import { users, companies } from '../middleware/accessControls';
+import { users, APP_ROLES } from '../middleware/accessControls';
 
 require('./../middleware/passport')(passport);
 
@@ -34,7 +34,7 @@ router.delete('/companies', authenticateViaToken, CompaniesController.deleteComp
 // ===================================================
 // '/api/users'
 // =========================
-router.get('/users', authenticateViaToken, usersController.getUsers); // request should start off not permitted
+router.get('/users', authenticateViaToken, users.accessControls([APP_ROLES.COMPANY_VIEWER, APP_ROLES.COMPANY_EDITOR, APP_ROLES.COMPANY_ADMIN]), usersController.getUsers); // request should start off not permitted
 router.post('/users', authenticateViaToken, usersController.addUser);
 router.put('/users/update_user', authenticateViaToken, usersController.updateWholeUser);
 router.put('/users/update_email', authenticateViaToken, usersController.updateEmail);
