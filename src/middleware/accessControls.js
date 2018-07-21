@@ -20,8 +20,8 @@ export const users = {
   accessControls: (allowedRoles) => async (req, res, next) => {
     const { user } = req;
 
-    if (allowedRoles.includes(APP_ROLES.VIEWER)) {
-      if (user.userRoleCode === APP_ROLES.VIEWER) {
+    if (allowedRoles.includes(APP_ROLES.COMPANY_VIEWER)) {
+      if (user.userRoleCode === APP_ROLES.COMPANY_VIEWER) {
         return next();
       }
     }
