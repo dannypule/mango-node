@@ -2,7 +2,7 @@ export const formatFromDb = item => {
   return {
     id: item.id,
     title: item.title,
-    projectCreator: item.project_creator,
+    projectCreatorId: item.project_creator_id,
     companyId: item.company_id,
     createdAt: item.created_at,
     updatedAt: item.updated_at,
@@ -13,7 +13,7 @@ export const formatFromDb = item => {
 export const formatForDb = item => {
   return {
     title: item.title,
-    project_creator: item.projectCreator,
+    project_creator_id: item.projectCreatorId,
     company_id: item.companyId,
     status: item.status,
   };

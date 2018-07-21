@@ -6,19 +6,23 @@ export default () => {
     try {
       await db.UserRole.create({
         code: 30,
-        description: 'Role Type 1',
+        description: 'Company Viewer',
       });
       await db.UserRole.create({
         code: 40,
-        description: 'Main Account Holder',
+        description: 'Company Editor',
+      });
+      await db.UserRole.create({
+        code: 50,
+        description: 'Company Admin',
       });
       await db.UserRole.create({
         code: 100,
-        description: 'Admin Role',
+        description: 'Admin',
       });
       await db.UserRole.create({
         code: 110,
-        description: 'Super Admin Role',
+        description: 'Super Admin',
       });
 
       console.log(colors.green('Demo items inserted into UserRole table.'));

@@ -11,11 +11,6 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
       defaultValue: 'ACTIVE',
     },
-    access_type: {
-      allowNull: false,
-      type: DataTypes.ENUM('FULL', 'EDITOR', 'VIEWER'),
-      defaultValue: 'VIEWER',
-    },
   });
 
   UserCompany.associate = models => {

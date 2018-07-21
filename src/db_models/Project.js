@@ -22,7 +22,7 @@ export default (sequelize, DataTypes) => {
     //   through: 'user_project',
     // })
     Project.belongsTo(models.User, {
-      foreignKey: 'project_creator',
+      foreignKey: 'project_creator_id',
     });
     Project.belongsTo(models.Company, {
       foreignKey: 'company_id',
