@@ -7,10 +7,13 @@
 */
 import colors from 'colors/safe';
 import db from '../db_models';
+
 import UserRoleSetup from './UserRole_setup';
-import CompanySetup from './Company_setup';
 import UserSetup from './User_setup';
+import CompanySetup from './Company_setup';
+import UserCompanySetup from './UserCompany_setup';
 import ProjectSetup from './Project_setup';
+import UserProjectSetup from './UserProject_setup';
 import CompanyAddress from './CompanyAddress_setup';
 import CompanyPhoneNumber from './CompanyPhoneNumber_setup';
 import UserAddress from './UserAddress_setup';
@@ -34,7 +37,9 @@ const performSync = async () => {
   await UserRoleSetup();
   await UserSetup();
   await CompanySetup();
+  await UserCompanySetup();
   await ProjectSetup();
+  await UserProjectSetup();
   await CompanyAddress();
   await CompanyPhoneNumber();
   await UserAddress();

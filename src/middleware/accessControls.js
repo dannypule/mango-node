@@ -1,23 +1,27 @@
 import db from '../db_models';
 import utils from '../utils/utils';
 
+export const appRoles = {
+  SUPERADMIN: 110,
+  ADMIN: 100,
+  COMPANY_ADMIN: 50,
+  COMPANY_EDITOR: 40,
+  COMPANY_VIEWER: 40,
+  SELF: 'SELF',
+};
+
 export const users = {
   accessControls: (allowedUsers) => async (req, res, next) => {
     const userIdFromRequest = req.body.id;
     const authenticatedUser = req.user;
 
-    if (allowedUsers.includes('SELF')) {
+    if (allowedUsers.includes(appRoles.SELF)) {
       if (userIdFromRequest === authenticatedUser.id) {
         return next();
       }
     }
-    if (allowedUsers.includes('MANAGER')) {
-      if (userIdFromRequest === authenticatedUser.id) { // todo - if the user.id is on the item's manager's list
-        return next();
-      }
-    }
-    if (allowedUsers.includes('ADMIN')) {
-      if (authenticatedUser.userRoleCode >= 100) {
+    if (allowedUsers.includes(appRoles.ADMIN)) {
+      if (authenticatedUser.userRoleCode >= appRoles.ADMIN) {
         return next();
       }
     }

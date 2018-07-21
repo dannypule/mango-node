@@ -12,17 +12,14 @@ export default () => {
         name: 'Google',
       });
       await db.UserCompany.create({
-        access_type: 'FULL',
         user_id: 3,
         company_id: company.id,
       });
       await db.UserCompany.create({
-        access_type: 'EDITOR',
         user_id: 4,
         company_id: company.id,
       });
       await db.UserCompany.create({
-        access_type: 'VIEWER',
         user_id: 5,
         company_id: company.id,
       });
@@ -49,17 +46,14 @@ export default () => {
         name: 'Apple',
       });
       await db.UserCompany.create({
-        access_type: 'FULL',
         user_id: 3,
         company_id: company.id,
       });
       await db.UserCompany.create({
-        access_type: 'EDITOR',
         user_id: 4,
         company_id: company.id,
       });
       await db.UserCompany.create({
-        access_type: 'VIEWER',
         user_id: 5,
         company_id: company.id,
       });
@@ -81,11 +75,11 @@ export default () => {
         company_id: company.id,
       });
 
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 200; i++) {
         db.Company.create({
           name: faker.company.companyName(),
         }).then(() => {
-          if (i === 99) {
+          if (i === 199) {
             console.log(colors.green('Demo items inserted into Company table.'));
             resolve();
           }
