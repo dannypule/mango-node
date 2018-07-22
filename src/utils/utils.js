@@ -69,12 +69,12 @@ const isAdmin = (req) => {
   return false;
 };
 
-const ifAdminGetUserIdFromRequest = (req) => {
-  if (isAdmin(req)) {
-    return req.body.userId;
-  }
-  return req.user.id;
-};
+// const ifAdminGetUserIdFromRequest = (req) => {
+//   if (isAdmin(req)) {
+//     return req.body.userId;
+//   }
+//   return req.user.id;
+// };
 
 // //////////////////////////////
 // This is here to handle all the uncaught promise rejections
@@ -90,7 +90,7 @@ const utils = {
   fail,
   error,
   isAdmin,
-  ifAdminGetUserIdFromRequest,
+  // ifAdminGetUserIdFromRequest,
 };
 
 export default utils;
