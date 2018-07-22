@@ -22,7 +22,7 @@ module.exports = passport => {
             id: jwtPayload.userID,
           },
         });
-        if (!user || !userCompany) {
+        if (!user || !userCompany || user.status !== 'ACTIVE') {
           return done(null, false);
         }
         const formattedUser = {

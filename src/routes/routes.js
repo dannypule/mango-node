@@ -10,7 +10,7 @@ import CompanyAddressesController from '../components/company_addresses';
 import CompanyPhoneNumbersController from '../components/company_phone_numbers';
 import UserAddressesController from '../components/user_addresses';
 import UserPhoneNumbersController from '../components/user_phone_numbers';
-import { users, APP_ROLES } from '../middleware/accessControls';
+import { usersRoutes, SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN } from '../middleware/accessControls';
 
 require('./../middleware/passport')(passport);
 
@@ -34,13 +34,14 @@ router.delete('/companies', authenticateViaToken, CompaniesController.deleteComp
 // ===================================================
 // '/api/users'
 // =========================
-router.get('/users', authenticateViaToken, users.accessControls([APP_ROLES.COMPANY_VIEWER, APP_ROLES.COMPANY_EDITOR, APP_ROLES.COMPANY_ADMIN]), usersController.getUsers); // request should start off not permitted
-router.post('/users', authenticateViaToken, usersController.addUser);
-router.put('/users/update_user', authenticateViaToken, usersController.updateWholeUser);
-router.put('/users/update_email', authenticateViaToken, usersController.updateEmail);
-router.put('/users/update_name', authenticateViaToken, usersController.updateName);
-router.put('/users/update_password', authenticateViaToken, usersController.updatePassword);
-router.delete('/users', authenticateViaToken, usersController.deleteUser);
+router.get('/users', authenticateViaToken, usersRoutes.accessControls([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.getUsers); // request should start off not permitted
+router.post('/users/add_user', authenticateViaToken, usersRoutes.accessControls([COMPANY_EDITOR, COMPANY_ADMIN]), usersController.addUser);
+router.put('/users/update_user', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateWholeUser);
+router.put('/users/update_email', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateEmail);
+router.put('/users/update_name', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateName);
+router.put('/users/update_password', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updatePassword);
+router.put('/users/change_status', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.changeUserStatus);
+router.delete('/users/remove_user', authenticateViaToken, usersRoutes.accessControls([]), usersController.removeUserFromDatabase);
 
 // ===================================================
 // '/api/projects'

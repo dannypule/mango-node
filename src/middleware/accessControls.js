@@ -1,62 +1,55 @@
 import db from '../db_models';
 import utils from '../utils/utils';
 
-export const APP_ROLES = {
-  SUPERADMIN: 110,
-  ADMIN: 100,
-  COMPANY_ADMIN: 50,
-  COMPANY_EDITOR: 40,
-  COMPANY_VIEWER: 30,
-  COMPANY_REGULAR: 20,
-  SELF: 'SELF',
-};
+export const SUPERADMIN = 110;
+export const ADMIN = 100;
+export const COMPANY_ADMIN = 50;
+export const COMPANY_EDITOR = 40;
+export const COMPANY_VIEWER = 30;
+export const COMPANY_REGULAR = 20;
+export const SELF = 'SELF';
+
 
 // user can view, update, add his own user data
 // user can only view users from his company
 // user can only update users from his company with company_editor or company_admin permissing
 // user can only add users to his company with company_editor or company_admin permissing
 
-export const users = {
+export const usersRoutes = {
   accessControls: (allowedRoles) => async (req, res, next) => {
-    const { user } = req;
+    const authUser = req.user;
+    const reqUser = req.body;
 
-    if (allowedRoles.includes(APP_ROLES.COMPANY_VIEWER)) {
-      if (user.userRoleCode === APP_ROLES.COMPANY_VIEWER) {
+    if (allowedRoles.includes(SELF)) {
+      if (authUser.id === reqUser.id) {
         return next();
       }
     }
 
-    if (allowedRoles.includes(APP_ROLES.COMPANY_EDITOR)) {
-      if (user.userRoleCode === APP_ROLES.COMPANY_EDITOR) {
+    if (allowedRoles.includes(COMPANY_VIEWER)) {
+      if (authUser.userRoleCode === COMPANY_VIEWER) {
         return next();
       }
     }
 
-    if (allowedRoles.includes(APP_ROLES.COMPANY_ADMIN)) {
-      if (user.userRoleCode === APP_ROLES.COMPANY_ADMIN) {
+    if (allowedRoles.includes(COMPANY_EDITOR)) {
+      if (authUser.userRoleCode === COMPANY_EDITOR) {
         return next();
       }
     }
 
-    if (user.userRoleCode >= APP_ROLES.ADMIN) {
+    if (allowedRoles.includes(COMPANY_ADMIN)) {
+      if (authUser.userRoleCode === COMPANY_ADMIN) {
+        return next();
+      }
+    }
+
+    if (authUser.userRoleCode >= ADMIN) {
       return next();
     }
 
     utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-  },
-  allowSelf: () => (req, res, next) => {
-    const { user } = req;
-    const userFromBody = req.user;
-
-    if (user.id === userFromBody.id) {
-      return next();
-    }
-
-    if (user.userRoleCode >= APP_ROLES.ADMIN) {
-      return next();
-    }
-
-    utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
+    // utils.fail(res, { message: [authUser, reqUser] }, 403);
   },
 };
 
