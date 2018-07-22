@@ -45,12 +45,12 @@ export default class CompaniesController {
 
   addCompany = async (req, res) => {
     const formatted = formatForDb(req.body);
-    const userId = this.utils.ifAdminGetUserIdFromRequest(req);
+    const userId = req.user.id;
 
     try {
       const company = await this.model.create(formatted);
       await this.modelUserCompany.create({ user_id: userId, company_id: company.id });
-      this.utils.success(res, { company: formatFromDb(company), user: req.user, userId });
+      this.utils.success(res, { company: formatFromDb(company) });
     } catch (err) {
       this.utils.fail(res, err);
     }

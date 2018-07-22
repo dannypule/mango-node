@@ -26,9 +26,10 @@ router.post('/auth/register', AuthController.register);
 // ===================================================
 // '/api/companies'
 // =========================
-router.get('/companies', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.getCompanies);
-router.post('/companies', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.addCompany);
-router.put('/companies', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.updateCompany);
+router.get('/companies', authenticateViaToken, access([]), CompaniesController.getCompanies);
+router.get('/companies/single_company', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.getSingleCompany);
+router.post('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.addCompany);
+router.put('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.updateCompany);
 router.delete('/companies', authenticateViaToken, access([]), CompaniesController.deleteCompany);
 
 // ===================================================
@@ -41,7 +42,7 @@ router.put('/users/update_email', authenticateViaToken, access([SELF, COMPANY_ED
 router.put('/users/update_name', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateName);
 router.put('/users/update_password', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updatePassword);
 router.put('/users/change_status', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.changeUserStatus);
-router.delete('/users/remove_user', authenticateViaToken, access([]), usersController.removeUserFromDatabase);
+router.delete('/users/remove_user', authenticateViaToken, access([]), usersController.deleteUser);
 
 // ===================================================
 // '/api/projects'
