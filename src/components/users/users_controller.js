@@ -95,6 +95,16 @@ export default class UsersController {
     this.usersService.updateUser(req, res, user.id, objectToUpdate);
   };
 
+  changeUserStatus = async (req, res) => {
+    const user = req.body;
+
+    const objectToUpdate = {
+      status: user.status,
+    };
+
+    this.usersService.updateUser(req, res, user.id, objectToUpdate);
+  }
+
   deleteUser = async (req, res) => {
     const user = req.body;
 
@@ -109,7 +119,7 @@ export default class UsersController {
     try {
       const result = await this.model.destroy({
         where: {
-          email: req.body.email,
+          id: req.body.id,
         },
       });
       if (result === 1) {
