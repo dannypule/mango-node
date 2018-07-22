@@ -17,12 +17,7 @@ module.exports = passport => {
             id: jwtPayload.userID,
           },
         });
-        const userCompany = await db.UserCompany.findOne({
-          where: {
-            id: jwtPayload.userID,
-          },
-        });
-        if (!user || !userCompany || user.status !== 'ACTIVE') {
+        if (!user || user.status !== 'ACTIVE') {
           return done(null, false);
         }
         const formattedUser = {
@@ -33,7 +28,7 @@ module.exports = passport => {
           createdAt: user.created_at,
           updatedAt: user.updated_at,
           userRoleCode: user.user_role_code,
-          companyId: userCompany.company_id,
+          companyId: user.company_id,
           status: user.status,
         };
         return done(null, formattedUser);

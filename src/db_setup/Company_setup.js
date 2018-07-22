@@ -11,18 +11,6 @@ export default () => {
       company = await db.Company.create({
         name: 'Google',
       });
-      await db.UserCompany.create({
-        user_id: 3,
-        company_id: company.id,
-      });
-      await db.UserCompany.create({
-        user_id: 4,
-        company_id: company.id,
-      });
-      await db.UserCompany.create({
-        user_id: 5,
-        company_id: company.id,
-      });
       await db.CompanyAddress.create({
         address_line_1: faker.address.streetAddress(),
         address_line_2: faker.company.bsAdjective(),
@@ -44,18 +32,6 @@ export default () => {
       // *** COMPANY 2 - Apple ***
       company = await db.Company.create({
         name: 'Apple',
-      });
-      await db.UserCompany.create({
-        user_id: 3,
-        company_id: company.id,
-      });
-      await db.UserCompany.create({
-        user_id: 4,
-        company_id: company.id,
-      });
-      await db.UserCompany.create({
-        user_id: 5,
-        company_id: company.id,
       });
       await db.CompanyAddress.create({
         address_line_1: faker.address.streetAddress(),
