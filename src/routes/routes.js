@@ -10,7 +10,7 @@ import CompanyAddressesController from '../components/company_addresses';
 import CompanyPhoneNumbersController from '../components/company_phone_numbers';
 import UserAddressesController from '../components/user_addresses';
 import UserPhoneNumbersController from '../components/user_phone_numbers';
-import { usersRoutes, SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN } from '../middleware/accessControls';
+import { access, SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN } from '../middleware/accessControls';
 
 require('./../middleware/passport')(passport);
 
@@ -26,22 +26,22 @@ router.post('/auth/register', AuthController.register);
 // ===================================================
 // '/api/companies'
 // =========================
-router.get('/companies', authenticateViaToken, CompaniesController.getCompanies);
-router.post('/companies', authenticateViaToken, CompaniesController.addCompany);
-router.put('/companies', authenticateViaToken, CompaniesController.updateCompany);
-router.delete('/companies', authenticateViaToken, CompaniesController.deleteCompany);
+router.get('/companies', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.getCompanies);
+router.post('/companies', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.addCompany);
+router.put('/companies', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.updateCompany);
+router.delete('/companies', authenticateViaToken, access([]), CompaniesController.deleteCompany);
 
 // ===================================================
 // '/api/users'
 // =========================
-router.get('/users', authenticateViaToken, usersRoutes.accessControls([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.getUsers); // request should start off not permitted
-router.post('/users/add_user', authenticateViaToken, usersRoutes.accessControls([COMPANY_EDITOR, COMPANY_ADMIN]), usersController.addUser);
-router.put('/users/update_user', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateWholeUser);
-router.put('/users/update_email', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateEmail);
-router.put('/users/update_name', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateName);
-router.put('/users/update_password', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updatePassword);
-router.put('/users/change_status', authenticateViaToken, usersRoutes.accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.changeUserStatus);
-router.delete('/users/remove_user', authenticateViaToken, usersRoutes.accessControls([]), usersController.removeUserFromDatabase);
+router.get('/users', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.getUsers); // request should start off not permitted
+router.post('/users/add_user', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), usersController.addUser);
+router.put('/users/update_user', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateWholeUser);
+router.put('/users/update_email', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateEmail);
+router.put('/users/update_name', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateName);
+router.put('/users/update_password', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updatePassword);
+router.put('/users/change_status', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.changeUserStatus);
+router.delete('/users/remove_user', authenticateViaToken, access([]), usersController.removeUserFromDatabase);
 
 // ===================================================
 // '/api/projects'

@@ -9,48 +9,40 @@ export const COMPANY_VIEWER = 30;
 export const COMPANY_REGULAR = 20;
 export const SELF = 'SELF';
 
+export const access = (allowedRoles) => async (req, res, next) => {
+  const authUser = req.user;
+  const reqUser = req.body;
 
-// user can view, update, add his own user data
-// user can only view users from his company
-// user can only update users from his company with company_editor or company_admin permissing
-// user can only add users to his company with company_editor or company_admin permissing
-
-export const usersRoutes = {
-  accessControls: (allowedRoles) => async (req, res, next) => {
-    const authUser = req.user;
-    const reqUser = req.body;
-
-    if (allowedRoles.includes(SELF)) {
-      if (authUser.id === reqUser.id) {
-        return next();
-      }
-    }
-
-    if (allowedRoles.includes(COMPANY_VIEWER)) {
-      if (authUser.userRoleCode === COMPANY_VIEWER) {
-        return next();
-      }
-    }
-
-    if (allowedRoles.includes(COMPANY_EDITOR)) {
-      if (authUser.userRoleCode === COMPANY_EDITOR) {
-        return next();
-      }
-    }
-
-    if (allowedRoles.includes(COMPANY_ADMIN)) {
-      if (authUser.userRoleCode === COMPANY_ADMIN) {
-        return next();
-      }
-    }
-
-    if (authUser.userRoleCode >= ADMIN) {
+  if (allowedRoles.includes(SELF)) {
+    if (authUser.id === reqUser.id) {
       return next();
     }
+  }
 
-    utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-    // utils.fail(res, { message: [authUser, reqUser] }, 403);
-  },
+  if (allowedRoles.includes(COMPANY_VIEWER)) {
+    if (authUser.userRoleCode === COMPANY_VIEWER) {
+      return next();
+    }
+  }
+
+  if (allowedRoles.includes(COMPANY_EDITOR)) {
+    if (authUser.userRoleCode === COMPANY_EDITOR) {
+      return next();
+    }
+  }
+
+  if (allowedRoles.includes(COMPANY_ADMIN)) {
+    if (authUser.userRoleCode === COMPANY_ADMIN) {
+      return next();
+    }
+  }
+
+  if (authUser.userRoleCode >= ADMIN) {
+    return next();
+  }
+
+  utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
+  // utils.fail(res, { message: [authUser, reqUser] }, 403);
 };
 
 export const companies = {
