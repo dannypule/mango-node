@@ -20,6 +20,7 @@ export default class UsersController {
       // default db query
       const dbQuery = {
         where: {},
+        include: ['Company'],
         limit,
         offset,
         order: [['id', 'DESC']],
@@ -37,7 +38,7 @@ export default class UsersController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      this.utils.success(res, { content: formatted, count: data.count, pages, page, length: formatted.length });
+      this.utils.success(res, { rows: data.rows, content: formatted, count: data.count, pages, page, length: formatted.length });
     } catch (err) {
       this.utils.fail(res, err);
     }

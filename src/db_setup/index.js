@@ -9,9 +9,8 @@ import colors from 'colors/safe';
 import db from '../db_models';
 
 import UserRoleSetup from './UserRole_setup';
-import UserSetup from './User_setup';
 import CompanySetup from './Company_setup';
-import UserCompanySetup from './UserCompany_setup';
+import UserSetup from './User_setup';
 import ProjectSetup from './Project_setup';
 import UserProjectSetup from './UserProject_setup';
 import CompanyAddress from './CompanyAddress_setup';
@@ -35,9 +34,8 @@ const performSync = async () => {
   // insert mock data
   // ///////////////////////////////////////////////////////////////////////////////////////
   await UserRoleSetup();
-  await UserSetup();
   await CompanySetup();
-  await UserCompanySetup();
+  await UserSetup();
   await ProjectSetup();
   await UserProjectSetup();
   await CompanyAddress();

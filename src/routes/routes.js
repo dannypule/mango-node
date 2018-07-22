@@ -27,7 +27,6 @@ router.post('/auth/register', AuthController.register);
 // '/api/companies'
 // =========================
 router.get('/companies', authenticateViaToken, access([]), CompaniesController.getCompanies);
-router.get('/companies/single_company', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.getSingleCompany);
 router.post('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.addCompany);
 router.put('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.updateCompany);
 router.delete('/companies', authenticateViaToken, access([]), CompaniesController.deleteCompany);
