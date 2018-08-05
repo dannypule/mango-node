@@ -11,7 +11,7 @@ export default () => {
       user = await db.User.create({
         first_name: 'super',
         last_name: 'admin',
-        email: 'super.admin@email.infoz',
+        email: 'super.admin@email.fake',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 110, // super admin role
         company_id: 1,
@@ -38,7 +38,7 @@ export default () => {
       user = await db.User.create({
         first_name: 'admin',
         last_name: 'admin',
-        email: 'admin@email.infoz',
+        email: 'admin@email.fake',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 100, // admin role
         company_id: 1,
@@ -65,7 +65,7 @@ export default () => {
       user = await db.User.create({
         first_name: 'company',
         last_name: 'admin',
-        email: 'company.admin@email.infoz',
+        email: 'company.admin@email.fake',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 50,
         company_id: 1,
@@ -92,7 +92,7 @@ export default () => {
       user = await db.User.create({
         first_name: 'company',
         last_name: 'editor',
-        email: 'company.editor@email.infoz',
+        email: 'company.editor@email.fake',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 40,
         company_id: 1,
@@ -119,7 +119,7 @@ export default () => {
       user = await db.User.create({
         first_name: 'company',
         last_name: 'viewer',
-        email: 'company.viewer@email.infoz',
+        email: 'company.viewer@email.fake',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 30,
         company_id: 1,
@@ -146,7 +146,7 @@ export default () => {
       user = await db.User.create({
         first_name: 'company',
         last_name: 'regular',
-        email: 'company.regular@email.infoz',
+        email: 'company.regular@email.fake',
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 20,
         company_id: 1,
@@ -169,16 +169,20 @@ export default () => {
         user_id: user.id,
       });
 
-      for (let i = 0; i < 400; i++) {
+      const amount = 400;
+      for (let i = 0; i <= amount; i++) {
+        const firstName = faker.name.firstName();
+        const lastName = faker.name.lastName();
         db.User.create({
-          first_name: faker.name.firstName(),
-          last_name: faker.name.lastName(),
-          email: faker.internet.email(),
+          first_name: firstName,
+          last_name: lastName,
+          email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${i}@email.fake`,
           password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
           user_role_code: [50, 40, 30, 20][Math.floor(Math.random() * 3)],
           company_id: 2,
-        }).then(() => {
-          if (i === 199) {
+        }).then((user) => {
+          console.log(colors.green(user.email));
+          if (i === amount) {
             console.log(colors.green('Demo items inserted into User table.'));
             resolve();
           }

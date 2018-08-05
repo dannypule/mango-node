@@ -10,10 +10,10 @@ export const SELF = 'SELF';
 
 export const access = (allowedRoles) => async (req, res, next) => {
   const authUser = req.user;
-  const reqUser = req.body;
+  const requestedUser = req.body;
 
   if (allowedRoles.includes(SELF)) {
-    if (authUser.id === reqUser.id) {
+    if (requestedUser && requestedUser.id && authUser.id === requestedUser.id) {
       return next();
     }
   }
@@ -41,6 +41,6 @@ export const access = (allowedRoles) => async (req, res, next) => {
   }
 
   utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-  // utils.fail(res, { message: [authUser, reqUser] }, 403);
+  // utils.fail(res, { message: [authUser, requestedUser] }, 403);
 };
 
