@@ -14,22 +14,17 @@ module.exports = passport => {
       try {
         const user = await db.User.findOne({
           where: {
-            id: jwtPayload.userID,
+            id: jwtPayload.userId,
           },
         });
         if (!user || user.status !== 'ACTIVE') {
           return done(null, false);
         }
         const formattedUser = {
-          id: user.id,
-          firstName: user.first_name,
-          lastName: user.last_name,
-          email: user.email,
-          createdAt: user.created_at,
-          updatedAt: user.updated_at,
-          userRoleCode: user.user_role_code,
-          companyId: user.company_id,
-          status: user.status,
+          id: jwtPayload.userId,
+          userRoleCode: jwtPayload.userRoleCode,
+          companyId: jwtPayload.companyId,
+          status: jwtPayload.status,
         };
         return done(null, formattedUser);
       } catch (err) {

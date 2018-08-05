@@ -20,7 +20,6 @@ export default class UsersController {
       // default db query
       const dbQuery = {
         where: {},
-        include: ['Company'],
         limit,
         offset,
         order: [['id', 'DESC']],

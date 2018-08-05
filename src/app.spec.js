@@ -16,7 +16,7 @@ const request = supertest('http://localhost:5566');
 //   timeout: 10000,
 // })
 
-describe('When I make an API request', () => {
+xdescribe('When I make an API request', () => {
   beforeAll(done => {
     request.get('/').expect(200, (err, res) => {
       // console.log(res.body)
