@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { validateUser } from '../../validation_models/user_validation';
+import { validateUser } from '../../form_validation/user';
 
 export const formatFromDb = user => {
   return {

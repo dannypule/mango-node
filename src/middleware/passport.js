@@ -17,16 +17,16 @@ module.exports = passport => {
             id: jwtPayload.userId,
           },
         });
-        if (!user || user.status !== 'ACTIVE') {
+        if (!user || user.status !== 'ACTIVE') { // @todo - to scale up we would need a redis cache-based solution instead of querying the db
           return done(null, false);
         }
-        const formattedUser = {
+        const userFromJwtPayload = {
           id: jwtPayload.userId,
           userRoleCode: jwtPayload.userRoleCode,
           companyId: jwtPayload.companyId,
           status: jwtPayload.status,
         };
-        return done(null, formattedUser);
+        return done(null, userFromJwtPayload);
       } catch (err) {
         console.log(err, 'Error setting up passport strategy'); // @todo handle errors - this error would happen on app init
       }
