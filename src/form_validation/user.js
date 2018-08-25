@@ -1,6 +1,7 @@
+
 import yup from 'yup';
 
-export const UserSchema = yup.object().shape({
+export const UserYupSchema = yup.object().shape({
   firstName: yup.string().required('A first name is required.'),
   lastName: yup.string().required('A last name is required.'),
   email: yup
@@ -13,5 +14,5 @@ export const UserSchema = yup.object().shape({
 });
 
 export const validateUser = async (req, res, user) => {
-  return UserSchema.validate(user);
+  return UserYupSchema.validate(user);
 };

@@ -5,7 +5,7 @@
 // import app from './app'
 
 // chai.use(chaiHttp)
-import faker from 'faker';
+// import faker from 'faker';
 import supertest from 'supertest';
 
 const request = supertest('http://localhost:5566');
@@ -55,20 +55,20 @@ xdescribe('When I make an API request', () => {
   xdescribe('to /users', () => {
     describe('and I make a GET request', () => {
       describe(`and I don't include a page number`, () => {
-        it('should return the expected data', done => {
-          // axiosInstance
-          //   .get('/users')
-          //   .then(res => {
-          //     expect(res.status).toBe(200)
-          //     const resData = res.data.data
-          //     expect(resData.users.length).not.toBe(0)
-          //     done()
-          //   })
-          //   .catch(error => {
-          //     expect(error).toBe(null)
-          //     done()
-          //   })
-        });
+        // it('should return the expected data', done => {
+        // axiosInstance
+        //   .get('/users')
+        //   .then(res => {
+        //     expect(res.status).toBe(200)
+        //     const resData = res.data.data
+        //     expect(resData.users.length).not.toBe(0)
+        //     done()
+        //   })
+        //   .catch(error => {
+        //     expect(error).toBe(null)
+        //     done()
+        //   })
+        // });
       });
       //   describe(`and I include a page number`, () => {
       //     it('should return the expected data and the correct page number', done => {

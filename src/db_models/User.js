@@ -1,6 +1,4 @@
-// import bcrypt from 'bcrypt'
-import config from '../config';
-import jwt from 'jsonwebtoken';
+import { getJWT } from '../utils/jwt';
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -41,18 +39,7 @@ export default (sequelize, DataTypes) => {
     User.belongsTo(models.UserRole);
   };
 
-  User.prototype.getJWT = user => {
-    const expirationTime = parseInt(config.jwt_expiration, 10);
-    const token = jwt.sign({
-      userId: user.id,
-      userRoleCode: user.user_role_code,
-      companyId: user.company_id,
-      status: user.status,
-    }, config.jwt_encryption, {
-      expiresIn: expirationTime,
-    });
-    return `Bearer ${token}`;
-  };
+  User.prototype.getJWT = getJWT;
 
   return User;
 };
