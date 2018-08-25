@@ -10,7 +10,7 @@ export default class ProjectsController {
     try {
       const limit = 15; // number of records per page
 
-      const { id, companyId, projectOwner } = req.query;
+      const { id, companyId, projectCreatorId } = req.query;
 
       const page = parseInt(req.query.page, 10) || 1; // page 1 default
 
@@ -40,11 +40,11 @@ export default class ProjectsController {
         };
       }
 
-      // ability to search by projectOwner
-      if (projectOwner !== undefined) {
+      // ability to search by projectCreatorId
+      if (projectCreatorId !== undefined) {
         dbQuery.where = {
           ...dbQuery.where,
-          project_owner: parseInt(projectOwner, 10),
+          project_creator_id: parseInt(projectCreatorId, 10),
         };
       }
 

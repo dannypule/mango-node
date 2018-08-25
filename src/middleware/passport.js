@@ -1,7 +1,6 @@
 import passportJWT from 'passport-jwt';
 import db from '../db_models';
 import config from '../config';
-import { formatFromDb } from '../components/users/users_service';
 
 const { ExtractJwt, Strategy } = passportJWT;
 
@@ -15,13 +14,19 @@ module.exports = passport => {
       try {
         const user = await db.User.findOne({
           where: {
-            id: jwtPayload.userID,
+            id: jwtPayload.userId,
           },
         });
-        if (!user) {
+        if (!user || user.status !== 'ACTIVE') { // @todo - to scale up we would need a redis cache-based solution instead of querying the db
           return done(null, false);
         }
-        return done(null, formatFromDb(user));
+        const userFromJwtPayload = {
+          id: jwtPayload.userId,
+          userRoleCode: jwtPayload.userRoleCode,
+          companyId: jwtPayload.companyId,
+          status: jwtPayload.status,
+        };
+        return done(null, userFromJwtPayload);
       } catch (err) {
         console.log(err, 'Error setting up passport strategy'); // @todo handle errors - this error would happen on app init
       }

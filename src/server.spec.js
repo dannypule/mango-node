@@ -3,7 +3,7 @@ import supertest from 'supertest';
 
 const request = supertest('http://localhost:5566');
 
-describe('GET /api', () => {
+xdescribe('GET /api', () => {
   it('should return 200 OK', done => {
     request.get('/').expect(200, (err, res) => {
       // console.log(res.body)

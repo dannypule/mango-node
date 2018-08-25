@@ -45,7 +45,7 @@ const resMock = jest.fn();
 const addUserMock = jest.fn();
 let controller;
 
-describe('UsersController', () => {
+xdescribe('UsersController', () => {
   describe('when getUsers is called', () => {
     beforeEach(() => {
       jest.clearAllMocks();
