@@ -46,7 +46,7 @@ export default class UsersController {
   addUser = (req, res) => {
     const user = req.body;
 
-    this.usersService.addUser(req, res, user);
+    this.usersService.addUser(req, res, user, false);
   };
 
   updateName = async (req, res) => {
