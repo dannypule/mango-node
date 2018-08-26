@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import utils from '../../utils/utils';
+import { getJWT } from '../../utils/jwt';
 
 export default class AuthController {
   constructor({ model, usersService }) {
@@ -23,7 +24,7 @@ export default class AuthController {
           return;
         }
         if (r) {
-          utils.success(res, { token: user.getJWT(user) });
+          utils.success(res, { token: getJWT(user) });
         } else {
           utils.fail(res, { message: `Couldn't log in.` }, 403);
         }
@@ -44,6 +45,6 @@ export default class AuthController {
       companyId: user.companyId,
       userRoleCode: 30, // todo basic user - should use constants file
       status: 'ACTIVE',
-    });
+    }, true);
   };
 }

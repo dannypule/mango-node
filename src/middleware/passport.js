@@ -24,6 +24,7 @@ module.exports = passport => {
           id: jwtPayload.userId,
           userRoleCode: jwtPayload.userRoleCode,
           companyId: jwtPayload.companyId,
+          verified: jwtPayload.verified,
           status: jwtPayload.status,
         };
         return done(null, userFromJwtPayload);

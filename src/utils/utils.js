@@ -42,6 +42,9 @@ const fail = (res, data, code) => {
   if (typeof data === 'object' && typeof data.message !== 'undefined') {
     sendData = { ...sendData, message: data.message };
   }
+  if (typeof data === 'string') {
+    sendData = { ...sendData, message: data };
+  }
   res.statusCode = code || 200;
 
   return res.json(sendData);
