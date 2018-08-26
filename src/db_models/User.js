@@ -1,5 +1,3 @@
-import { getJWT } from '../utils/jwt';
-
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
@@ -27,6 +25,11 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING(150),
       },
+      verified: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       status: {
         allowNull: false,
         type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
@@ -38,8 +41,6 @@ export default (sequelize, DataTypes) => {
   User.associate = models => {
     User.belongsTo(models.UserRole);
   };
-
-  User.prototype.getJWT = getJWT;
 
   return User;
 };

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { validateUser } from '../../form_validation/user';
+import { getJWT } from '../../utils/jwt';
 
 export const formatFromDb = user => {
   return {
@@ -10,6 +11,7 @@ export const formatFromDb = user => {
     createdAt: user.created_at,
     updatedAt: user.updated_at,
     userRoleCode: user.user_role_code,
+    verfied: user.verfied,
     status: user.status,
   };
 };
@@ -20,7 +22,7 @@ class UsersService {
     this.utils = utils;
   }
 
-  addUser = async (req, res, user) => {
+  addUser = async (req, res, user, sendToken) => {
     try {
       await validateUser(req, res, user);
 
@@ -36,9 +38,11 @@ class UsersService {
       formatted.password = await this.saltAndHashPassword(formatted.password);
 
       const _user = await this.model.create(formatted, { individualHooks: true });
-      this.utils.success(res, formatFromDb(_user));
+      const token = sendToken ? getJWT(_user) : '';
+
+      this.utils.success(res, { user: formatFromDb(_user), token });
     } catch (err) {
-      this.utils.fail(res, err);
+      this.utils.fail(res, err.errors[0].message);
     }
   };
 

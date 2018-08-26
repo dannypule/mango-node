@@ -7,6 +7,7 @@ export const getJWT = user => {
     userId: user.id,
     userRoleCode: user.user_role_code,
     companyId: user.company_id,
+    verified: user.verified,
     status: user.status,
   }, config.jwt_encryption, {
     expiresIn: expirationTime,
