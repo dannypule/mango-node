@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
-import utils from '../../utils/utils';
 import { getJWT } from '../../utils/jwt';
 
 export default class AuthController {
-  constructor({ model, usersService }) {
+  constructor({ model, usersService, utils }) {
     this.model = model;
     this.usersService = usersService;
+    this.utils = utils;
   }
 
   login = async (req, res) => {
@@ -16,21 +16,21 @@ export default class AuthController {
         },
       });
 
-      if (!user) utils.fail(res, { message: `Couldn't log in.` });
+      if (!user) this.utils.fail(res, { message: `Couldn't log in.` });
 
       bcrypt.compare(req.body.password, user.password, (err, r) => {
         if (err) {
-          utils.fail(res, err);
+          this.utils.fail(res, err);
           return;
         }
         if (r) {
-          utils.success(res, { token: getJWT(user) });
+          this.utils.success(res, { token: getJWT(user) });
         } else {
-          utils.fail(res, { message: `Couldn't log in.` }, 403);
+          this.utils.fail(res, { message: `Couldn't log in.` }, 403);
         }
       });
     } catch (err) {
-      utils.fail(res, err);
+      this.utils.fail(res, err);
     }
   };
 
