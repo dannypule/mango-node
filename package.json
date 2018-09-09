@@ -12,7 +12,7 @@
     "db:setup": "NODE_ENV=development babel-node src/db_setup",
     "db:setup:staging": "NODE_ENV=staging babel-node src/db_setup",
     "db": "docker-compose -f docker-compose.yml up",
-    "test": "jest --watch",
+    "test": "NODE_ENV=development jest --watch",
     "test:c": "jest --forceExit --coverage --verbose",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
