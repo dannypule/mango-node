@@ -36,6 +36,7 @@ describe('Given AuthController', () => {
           done();
         })
         .catch(err => {
+          console.log(err);
           throw new Error(err);
         });
     });
@@ -83,12 +84,13 @@ describe('Given AuthController', () => {
         .then((res) => {
           expect(res.status).toBe(200);
           expect(res.data.ok).toBe(true);
-          // expect(res.data.).toBe(null);
+          expect(res.data.data.user).toBeTruthy();
           expect(res.data.data.token.includes('Bearer')).toBe(true);
           newUserId = res.data.data.user.id;
           done();
         })
         .catch(err => {
+          console.log(err);
           throw new Error(err);
         });
     });
