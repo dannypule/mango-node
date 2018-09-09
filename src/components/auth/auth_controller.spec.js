@@ -1,57 +1,96 @@
-import AuthController from './auth_controller';
+import axios from 'axios';
+import config from '../../config';
 
-const reqMock = {
-  body: {
-    firstName: 'su',
-    lastName: 'li',
-    email: 'su.li@email.fake',
-    password: 'supassword',
-    companyId: 123,
-  },
-};
-const resMock = {};
-const utilsMock = {
-  success: jest.fn(),
-  fail: jest.fn(),
-};
-const modelMock = {
-  findOne: jest.fn(),
-};
-const usersServiceMock = {
-  addUser: jest.fn(),
-};
+const axiosInstance = axios.create({
+  baseURL: `${config.baseURL}`,
+  timeout: 5000,
+});
 
 describe('Given AuthController', () => {
-  let controller;
-
-  afterEach(() => {
-    utilsMock.success.mockReset();
-    utilsMock.fail.mockReset();
-    modelMock.findOne.mockReset();
-    usersServiceMock.addUser.mockReset();
-  });
-
-  /* register */
-  describe('and `register` is called', () => {
-    beforeEach(() => {
-      controller = new AuthController({ model: modelMock, usersService: usersServiceMock, utils: utilsMock });
-      controller.register(reqMock, resMock);
-    });
-
-    it('should call `addUser`', () => {
-      const firstArg = { body: { companyId: 123, email: 'su.li@email.fake', firstName: 'su', lastName: 'li', password: 'supassword' } };
-      const secondArd = {};
-      const thirdArg = { companyId: 123, email: 'su.li@email.fake', firstName: 'su', lastName: 'li', password: 'supassword', status: 'ACTIVE', userRoleCode: 30 };
-      const fourthArg = true;
-      expect(usersServiceMock.addUser).toHaveBeenCalledWith(firstArg, secondArd, thirdArg, fourthArg);
-    });
+  beforeAll((done) => {
+    axiosInstance
+      .post('/api/auth/login', {
+        email: 'super.admin@email.fake',
+        password: 'supersecure',
+      })
+      .then(res => {
+        axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
+        done();
+      });
   });
 
   /* login */
-  describe('and `login` is called', () => {
+  describe('user tries to login', () => {
+    const postData = {
+      email: 'company.admin@email.fake',
+      password: 'supersecure',
+    };
+
+    it('should log user in', (done) => {
+      axiosInstance
+        .post('/api/auth/login', postData)
+        .then((res) => {
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
+          expect(res.data.data.token.includes('Bearer')).toBe(true);
+          done();
+        })
+        .catch(err => {
+          throw new Error(err);
+        });
+    });
+  });
+
+  /* register */
+  describe('and user tries to register an account', () => {
+    let postData;
+    let newUserId;
+
     beforeEach(() => {
-      controller = new AuthController({ model: modelMock, usersService: usersServiceMock, utils: utilsMock });
-      controller.login(reqMock, resMock);
+      postData = {
+        firstName: 'test',
+        lastName: 'user',
+        email: 'test.user@email.fakez',
+        password: 'supersecure',
+        companyId: 1,
+      };
+    });
+
+    afterEach((done) => {
+      if (newUserId) {
+        const postData = { id: newUserId };
+        console.log(`Deleting user #${newUserId}`);
+        axiosInstance
+          .delete('/api/users/remove_user', {
+            data: postData,
+          })
+          .then((res) => {
+            if (res.data.ok) {
+              console.log(`User #${newUserId} deleted`);
+            } else {
+              console.log(`Unable to delete user #${newUserId}`);
+            }
+            done();
+          });
+      } else {
+        done();
+      }
+    });
+
+    it('should register a new user', (done) => {
+      axiosInstance
+        .post('/api/auth/register', postData)
+        .then((res) => {
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
+          // expect(res.data.).toBe(null);
+          expect(res.data.data.token.includes('Bearer')).toBe(true);
+          newUserId = res.data.data.user.id;
+          done();
+        })
+        .catch(err => {
+          throw new Error(err);
+        });
     });
   });
 });
