@@ -28,9 +28,11 @@ describe('Given /api/users', () => {
           .then((res) => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
+
             expect(res.data.data.content.length).toBe(15);
             expect(res.data.data.page).toBe(1);
             expect(res.data.data.length).toBe(15);
+
             done();
           })
           .catch(err => {
@@ -49,9 +51,11 @@ describe('Given /api/users', () => {
           .then((res) => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
+
             expect(res.data.data.content.length).toBe(15);
             expect(res.data.data.page).toBe(4);
             expect(res.data.data.length).toBe(15);
+
             done();
           })
           .catch(err => {
@@ -70,9 +74,11 @@ describe('Given /api/users', () => {
           .then((res) => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
+
             expect(res.data.data.content.length).toBe(1);
             expect(res.data.data.page).toBe(1);
             expect(res.data.data.length).toBe(1);
+
             done();
           })
           .catch(err => {
@@ -87,27 +93,6 @@ describe('Given /api/users', () => {
     describe('and user wants to add user', () => {
       let newUserId;
 
-      afterAll((done) => {
-        if (newUserId) {
-          const postData = { id: newUserId };
-          console.log(`Deleting user #${newUserId}`);
-          axiosInstance
-            .delete('/api/users/remove_user', {
-              data: postData,
-            })
-            .then((res) => {
-              if (res.data.ok) {
-                console.log(`User #${newUserId} was deleted`);
-              } else {
-                console.log(`Unable to delete user #${newUserId}`);
-              }
-              done();
-            });
-        } else {
-          done();
-        }
-      });
-
       it('should add user', (done) => {
         const postData = {
           firstName: 'some',
@@ -121,9 +106,12 @@ describe('Given /api/users', () => {
           .then((res) => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
+
             expect(res.data.data.user).toBeTruthy();
             expect(res.data.data.token.includes('Bearer')).toBe(false);
+
             newUserId = res.data.data.user.id;
+
             done();
           })
           .catch(err => {
@@ -155,6 +143,7 @@ describe('Given /api/users', () => {
               expect(res.data.data.content.email).toBe(postData.email);
               expect(res.data.data.content.userRoleCode).toBe(postData.userRoleCode);
               expect(res.data.data.content.status).toBe(postData.status);
+
               done();
             })
             .catch(err => {
@@ -177,7 +166,9 @@ describe('Given /api/users', () => {
             .then((res) => {
               expect(res.status).toBe(200);
               expect(res.data.ok).toBe(true);
+
               expect(res.data.data.content.email).toBe(postData.email);
+
               done();
             })
             .catch(err => {
@@ -188,8 +179,8 @@ describe('Given /api/users', () => {
         });
       });
 
-      /* PUT /api/users/update_user */
-      describe('and user wants to update user', () => {
+      /* PUT /api/users/update_name */
+      describe('and user wants to update user\'s names', () => {
         it('should update name', (done) => {
           const postData = {
             id: newUserId,
@@ -197,16 +188,99 @@ describe('Given /api/users', () => {
             lastName: 'updated_last_name',
           };
           axiosInstance
-            .put('/api/users/update_user', postData)
+            .put('/api/users/update_name', postData)
             .then((res) => {
               expect(res.status).toBe(200);
               expect(res.data.ok).toBe(true);
+
               expect(res.data.data.content.firstName).toBe(postData.firstName);
               expect(res.data.data.content.lastName).toBe(postData.lastName);
+
               done();
             })
             .catch(err => {
               console.log(err);
+              done();
+              throw new Error(err);
+            });
+        });
+      });
+
+      /* PUT /api/users/update_password */
+      describe('and user wants to update user\'s password', () => {
+        it('should update password', (done) => {
+          const postData = {
+            id: newUserId,
+            password: 'football',
+          };
+          axiosInstance
+            .put('/api/users/update_password', postData)
+            .then((res) => {
+              expect(res.status).toBe(200);
+              expect(res.data.ok).toBe(true);
+
+              expect(res.data.data.content.id).toBe(postData.id);
+
+              done();
+            })
+            .catch(err => {
+              console.log(err);
+              done();
+              throw new Error(err);
+            });
+        });
+      });
+
+      /* PUT /api/users/update_status */
+      describe('and user wants to update user\'s status', () => {
+        it('should update status', (done) => {
+          const postData = {
+            id: newUserId,
+            status: 'DELETED',
+          };
+          axiosInstance
+            .put('/api/users/update_status', postData)
+            .then((res) => {
+              expect(res.status).toBe(200);
+              expect(res.data.ok).toBe(true);
+
+              expect(res.data.data.content.id).toBe(postData.id);
+
+              done();
+            })
+            .catch(err => {
+              console.log(err);
+              done();
+              throw new Error(err);
+            });
+        });
+      });
+
+      /* DELETE /api/users/remove_user */
+      describe('and user wants to permanently remove user from database', () => {
+        it('should remove user from databse', (done) => {
+          const postData = {
+            id: newUserId,
+          };
+          axiosInstance
+            .delete('/api/users/remove_user', {
+              data: postData,
+            })
+            .then((res) => {
+              if (res.data.ok) {
+                console.log(`User #${newUserId} was deleted`);
+              } else {
+                console.log(`Unable to delete user #${newUserId}`);
+              }
+
+              expect(res.status).toBe(200);
+              expect(res.data.ok).toBe(true);
+
+              done();
+            })
+            .catch(err => {
+              console.log(err);
+              console.log(`Error deleting user #${newUserId}`);
               done();
               throw new Error(err);
             });
