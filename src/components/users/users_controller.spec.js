@@ -6,6 +6,8 @@ const axiosInstance = axios.create({
   timeout: 5000,
 });
 
+// todo delete user by email at beginning of tests
+
 describe('Given /api/users', () => {
   describe('and a super user is logged in', () => {
     beforeAll((done) => {
@@ -258,7 +260,7 @@ describe('Given /api/users', () => {
 
       /* DELETE /api/users/remove_user */
       describe('and user wants to permanently remove user from database', () => {
-        it('should remove user from databse', (done) => {
+        it('should remove user from database', (done) => {
           const postData = {
             id: newUserId,
           };

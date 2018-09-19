@@ -34,6 +34,16 @@ describe('Given /api/user_phone_numbers', () => {
             expect(res.data.data.content.length).toBe(15);
             expect(res.data.data.page).toBe(1);
 
+            expect(res.data.data.content).not.toBe(0);
+
+            expect(res.data.data.content[0]).toHaveProperty('id');
+            expect(res.data.data.content[0]).toHaveProperty('phone');
+            expect(res.data.data.content[0]).toHaveProperty('typeCode');
+            expect(res.data.data.content[0]).toHaveProperty('userId');
+            expect(res.data.data.content[0]).toHaveProperty('createdAt');
+            expect(res.data.data.content[0]).toHaveProperty('updatedAt');
+            expect(res.data.data.content[0]).toHaveProperty('status');
+
             done();
           })
           .catch(err => {
@@ -123,6 +133,14 @@ describe('Given /api/user_phone_numbers', () => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
+            expect(res.data.data.content).toHaveProperty('id');
+            expect(res.data.data.content).toHaveProperty('phone');
+            expect(res.data.data.content).toHaveProperty('typeCode');
+            expect(res.data.data.content).toHaveProperty('userId');
+            expect(res.data.data.content).toHaveProperty('createdAt');
+            expect(res.data.data.content).toHaveProperty('updatedAt');
+            expect(res.data.data.content).toHaveProperty('status');
+
             newPhoneNumberId = res.data.data.content.id;
 
             done();
@@ -152,6 +170,9 @@ describe('Given /api/user_phone_numbers', () => {
             expect(res.data.ok).toBe(true);
 
             expect(res.data.data.content.id).toBe(postData.id);
+            expect(res.data.data.content).toHaveProperty('phone');
+            expect(res.data.data.content).toHaveProperty('typeCode');
+            expect(res.data.data.content).toHaveProperty('userId');
 
             done();
           })
@@ -196,3 +217,14 @@ describe('Given /api/user_phone_numbers', () => {
     });
   });
 });
+
+
+// const content = {
+//   id: expect.,
+//   phone: '840.649.2348',
+//   typeCode: 3,
+//   userId: 14,
+//   createdAt: '2018-09-17T21:16:39.562Z',
+//   updatedAt: '2018-09-19T21:51:45.001Z',
+//   status: 'ACTIVE',
+// };
