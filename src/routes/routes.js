@@ -34,14 +34,61 @@ router.delete('/companies', authenticateViaToken, access([]), CompaniesControlle
 // ===================================================
 // '/api/users'
 // =========================
-router.get('/users', authenticateViaToken, access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.getUsers); // request should start off not permitted
-router.post('/users/add_user', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), usersController.addUser);
-router.put('/users/update_user', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateWholeUser);
-router.put('/users/update_email', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateEmail);
-router.put('/users/update_name', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updateName);
-router.put('/users/update_password', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.updatePassword);
-router.put('/users/update_status', authenticateViaToken, access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), usersController.changeUserStatus);
-router.delete('/users/remove_user', authenticateViaToken, access([]), usersController.deleteUser);
+router.get(
+  '/users',
+  authenticateViaToken,
+  access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
+  usersController.getUsers,
+); // request should start off not permitted
+
+router.post(
+  '/users/add_user',
+  authenticateViaToken,
+  access([COMPANY_EDITOR, COMPANY_ADMIN]),
+  usersController.addUser,
+);
+
+router.put(
+  '/users/update_user',
+  authenticateViaToken,
+  access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
+  usersController.updateWholeUser,
+);
+
+router.put(
+  '/users/update_email',
+  authenticateViaToken,
+  access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
+  usersController.updateEmail,
+);
+
+router.put(
+  '/users/update_name',
+  authenticateViaToken,
+  access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
+  usersController.updateName,
+);
+
+router.put(
+  '/users/update_password',
+  authenticateViaToken,
+  access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
+  usersController.updatePassword,
+);
+
+router.put(
+  '/users/update_status',
+  authenticateViaToken,
+  access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
+  usersController.changeUserStatus,
+);
+
+router.delete(
+  '/users/remove_user',
+  authenticateViaToken,
+  access([]),
+  usersController.deleteUser,
+);
 
 // ===================================================
 // '/api/projects'
@@ -78,10 +125,32 @@ router.delete('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumber
 // ===================================================
 // '/api/user_addresses'
 // =========================
-router.get('/user_addresses', authenticateViaToken, UserAddressesController.getUserAddresses);
-router.post('/user_addresses', authenticateViaToken, UserAddressesController.addUserAddress);
-router.put('/user_addresses', authenticateViaToken, UserAddressesController.updateUserAddress);
-router.delete('/user_addresses', authenticateViaToken, UserAddressesController.deleteUserAddress);
+router.get(
+  '/user_addresses',
+  authenticateViaToken,
+  access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
+  UserAddressesController.getUserAddresses,
+);
+
+router.post(
+  '/user_addresses',
+  authenticateViaToken,
+  access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
+  UserAddressesController.addUserAddress,
+);
+
+router.put(
+  '/user_addresses',
+  authenticateViaToken,
+  access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
+  UserAddressesController.updateUserAddress,
+);
+
+router.delete(
+  '/user_addresses',
+  authenticateViaToken,
+  access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
+  UserAddressesController.deleteUserAddress);
 
 // ===================================================
 // '/api/user_phone_numbers'

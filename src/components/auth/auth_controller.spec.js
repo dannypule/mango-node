@@ -6,6 +6,7 @@ const axiosInstance = axios.create({
   timeout: 5000,
 });
 
+
 describe('Given AuthController', () => {
   describe('and a super user is logged in', () => {
     beforeAll((done) => {
@@ -52,7 +53,7 @@ describe('Given AuthController', () => {
         postData = {
           firstName: 'test',
           lastName: 'user',
-          email: 'test.user@email.fakez',
+          email: 'auth.test@email.fakez',
           password: 'supersecure',
           companyId: 1,
         };
