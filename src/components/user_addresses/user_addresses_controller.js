@@ -36,7 +36,7 @@ export default class UserAddressesController {
       if (userId !== undefined) {
         dbQuery.where = {
           ...dbQuery.where,
-          company_id: parseInt(userId, 10),
+          user_id: parseInt(userId, 10),
         };
       }
 
