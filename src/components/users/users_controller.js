@@ -105,7 +105,7 @@ export default class UsersController {
     this.usersService.updateUser(req, res, user.id, objectToUpdate);
   }
 
-  deleteUser = async (req, res) => {
+  setStatusToDeleted = async (req, res) => {
     const user = req.body;
 
     const objectToUpdate = {

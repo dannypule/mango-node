@@ -9,7 +9,8 @@ const axiosInstance = axios.create({
 // todo delete user by email at beginning of tests
 
 describe('Given /api/users', () => {
-  describe('and a super user is logged in', () => {
+  /* super user */
+  describe('and a "super user" is logged in', () => {
     beforeAll((done) => {
       axiosInstance
         .post('/api/auth/login', {
@@ -287,6 +288,79 @@ describe('Given /api/users', () => {
               throw new Error(err);
             });
         });
+      });
+    });
+  });
+
+  /* company admin user */
+  describe('and a "company admin" is logged in', () => {
+    beforeAll((done) => {
+      axiosInstance
+        .post('/api/auth/login', {
+          email: 'company.admin@email.fake',
+          password: 'supersecure',
+        })
+        .then(res => {
+          axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
+          done();
+        });
+    });
+
+    /* GET /api/users */
+    describe('/api/users GET', () => {
+      it('should return users', (done) => {
+        axiosInstance
+          .get('/api/users')
+          .then((res) => {
+            expect(res.status).toBe(200);
+            expect(res.data.ok).toBe(true);
+
+            expect(res.data.data.content.length).toBe(15);
+            expect(res.data.data.page).toBe(1);
+            expect(res.data.data.length).toBe(15);
+
+            done();
+          })
+          .catch(err => {
+            console.log(err);
+            done();
+            throw new Error(err);
+          });
+      });
+    });
+  });
+
+  /* company regular user */
+  describe('and a "company regular user" is logged in', () => {
+    beforeAll((done) => {
+      axiosInstance
+        .post('/api/auth/login', {
+          email: 'company.regular@email.fake',
+          password: 'supersecure',
+        })
+        .then(res => {
+          axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
+          done();
+        });
+    });
+
+    /* GET /api/users */
+    describe('/api/users GET', () => {
+      it('should NOT return users', (done) => {
+        axiosInstance
+          .get('/api/users')
+          .then((res) => {
+            done();
+            throw new Error(res);
+          })
+          .catch((err) => {
+            const res = err.response;
+            expect(res.status).toBe(403);
+            expect(res.data.ok).toBe(false);
+            expect(res.data).toHaveProperty('message');
+
+            done();
+          });
       });
     });
   });
