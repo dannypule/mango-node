@@ -17,6 +17,9 @@ describe('Given AuthController', () => {
         .then(res => {
           axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
           done();
+        })
+        .catch(() => {
+          done();
         });
     });
 
