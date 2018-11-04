@@ -1,7 +1,8 @@
 const axios = require('axios');
+const config = require('../../src/config');
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5566',
+  baseURL: config.baseURL,
   timeout: 10000,
 });
 
@@ -18,7 +19,7 @@ const deleteTestUser = () => {
       .then(res => {
         axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
         axiosInstance
-          .delete('http://localhost:5566/api/users/remove_user_by_email', {
+          .delete('/api/users/remove_user_by_email', {
             data: deleteData,
           })
           .then(resolve);
