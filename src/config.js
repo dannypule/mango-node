@@ -77,4 +77,4 @@ const configuration = {
     jwt_expiration: process.env.PROD_JWT_EXPIRATION,
   },
 };
-export default configuration[env];
+module.exports = configuration[env];
