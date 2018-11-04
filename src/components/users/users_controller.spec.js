@@ -9,6 +9,10 @@ const axiosInstance = axios.create({
 // todo delete user by email at beginning of tests
 
 describe('Given /api/users', () => {
+  beforeAll((done) => {
+    setTimeout(done, config.testDelay);
+  });
+
   /* super user */
   describe('and a "super user" is logged in', () => {
     beforeAll((done) => {
@@ -19,7 +23,7 @@ describe('Given /api/users', () => {
         })
         .then(res => {
           axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-          done();
+          setTimeout(done, config.testDelay);
         });
     });
 
@@ -100,7 +104,7 @@ describe('Given /api/users', () => {
         const postData = {
           firstName: 'some',
           lastName: 'user',
-          email: 'some.user@email.fakez',
+          email: 'some.user@test-email.fake',
           password: 'supersecure',
           companyId: 1,
         };
@@ -131,7 +135,7 @@ describe('Given /api/users', () => {
             id: newUserId,
             firstName: 'updatedFirstName',
             lastName: 'updatedLastName',
-            email: 'updated.email@email.fakez',
+            email: 'updated.email@test-email.fake',
             userRoleCode: 40,
             status: 'INACTIVE',
           };
@@ -162,7 +166,7 @@ describe('Given /api/users', () => {
         it('should update email', (done) => {
           const postData = {
             id: newUserId,
-            email: 'email.is.updated@email.fakez',
+            email: 'email.is.updated@test-email.fake',
           };
           axiosInstance
             .put('/api/users/update_email', postData)
