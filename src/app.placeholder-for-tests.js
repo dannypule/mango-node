@@ -28,7 +28,7 @@ xdescribe('When I make an API request', () => {
     //   .get('/')
     //   // .post('/auth/login')
     //   // .send({
-    //   //   email: 'Super.Admin@fake-email.infoz',
+    //   //   email: 'super.admin@email.fake',
     //   //   password: 'supersecure',
     //   // })
     //   // .set('Accept', 'application/json')
@@ -39,7 +39,7 @@ xdescribe('When I make an API request', () => {
     //   });
     // axiosInstance
     // .post('/auth/login', {
-    //   email: 'Super.Admin@fake-email.infoz',
+    //   email: 'super.admin@email.fake',
     //   password: 'supersecure',
     // })
     //   .then(res => {
