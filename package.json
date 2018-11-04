@@ -17,9 +17,10 @@
     "db:setup": "NODE_ENV=development babel-node src/db_setup",
     "db:setup:staging": "NODE_ENV=staging babel-node src/db_setup",
     
-    "test": "NODE_ENV=development jest --watch",
-    "test:c": "jest --forceExit --coverage --verbose",
-    
+    "test:unit": "NODE_ENV=development jest -c jest.config.unit.js --watch",
+    "test:int": "NODE_ENV=development jest -c jest.config.integration.js",
+    "test:cov": "jest -c jest.config.unit.js --forceExit --coverage --verbose",
+
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
   },

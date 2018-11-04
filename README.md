@@ -39,7 +39,7 @@ Login at `http://localhost:5566/api/auth/login` using:
 
 ```
 {
-  "email": "Super.Admin@fake-email.infoz",
+  "email": "super.admin@email.fake",
   "password": "supersecure"
 }
 ```

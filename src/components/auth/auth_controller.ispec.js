@@ -6,39 +6,7 @@ const axiosInstance = axios.create({
   timeout: 5000,
 });
 
-
-const deleteTestUser = (email, done) => {
-  const deleteData = {
-    email,
-  };
-  axiosInstance
-    .delete('/api/users/remove_user', {
-      data: deleteData,
-    })
-    .then((res) => {
-      if (res.data.ok) {
-        console.log(`User #${email} was deleted`);
-      } else {
-        console.log(`Unable to delete user ${email}`);
-      }
-
-      done();
-    })
-    .catch(err => {
-      console.log(err);
-      console.log(`Error deleting user ${email}`);
-      done();
-      throw new Error(err);
-    });
-};
-
 describe('Given AuthController', () => {
-  beforeAll((done) => {
-    setTimeout(() => {
-      deleteTestUser('auth.test@test-email.fake', done);
-    }, config.testDelay);
-  });
-
   describe('and a super user is logged in', () => {
     beforeAll((done) => {
       axiosInstance
@@ -125,8 +93,8 @@ describe('Given AuthController', () => {
           .catch(err => {
             console.log('Unable to register user.');
             console.log(err);
+            expect(err).toBe(null);
             done();
-            throw new Error(err);
           });
       });
     });

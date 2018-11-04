@@ -1,6 +1,6 @@
-import Sequelize from 'sequelize';
+// import Sequelize from 'sequelize';
 import { formatFromDb } from './users_service';
-const { Op } = Sequelize;
+// const { Op } = Sequelize;
 
 export default class UsersController {
   constructor({ model, utils, usersService }) {
@@ -137,7 +137,8 @@ export default class UsersController {
     try {
       const result = await this.model.destroy({
         where: {
-          email: { [Op.iLike]: `%${req.body.email}` },
+          // email: { [Op.iLike]: `%${req.body.email}` },
+          email: req.body.email,
         },
       });
       if (result === 1) {
