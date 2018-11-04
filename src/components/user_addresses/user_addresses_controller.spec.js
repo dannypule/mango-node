@@ -18,7 +18,7 @@ describe('Given /api/user_addresses', () => {
         })
         .then(res => {
           axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-          done();
+          setTimeout(done, config.testDelay);
         });
     });
 

@@ -9,6 +9,7 @@ const configuration = {
   cors: {
     exposedHeaders: ['Link'],
   },
+  testDelay: 4000,
   development: {
     baseURL: `http://localhost:${port}`,
     db: {
@@ -45,6 +46,12 @@ const configuration = {
         },
         define: { underscored: true },
         logging: false,
+        pool: { // increase pool size for AWS https://github.com/sequelize/sequelize/issues/7884
+          max: 5,
+          min: 0,
+          idle: 20000,
+          acquire: 20000,
+        },
       },
     },
     jwt_encryption: process.env.STAGING_JWT_ENCRYPTION,
