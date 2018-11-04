@@ -87,7 +87,14 @@ router.delete(
   '/users/remove_user',
   authenticateViaToken,
   access([]),
-  usersController.deleteUser,
+  usersController.removeUser,
+);
+
+router.delete(
+  '/users/remove_user_by_email',
+  authenticateViaToken,
+  access([]),
+  usersController.removeUserByEmail,
 );
 
 // ===================================================

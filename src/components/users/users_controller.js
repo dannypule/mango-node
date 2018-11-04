@@ -1,4 +1,6 @@
+import Sequelize from 'sequelize';
 import { formatFromDb } from './users_service';
+const { Op } = Sequelize;
 
 export default class UsersController {
   constructor({ model, utils, usersService }) {
@@ -115,7 +117,7 @@ export default class UsersController {
     this.usersService.updateUser(req, res, user.id, objectToUpdate);
   }
 
-  deleteUser = async (req, res) => {
+  removeUser = async (req, res) => {
     try {
       const result = await this.model.destroy({
         where: {
@@ -126,6 +128,22 @@ export default class UsersController {
         this.utils.success(res);
       } else {
         this.utils.fail(res, { message: 'Unable to delete this user.' });
+      }
+    } catch (err) {
+      this.utils.fail(res, err);
+    }
+  };
+  removeUserByEmail = async (req, res) => {
+    try {
+      const result = await this.model.destroy({
+        where: {
+          email: { [Op.iLike]: `%${req.body.email}` },
+        },
+      });
+      if (result === 1) {
+        this.utils.success(res, { result });
+      } else {
+        this.utils.fail(res, { message: 'Unable to delete this user.', result });
       }
     } catch (err) {
       this.utils.fail(res, err);
