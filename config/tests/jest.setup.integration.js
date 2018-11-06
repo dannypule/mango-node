@@ -7,10 +7,6 @@ const axiosInstance = axios.create({
 });
 
 const deleteTestUser = () => {
-  const deleteData = {
-    email: 'auth.test@test-email.fake',
-  };
-
   return new Promise(resolve => {
     axiosInstance.post('/api/auth/login', {
       email: 'super.admin@email.fake',
@@ -18,12 +14,22 @@ const deleteTestUser = () => {
     })
       .then(res => {
         axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-        axiosInstance
+        return axiosInstance
           .delete('/api/users/remove_user_by_email', {
-            data: deleteData,
-          })
-          .then(resolve);
-      });
+            data: {
+              email: 'auth.test@test-email.fake',
+            },
+          });
+      })
+      .then(() => {
+        return axiosInstance
+          .delete('/api/users/remove_user_by_email', {
+            data: {
+              email: 'some.user@test-email.fake',
+            },
+          });
+      })
+      .then(resolve);
   });
 };
 
