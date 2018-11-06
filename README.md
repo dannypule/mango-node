@@ -84,4 +84,7 @@ PROD_JWT_EXPIRATION=2592000000
 If you have heroku installed you can view the logs of your app by typing
 something like `heroku logs --app your-heroku-project` in the command line.
 
+## Updating npm dependencies
+https://flaviocopes.com/update-npm-dependencies/
+
 ### Contributor(s) Danny Pule - open sourced under the MIT Liscense https://github.com/dannypule
