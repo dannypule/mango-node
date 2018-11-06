@@ -1,6 +1,4 @@
-// import Sequelize from 'sequelize';
 import { formatFromDb } from './users_service';
-// const { Op } = Sequelize;
 
 export default class UsersController {
   constructor({ model, utils, usersService }) {
@@ -19,7 +17,6 @@ export default class UsersController {
 
       const offset = limit * (page - 1); // define offset
 
-      // default db query
       const dbQuery = {
         where: {},
         limit,
@@ -27,7 +24,6 @@ export default class UsersController {
         order: [['id', 'DESC']],
       };
 
-      // ability to search by id
       if (id !== undefined) {
         dbQuery.where = {
           ...dbQuery.where,
@@ -39,7 +35,7 @@ export default class UsersController {
 
       const pages = Math.ceil(data.count / limit);
       const formatted = data.rows.map(formatFromDb);
-      this.utils.success(res, { rows: data.rows, content: formatted, count: data.count, pages, page, length: formatted.length });
+      this.utils.success(res, { content: formatted, count: data.count, pages, page, length: formatted.length });
     } catch (err) {
       this.utils.fail(res, err);
     }
@@ -137,7 +133,6 @@ export default class UsersController {
     try {
       const result = await this.model.destroy({
         where: {
-          // email: { [Op.iLike]: `%${req.body.email}` },
           email: req.body.email,
         },
       });
