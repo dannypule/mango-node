@@ -19,7 +19,6 @@ const formatForDb = item => {
   };
 };
 
-
 export default {
   formatFromDb,
   formatForDb,

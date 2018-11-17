@@ -1,4 +1,4 @@
-export const formatFromDb = item => {
+const formatFromDb = item => {
   return {
     id: item.id,
     projectId: item.project_id,
@@ -10,10 +10,15 @@ export const formatFromDb = item => {
   };
 };
 
-export const formatForDb = item => {
+const formatForDb = item => {
   return {
     project_id: item.projectId,
     user_id: item.userId,
     status: item.status,
   };
+};
+
+export default {
+  formatFromDb,
+  formatForDb,
 };
