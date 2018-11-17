@@ -301,4 +301,3 @@ describe('Given /api/user_addresses', () => {
     });
   });
 });
-

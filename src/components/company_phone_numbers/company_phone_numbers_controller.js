@@ -1,5 +1,8 @@
+import db from '../../db_models';
 import companyPhoneNumbersService from './company_phone_numbers_service';
 import utils from '../../utils/utils';
+
+const model = db.CompanyPhoneNumber;
 
 const getCompanyPhoneNumbers = async (req, res) => {
   try {
@@ -35,7 +38,7 @@ const getCompanyPhoneNumbers = async (req, res) => {
       };
     }
 
-    const data = await this.model.findAndCountAll(dbQuery);
+    const data = await model.findAndCountAll(dbQuery);
 
     const pages = Math.ceil(data.count / limit);
     const formatted = data.rows.map(companyPhoneNumbersService.formatFromDb);
@@ -49,7 +52,7 @@ const addCompanyPhoneNumber = async (req, res) => {
   const formatted = companyPhoneNumbersService.formatForDb(req.body);
 
   try {
-    const companyPhoneNumber = await this.model.create(formatted);
+    const companyPhoneNumber = await model.create(formatted);
     utils.success(res, companyPhoneNumbersService.formatFromDb(companyPhoneNumber));
   } catch (err) {
     utils.fail(res, err);
@@ -60,12 +63,12 @@ const updateCompanyPhoneNumber = async (req, res) => {
   const companyPhoneNumber = req.body;
 
   try {
-    await this.model.update(companyPhoneNumbersService.formatForDb(companyPhoneNumber), {
+    await model.update(companyPhoneNumbersService.formatForDb(companyPhoneNumber), {
       where: {
         id: companyPhoneNumber.id,
       },
     });
-    const _companyPhoneNumber = await this.model.findOne({
+    const _companyPhoneNumber = await model.findOne({
       where: {
         id: req.body.id,
       },
@@ -78,7 +81,7 @@ const updateCompanyPhoneNumber = async (req, res) => {
 
 const deleteCompanyPhoneNumber = async (req, res) => {
   try {
-    const result = await this.model.destroy({
+    const result = await model.destroy({
       where: {
         id: req.body.id,
       },
