@@ -4,12 +4,12 @@ import passport from 'passport';
 import authController from '../components/auth/auth_controller';
 import companiesController from '../components/companies/companies_controller';
 import usersController from '../components/users/users_controller';
-import ProjectsController from '../components/projects';
-import UserProjectsController from '../components/user_projects';
+import projectsController from '../components/projects/projects_controller';
+import userProjectsController from '../components/user_projects/user_projects_controller';
 import companyAddressesController from '../components/company_addresses/company_addresses_controller';
 import companyPhoneNumbersController from '../components/company_phone_numbers/company_phone_numbers_controller';
-import UserAddressesController from '../components/user_addresses';
-import UserPhoneNumbersController from '../components/user_phone_numbers';
+import userAddressesController from '../components/user_addresses/user_addresses_controller';
+import userPhoneNumbersController from '../components/user_phone_numbers/user_phone_numbers_controller';
 import { access, SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN } from '../middleware/accessControls';
 
 require('./../middleware/passport')(passport);
@@ -100,18 +100,18 @@ router.delete(
 // ===================================================
 // '/api/projects'
 // =========================
-router.get('/projects', authenticateViaToken, ProjectsController.getProjects);
-router.post('/projects', authenticateViaToken, ProjectsController.addProject);
-router.put('/projects', authenticateViaToken, ProjectsController.updateProject);
-router.delete('/projects', authenticateViaToken, ProjectsController.deleteProject);
+router.get('/projects', authenticateViaToken, projectsController.getProjects);
+router.post('/projects', authenticateViaToken, projectsController.addProject);
+router.put('/projects', authenticateViaToken, projectsController.updateProject);
+router.delete('/projects', authenticateViaToken, projectsController.deleteProject);
 
 // ===================================================
 // '/api/user_projects'
 // =========================
-router.get('/user_projects', authenticateViaToken, UserProjectsController.getUserProjects);
-router.post('/user_projects', authenticateViaToken, UserProjectsController.addUserProject);
-router.put('/user_projects', authenticateViaToken, UserProjectsController.updateUserProject);
-router.delete('/user_projects', authenticateViaToken, UserProjectsController.deleteUserProject);
+router.get('/user_projects', authenticateViaToken, userProjectsController.getUserProjects);
+router.post('/user_projects', authenticateViaToken, userProjectsController.addUserProject);
+router.put('/user_projects', authenticateViaToken, userProjectsController.updateUserProject);
+router.delete('/user_projects', authenticateViaToken, userProjectsController.deleteUserProject);
 
 // ===================================================
 // '/api/company_addresses'
@@ -136,35 +136,35 @@ router.get(
   '/user_addresses',
   authenticateViaToken,
   access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  UserAddressesController.getUserAddresses,
+  userAddressesController.getUserAddresses,
 );
 
 router.post(
   '/user_addresses',
   authenticateViaToken,
   access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  UserAddressesController.addUserAddress,
+  userAddressesController.addUserAddress,
 );
 
 router.put(
   '/user_addresses',
   authenticateViaToken,
   access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  UserAddressesController.updateUserAddress,
+  userAddressesController.updateUserAddress,
 );
 
 router.delete(
   '/user_addresses',
   authenticateViaToken,
   access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  UserAddressesController.deleteUserAddress);
+  userAddressesController.deleteUserAddress);
 
 // ===================================================
 // '/api/user_phone_numbers'
 // =========================
-router.get('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.getUserPhoneNumbers);
-router.post('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.addUserPhoneNumber);
-router.put('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.updateUserPhoneNumber);
-router.delete('/user_phone_numbers', authenticateViaToken, UserPhoneNumbersController.deleteUserPhoneNumber);
+router.get('/user_phone_numbers', authenticateViaToken, userPhoneNumbersController.getUserPhoneNumbers);
+router.post('/user_phone_numbers', authenticateViaToken, userPhoneNumbersController.addUserPhoneNumber);
+router.put('/user_phone_numbers', authenticateViaToken, userPhoneNumbersController.updateUserPhoneNumber);
+router.delete('/user_phone_numbers', authenticateViaToken, userPhoneNumbersController.deleteUserPhoneNumber);
 
 export default router;

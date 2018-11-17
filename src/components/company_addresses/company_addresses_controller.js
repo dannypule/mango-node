@@ -2,7 +2,7 @@ import db from '../../db_models';
 import utils from '../../utils/utils';
 import companyAddressesService from './company_addresses_service';
 
-const model = db.Company;
+const model = db.CompanyAddress;
 
 const getCompanyAddresses = async (req, res) => {
   try {
