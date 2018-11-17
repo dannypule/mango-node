@@ -1,50 +1,52 @@
 import bcrypt from 'bcrypt';
 import { getJWT } from '../../utils/jwt';
+import usersService from '../users/users_service';
+import utils from '../../utils/utils';
+import db from '../../db_models';
 
-export default class AuthController {
-  constructor({ model, usersService, utils }) {
-    this.model = model;
-    this.usersService = usersService;
-    this.utils = utils;
+const model = db.User;
+
+const login = async (req, res) => {
+  try {
+    const user = await model.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+
+    if (!user) utils.fail(res, { message: `Couldn't log in.` });
+
+    bcrypt.compare(req.body.password, user.password, (err, r) => {
+      if (err) {
+        utils.fail(res, err);
+        return;
+      }
+      if (r) {
+        utils.success(res, { token: getJWT(user) });
+      } else {
+        utils.fail(res, { message: `Couldn't log in.` }, 403);
+      }
+    });
+  } catch (err) {
+    utils.fail(res, err);
   }
+};
 
-  login = async (req, res) => {
-    try {
-      const user = await this.model.findOne({
-        where: {
-          email: req.body.email,
-        },
-      });
+const register = (req, res) => {
+  const user = req.body;
 
-      if (!user) this.utils.fail(res, { message: `Couldn't log in.` });
+  usersService.addUser(req, res, {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    password: user.password,
+    companyId: user.companyId,
+    userRoleCode: 30, // todo basic user - should use constants file
+    status: 'ACTIVE',
+  }, true);
+};
 
-      bcrypt.compare(req.body.password, user.password, (err, r) => {
-        if (err) {
-          this.utils.fail(res, err);
-          return;
-        }
-        if (r) {
-          this.utils.success(res, { token: getJWT(user) });
-        } else {
-          this.utils.fail(res, { message: `Couldn't log in.` }, 403);
-        }
-      });
-    } catch (err) {
-      this.utils.fail(res, err);
-    }
-  };
-
-  register = (req, res) => {
-    const user = req.body;
-
-    this.usersService.addUser(req, res, {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      password: user.password,
-      companyId: user.companyId,
-      userRoleCode: 30, // todo basic user - should use constants file
-      status: 'ACTIVE',
-    }, true);
-  };
-}
+export default {
+  login,
+  register,
+};

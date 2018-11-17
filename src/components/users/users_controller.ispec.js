@@ -369,4 +369,3 @@ describe('Given /api/users', () => {
     });
   });
 });
-
