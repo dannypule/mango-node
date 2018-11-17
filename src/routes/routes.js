@@ -1,13 +1,13 @@
 import express from 'express';
 import passport from 'passport';
 
-import AuthController from '../components/auth';
-import CompaniesController from '../components/companies';
-import { usersController } from '../components/users';
+import authController from '../components/auth/auth_controller';
+import companiesController from '../components/companies/companies_controller';
+import usersController from '../components/users/users_controller';
 import ProjectsController from '../components/projects';
 import UserProjectsController from '../components/user_projects';
-import CompanyAddressesController from '../components/company_addresses';
-import CompanyPhoneNumbersController from '../components/company_phone_numbers';
+import companyAddressesController from '../components/company_addresses/company_addresses_controller';
+import companyPhoneNumbersController from '../components/company_phone_numbers/company_phone_numbers_controller';
 import UserAddressesController from '../components/user_addresses';
 import UserPhoneNumbersController from '../components/user_phone_numbers';
 import { access, SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN } from '../middleware/accessControls';
@@ -20,16 +20,16 @@ const authenticateViaToken = passport.authenticate('jwt', { session: false });
 // ===================================================
 // '/api/auth'
 // =========================
-router.post('/auth/login', AuthController.login);
-router.post('/auth/register', AuthController.register);
+router.post('/auth/login', authController.login);
+router.post('/auth/register', authController.register);
 
 // ===================================================
 // '/api/companies'
 // =========================
-router.get('/companies', authenticateViaToken, access([]), CompaniesController.getCompanies);
-router.post('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.addCompany);
-router.put('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), CompaniesController.updateCompany);
-router.delete('/companies', authenticateViaToken, access([]), CompaniesController.deleteCompany);
+router.get('/companies', authenticateViaToken, access([]), companiesController.getCompanies);
+router.post('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), companiesController.addCompany);
+router.put('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), companiesController.updateCompany);
+router.delete('/companies', authenticateViaToken, access([]), companiesController.deleteCompany);
 
 // ===================================================
 // '/api/users'
@@ -39,7 +39,7 @@ router.get(
   authenticateViaToken,
   access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
   usersController.getUsers,
-); // request should start off not permitted
+);
 
 router.post(
   '/users/add_user',
@@ -116,18 +116,18 @@ router.delete('/user_projects', authenticateViaToken, UserProjectsController.del
 // ===================================================
 // '/api/company_addresses'
 // =========================
-router.get('/company_addresses', authenticateViaToken, CompanyAddressesController.getCompanyAddresses);
-router.post('/company_addresses', authenticateViaToken, CompanyAddressesController.addCompanyAddress);
-router.put('/company_addresses', authenticateViaToken, CompanyAddressesController.updateCompanyAddress);
-router.delete('/company_addresses', authenticateViaToken, CompanyAddressesController.deleteCompanyAddress);
+router.get('/company_addresses', authenticateViaToken, companyAddressesController.getCompanyAddresses);
+router.post('/company_addresses', authenticateViaToken, companyAddressesController.addCompanyAddress);
+router.put('/company_addresses', authenticateViaToken, companyAddressesController.updateCompanyAddress);
+router.delete('/company_addresses', authenticateViaToken, companyAddressesController.deleteCompanyAddress);
 
 // ===================================================
 // '/api/company_phone_numbers'
 // =========================
-router.get('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.getCompanyPhoneNumbers);
-router.post('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.addCompanyPhoneNumber);
-router.put('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.updateCompanyPhoneNumber);
-router.delete('/company_phone_numbers', authenticateViaToken, CompanyPhoneNumbersController.deleteCompanyPhoneNumber);
+router.get('/company_phone_numbers', authenticateViaToken, companyPhoneNumbersController.getCompanyPhoneNumbers);
+router.post('/company_phone_numbers', authenticateViaToken, companyPhoneNumbersController.addCompanyPhoneNumber);
+router.put('/company_phone_numbers', authenticateViaToken, companyPhoneNumbersController.updateCompanyPhoneNumber);
+router.delete('/company_phone_numbers', authenticateViaToken, companyPhoneNumbersController.deleteCompanyPhoneNumber);
 
 // ===================================================
 // '/api/user_addresses'
