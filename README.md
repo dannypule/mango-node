@@ -87,4 +87,12 @@ something like `heroku logs --app your-heroku-project` in the command line.
 ## Updating npm dependencies
 https://flaviocopes.com/update-npm-dependencies/
 
+## AWS CD pipeline
+https://docs.aws.amazon.com/AWSGettingStartedContinuousDeliveryPipeline/latest/GettingStarted/CICD_Jenkins_Pipeline.html
+https://medium.com/@yogeshdarji99/steps-to-install-awscli-on-mac-5bad783483a
+
 ### Contributor(s) Danny Pule - open sourced under the MIT Liscense https://github.com/dannypule
+
+
+
+

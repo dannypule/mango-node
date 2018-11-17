@@ -1,0 +1,11 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:10.4-alpine
+    environment:
+      POSTGRES_USER: pguser3000
+      POSTGRES_PASSWORD: pguser3000
+      POSTGRES_DB: node_postgres
+    ports:
+      - 5433:5432
