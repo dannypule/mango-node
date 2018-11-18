@@ -1,6 +1,7 @@
 import db from '../../db_models';
-import userPhoneNumbersService from './user_phone_numbers_service';
 import utils from '../../utils/utils';
+import queryUtils from '../../utils/queryUtils';
+import userPhoneNumbersService from './user_phone_numbers_service';
 
 const model = db.UserPhoneNumber;
 
