@@ -1,6 +1,7 @@
 import db from '../../db_models';
-import projectsService from './projects_service';
 import utils from '../../utils/utils';
+import queryUtils from '../../utils/queryUtils';
+import projectsService from './projects_service';
 
 const model = db.Project;
 

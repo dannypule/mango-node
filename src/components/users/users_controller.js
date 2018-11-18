@@ -1,38 +1,16 @@
 import usersService from './users_service';
 import db from '../../db_models';
 import utils from '../../utils/utils';
+import queryUtils from '../../utils/queryUtils';
 
 const model = db.User;
 
 const getUsers = async (req, res) => {
   try {
-    const limit = 15; // number of records per page
-
-    const { id } = req.query;
-
-    const page = parseInt(req.query.page, 10) || 1; // page 1 default
-
-    const offset = limit * (page - 1); // define offset
-
-    const dbQuery = {
-      where: {},
-      limit,
-      offset,
-      order: [['id', 'DESC']],
-    };
-
-    if (id !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
-        id: parseInt(id, 10),
-      };
-    }
-
+    const dbQuery = queryUtils.getDbQuery(req);
     const data = await model.findAndCountAll(dbQuery);
-
-    const pages = Math.ceil(data.count / limit);
-    const formatted = data.rows.map(usersService.formatFromDb);
-    utils.success(res, { content: formatted, count: data.count, pages, page, length: formatted.length });
+    const responseBody = queryUtils.getResponseBody(req, data, usersService.formatFromDb);
+    utils.success(res, responseBody);
   } catch (err) {
     utils.fail(res, err);
   }
