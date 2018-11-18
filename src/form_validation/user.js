@@ -1,4 +1,3 @@
-
 import * as yup from 'yup';
 
 export const UserYupSchema = yup.object().shape({

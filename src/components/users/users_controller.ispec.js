@@ -9,13 +9,13 @@ const axiosInstance = axios.create({
 // todo delete user by email at beginning of tests
 
 describe('Given /api/users', () => {
-  beforeAll((done) => {
+  beforeAll(done => {
     setTimeout(done, config.testDelay);
   });
 
   /* super user */
   describe('and a "super user" is logged in', () => {
-    beforeAll((done) => {
+    beforeAll(done => {
       axiosInstance
         .post('/api/auth/login', {
           email: 'super.admin@email.fake',
@@ -29,10 +29,10 @@ describe('Given /api/users', () => {
 
     /* GET /api/users */
     describe('/api/users GET', () => {
-      it('should return users', (done) => {
+      it('should return users', done => {
         axiosInstance
           .get('/api/users')
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -52,10 +52,10 @@ describe('Given /api/users', () => {
 
     /* GET /api/users?page=4 */
     describe('and page 4 is requested', () => {
-      it('should return users from page 4', (done) => {
+      it('should return users from page 4', done => {
         axiosInstance
           .get('/api/users?page=4')
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -75,10 +75,10 @@ describe('Given /api/users', () => {
 
     /* GET /api/users?id=5 */
     describe('and user with id of 5 is requested', () => {
-      it('should return user with id of 5', (done) => {
+      it('should return user with id of 5', done => {
         axiosInstance
           .get('/api/users?id=5')
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -100,7 +100,7 @@ describe('Given /api/users', () => {
     describe('and user wants to add user', () => {
       let newUserId;
 
-      it('should add user', (done) => {
+      it('should add user', done => {
         const postData = {
           firstName: 'some',
           lastName: 'user',
@@ -110,7 +110,7 @@ describe('Given /api/users', () => {
         };
         axiosInstance
           .post('/api/users/add_user', postData)
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -130,7 +130,7 @@ describe('Given /api/users', () => {
 
       /* PUT /api/users/update_user */
       describe('and user wants to update user', () => {
-        it('should update user', (done) => {
+        it('should update user', done => {
           const postData = {
             id: newUserId,
             firstName: 'updatedFirstName',
@@ -141,7 +141,7 @@ describe('Given /api/users', () => {
           };
           axiosInstance
             .put('/api/users/update_user', postData)
-            .then((res) => {
+            .then(res => {
               expect(res.status).toBe(200);
               expect(res.data.ok).toBe(true);
 
@@ -163,14 +163,14 @@ describe('Given /api/users', () => {
 
       /* PUT /api/users/update_email */
       describe('and user wants to update email', () => {
-        it('should update email', (done) => {
+        it('should update email', done => {
           const postData = {
             id: newUserId,
             email: 'email.is.updated@test-email.fake',
           };
           axiosInstance
             .put('/api/users/update_email', postData)
-            .then((res) => {
+            .then(res => {
               expect(res.status).toBe(200);
               expect(res.data.ok).toBe(true);
 
@@ -187,8 +187,8 @@ describe('Given /api/users', () => {
       });
 
       /* PUT /api/users/update_name */
-      describe('and user wants to update user\'s names', () => {
-        it('should update name', (done) => {
+      describe("and user wants to update user's names", () => {
+        it('should update name', done => {
           const postData = {
             id: newUserId,
             firstName: 'updated_first_name',
@@ -196,7 +196,7 @@ describe('Given /api/users', () => {
           };
           axiosInstance
             .put('/api/users/update_name', postData)
-            .then((res) => {
+            .then(res => {
               expect(res.status).toBe(200);
               expect(res.data.ok).toBe(true);
 
@@ -214,15 +214,15 @@ describe('Given /api/users', () => {
       });
 
       /* PUT /api/users/update_password */
-      describe('and user wants to update user\'s password', () => {
-        it('should update password', (done) => {
+      describe("and user wants to update user's password", () => {
+        it('should update password', done => {
           const postData = {
             id: newUserId,
             password: 'football',
           };
           axiosInstance
             .put('/api/users/update_password', postData)
-            .then((res) => {
+            .then(res => {
               expect(res.status).toBe(200);
               expect(res.data.ok).toBe(true);
 
@@ -239,15 +239,15 @@ describe('Given /api/users', () => {
       });
 
       /* PUT /api/users/update_status */
-      describe('and user wants to update user\'s status', () => {
-        it('should update status', (done) => {
+      describe("and user wants to update user's status", () => {
+        it('should update status', done => {
           const postData = {
             id: newUserId,
             status: 'DELETED',
           };
           axiosInstance
             .put('/api/users/update_status', postData)
-            .then((res) => {
+            .then(res => {
               expect(res.status).toBe(200);
               expect(res.data.ok).toBe(true);
 
@@ -265,7 +265,7 @@ describe('Given /api/users', () => {
 
       /* DELETE /api/users/remove_user */
       describe('and user wants to permanently remove user from database', () => {
-        it('should remove user from database', (done) => {
+        it('should remove user from database', done => {
           const postData = {
             id: newUserId,
           };
@@ -273,7 +273,7 @@ describe('Given /api/users', () => {
             .delete('/api/users/remove_user', {
               data: postData,
             })
-            .then((res) => {
+            .then(res => {
               if (res.data.ok) {
                 console.log(`User #${newUserId} was deleted`);
               } else {
@@ -298,7 +298,7 @@ describe('Given /api/users', () => {
 
   /* company admin user */
   describe('and a "company admin" is logged in', () => {
-    beforeAll((done) => {
+    beforeAll(done => {
       axiosInstance
         .post('/api/auth/login', {
           email: 'company.admin@email.fake',
@@ -312,10 +312,10 @@ describe('Given /api/users', () => {
 
     /* GET /api/users */
     describe('/api/users GET', () => {
-      it('should return users', (done) => {
+      it('should return users', done => {
         axiosInstance
           .get('/api/users')
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -336,7 +336,7 @@ describe('Given /api/users', () => {
 
   /* company regular user */
   describe('and a "company regular user" is logged in', () => {
-    beforeAll((done) => {
+    beforeAll(done => {
       axiosInstance
         .post('/api/auth/login', {
           email: 'company.regular@email.fake',
@@ -350,14 +350,14 @@ describe('Given /api/users', () => {
 
     /* GET /api/users */
     describe('/api/users GET', () => {
-      it('should NOT return users', (done) => {
+      it('should NOT return users', done => {
         axiosInstance
           .get('/api/users')
-          .then((res) => {
+          .then(res => {
             done();
             throw new Error(res);
           })
-          .catch((err) => {
+          .catch(err => {
             const res = err.response;
             expect(res.status).toBe(403);
             expect(res.data.ok).toBe(false);
