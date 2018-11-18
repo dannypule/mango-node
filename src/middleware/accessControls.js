@@ -8,7 +8,7 @@ export const COMPANY_VIEWER = 30;
 export const COMPANY_REGULAR = 20;
 export const SELF = 'SELF';
 
-export const access = (allowedRoles) => async (req, res, next) => {
+export const access = allowedRoles => async (req, res, next) => {
   const authUser = req.user;
   const requestedUser = req.body;
 
@@ -41,6 +41,4 @@ export const access = (allowedRoles) => async (req, res, next) => {
   }
 
   utils.fail(res, { message: 'You are not allowed to perform that action.' }, 403);
-  // utils.fail(res, { message: [authUser, requestedUser] }, 403);
 };
-

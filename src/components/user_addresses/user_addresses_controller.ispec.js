@@ -10,7 +10,7 @@ describe('Given /api/user_addresses', () => {
   let newPhoneNumberId;
 
   describe('and a super user is logged in', () => {
-    beforeAll((done) => {
+    beforeAll(done => {
       axiosInstance
         .post('/api/auth/login', {
           email: 'super.admin@email.fake',
@@ -24,10 +24,10 @@ describe('Given /api/user_addresses', () => {
 
     /* GET /api/user_addresses */
     describe('GET /api/user_addresses', () => {
-      it('should return user addresses', (done) => {
+      it('should return user addresses', done => {
         axiosInstance
           .get('/api/user_addresses')
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -67,10 +67,10 @@ describe('Given /api/user_addresses', () => {
 
     /* GET /api/user_addresses?page=4 */
     describe('GET /api/user_addresses?page=4', () => {
-      it('should return user addresses from page 4', (done) => {
+      it('should return user addresses from page 4', done => {
         axiosInstance
           .get('/api/user_addresses?page=4')
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -89,10 +89,10 @@ describe('Given /api/user_addresses', () => {
 
     /* GET /api/user_addresses?id=5 */
     describe('GET /api/user_addresses?id=5', () => {
-      it('should return user with id of 5', (done) => {
+      it('should return user with id of 5', done => {
         axiosInstance
           .get('/api/user_addresses?id=5')
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -111,10 +111,10 @@ describe('Given /api/user_addresses', () => {
 
     /* GET /api/user_addresses?userId=1 */
     describe('GET /api/user_addresses?userId=1', () => {
-      it('should return user with userId of 1', (done) => {
+      it('should return user with userId of 1', done => {
         axiosInstance
           .get('/api/user_addresses?userId=1')
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -132,7 +132,7 @@ describe('Given /api/user_addresses', () => {
 
     /* POST /api/user_addresses */
     xdescribe('POST /api/user_addresses', () => {
-      it('should add user', (done) => {
+      it('should add user', done => {
         const postData = {
           phone: '840.649.2349',
           typeCode: 1,
@@ -140,7 +140,7 @@ describe('Given /api/user_addresses', () => {
         };
         axiosInstance
           .post('/api/user_addresses', postData)
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -164,10 +164,9 @@ describe('Given /api/user_addresses', () => {
       });
     });
 
-
     /* PUT /api/user_addresses */
     xdescribe('PUT /api/user_addresses', () => {
-      it('should add user', (done) => {
+      it('should add user', done => {
         const postData = {
           id: 203,
           phone: '840.649.2348',
@@ -176,7 +175,7 @@ describe('Given /api/user_addresses', () => {
         };
         axiosInstance
           .put('/api/user_addresses', postData)
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -195,10 +194,9 @@ describe('Given /api/user_addresses', () => {
       });
     });
 
-
     /* DELETE /api/user_addresses */
     xdescribe('and user wants to permanently remove user phone number from database', () => {
-      it('should remove user phone number from databse', (done) => {
+      it('should remove user phone number from databse', done => {
         const postData = {
           id: newPhoneNumberId,
         };
@@ -206,7 +204,7 @@ describe('Given /api/user_addresses', () => {
           .delete('/api/user_addresses', {
             data: postData,
           })
-          .then((res) => {
+          .then(res => {
             if (res.data.ok) {
               console.log(`User phone number #${newPhoneNumberId} was deleted`);
             } else {
@@ -230,7 +228,7 @@ describe('Given /api/user_addresses', () => {
 
   /* company admin user */
   xdescribe('and a "company admin" is logged in', () => {
-    beforeAll((done) => {
+    beforeAll(done => {
       axiosInstance
         .post('/api/auth/login', {
           email: 'company.admin@email.fake',
@@ -244,10 +242,10 @@ describe('Given /api/user_addresses', () => {
 
     /* GET /api/users */
     describe('/api/users GET', () => {
-      it('should return users', (done) => {
+      it('should return users', done => {
         axiosInstance
           .get('/api/users')
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
@@ -268,7 +266,7 @@ describe('Given /api/user_addresses', () => {
 
   /* company regular user */
   xdescribe('and a "company regular user" is logged in', () => {
-    beforeAll((done) => {
+    beforeAll(done => {
       axiosInstance
         .post('/api/auth/login', {
           email: 'company.regular@email.fake',
@@ -282,14 +280,14 @@ describe('Given /api/user_addresses', () => {
 
     /* GET /api/users */
     xdescribe('/api/users GET', () => {
-      it('should NOT return users', (done) => {
+      it('should NOT return users', done => {
         axiosInstance
           .get('/api/users')
-          .then((res) => {
+          .then(res => {
             done();
             throw new Error(res);
           })
-          .catch((err) => {
+          .catch(err => {
             const res = err.response;
             expect(res.status).toBe(403);
             expect(res.data.ok).toBe(false);
