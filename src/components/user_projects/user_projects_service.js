@@ -6,7 +6,6 @@ const formatFromDb = item => {
     createdAt: item.created_at,
     updatedAt: item.updated_at,
     status: item.status,
-
   };
 };
 
