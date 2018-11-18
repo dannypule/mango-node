@@ -13,24 +13,22 @@ const authorised = next => next();
 const notAuthorised = res => utils.fail(res, { message: getStatusText(FORBIDDEN) }, FORBIDDEN);
 
 export const access = allowedRoles => async (req, res, next) => {
-  const {
-    user: { id, userRoleCode },
-  } = req;
+  const { user: dbUser } = req;
   const sessionUser = req.body;
 
-  if (allowedRoles.includes(SELF) && sessionUser && sessionUser.id && id === sessionUser.id) {
+  if (allowedRoles.includes(SELF) && sessionUser && sessionUser.id && dbUser.id === sessionUser.id) {
     return authorised(next);
   }
-  if (allowedRoles.includes(COMPANY_VIEWER) && userRoleCode === COMPANY_VIEWER) {
+  if (allowedRoles.includes(COMPANY_VIEWER) && dbUser.userRoleCode === COMPANY_VIEWER) {
     return authorised(next);
   }
-  if (allowedRoles.includes(COMPANY_EDITOR) && userRoleCode === COMPANY_EDITOR) {
+  if (allowedRoles.includes(COMPANY_EDITOR) && dbUser.userRoleCode === COMPANY_EDITOR) {
     return authorised(next);
   }
-  if (allowedRoles.includes(COMPANY_ADMIN) && userRoleCode === COMPANY_ADMIN) {
+  if (allowedRoles.includes(COMPANY_ADMIN) && dbUser.userRoleCode === COMPANY_ADMIN) {
     return authorised(next);
   }
-  if (userRoleCode >= ADMIN) {
+  if (dbUser.userRoleCode >= ADMIN) {
     return authorised(next);
   }
 
