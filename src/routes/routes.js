@@ -27,8 +27,18 @@ router.post('/auth/register', authController.register);
 // '/api/companies'
 // =========================
 router.get('/companies', authenticateViaToken, access([]), companiesController.getCompanies);
-router.post('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), companiesController.addCompany);
-router.put('/companies', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), companiesController.updateCompany);
+router.post(
+  '/companies',
+  authenticateViaToken,
+  access([COMPANY_EDITOR, COMPANY_ADMIN]),
+  companiesController.addCompany,
+);
+router.put(
+  '/companies',
+  authenticateViaToken,
+  access([COMPANY_EDITOR, COMPANY_ADMIN]),
+  companiesController.updateCompany,
+);
 router.delete('/companies', authenticateViaToken, access([]), companiesController.deleteCompany);
 
 // ===================================================
@@ -41,12 +51,7 @@ router.get(
   usersController.getUsers,
 );
 
-router.post(
-  '/users/add_user',
-  authenticateViaToken,
-  access([COMPANY_EDITOR, COMPANY_ADMIN]),
-  usersController.addUser,
-);
+router.post('/users/add_user', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), usersController.addUser);
 
 router.put(
   '/users/update_user',
@@ -83,19 +88,9 @@ router.put(
   usersController.changeUserStatus,
 );
 
-router.delete(
-  '/users/remove_user',
-  authenticateViaToken,
-  access([]),
-  usersController.removeUser,
-);
+router.delete('/users/remove_user', authenticateViaToken, access([]), usersController.removeUser);
 
-router.delete(
-  '/users/remove_user_by_email',
-  authenticateViaToken,
-  access([]),
-  usersController.removeUserByEmail,
-);
+router.delete('/users/remove_user_by_email', authenticateViaToken, access([]), usersController.removeUserByEmail);
 
 // ===================================================
 // '/api/projects'
@@ -157,7 +152,8 @@ router.delete(
   '/user_addresses',
   authenticateViaToken,
   access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userAddressesController.deleteUserAddress);
+  userAddressesController.deleteUserAddress,
+);
 
 // ===================================================
 // '/api/user_phone_numbers'
