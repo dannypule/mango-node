@@ -1,48 +1,61 @@
 import db from '../../db_models';
 import utils from '../../utils/utils';
+import queryUtils from '../../utils/queryUtils';
 import companyAddressesService from './company_addresses_service';
 
 const model = db.CompanyAddress;
 
 const getCompanyAddresses = async (req, res) => {
   try {
-    const limit = 15; // number of records per page
+    // const limit = 15; // number of records per page
 
-    const { id, companyId } = req.query;
+    // const { id, companyId } = req.query;
 
-    const page = parseInt(req.query.page, 10) || 1; // page 1 default
+    // const page = parseInt(req.query.page, 10) || 1; // page 1 default
 
-    const offset = limit * (page - 1); // define offset
+    // const offset = limit * (page - 1); // define offset
 
-    // default db query
-    const dbQuery = {
-      where: {},
-      limit,
-      offset,
-      order: [['id', 'DESC']],
-    };
+    // // default db query
+    // const dbQuery = {
+    //   where: {},
+    //   limit,
+    //   offset,
+    //   order: [['id', 'DESC']],
+    // };
 
-    // ability to search by id
-    if (id !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
-        id: parseInt(id, 10),
-      };
-    }
+    // // ability to search by id
+    // if (id !== undefined) {
+    //   dbQuery.where = {
+    //     ...dbQuery.where,
+    //     id: parseInt(id, 10),
+    //   };
+    // }
 
-    // ability to search by companyId
-    if (companyId !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
+    // // ability to search by companyId
+    // if (companyId !== undefined) {
+    //   dbQuery.where = {
+    //     ...dbQuery.where,
+    //     company_id: parseInt(companyId, 10),
+    //   };
+    // }
+
+    // const data = await model.findAndCountAll(dbQuery);
+
+    // const pages = Math.ceil(data.count / limit);
+    // const formatted = data.rows.map(companyAddressesService.formatFromDb);
+    // utils.success(res, { content: formatted, count: data.count, pages, page });
+
+    const { companyId, postCode } = req.query;
+
+    const dbQuery = queryUtils.getDbQuery(req, {
+      where: {
         company_id: parseInt(companyId, 10),
-      };
-    }
-
+        post_code: postCode,
+      },
+    });
     const data = await model.findAndCountAll(dbQuery);
-
-    const pages = Math.ceil(data.count / limit);
-    const formatted = data.rows.map(companyAddressesService.formatFromDb);
-    utils.success(res, { content: formatted, count: data.count, pages, page });
+    const responseBody = queryUtils.getResponseBody(req, data, companyAddressesService.formatFromDb);
+    utils.success(res, responseBody);
   } catch (err) {
     utils.success(res, err);
   }
