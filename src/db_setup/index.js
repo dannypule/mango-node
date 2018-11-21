@@ -1,10 +1,10 @@
 /*
-*
-* This script will create new tables
-*
-* This script will also insert demo data when `freshMockData` is set to `true`
-*
-*/
+ *
+ * This script will create new tables
+ *
+ * This script will also insert demo data when `freshMockData` is set to `true`
+ *
+ */
 import colors from 'colors/safe';
 import db from '../db_models';
 
@@ -44,7 +44,7 @@ const performSync = async () => {
   await UserPhoneNumber();
 
   console.log(colors.green('DB setup complete. Bye!'));
-  process.exit();
+  process.exit(0);
 };
 
 performSync();

@@ -23,7 +23,7 @@ const getDbQuery = (req, options = { where: {} }) => {
   if (id) {
     dbQuery.where = {
       ...dbQuery.where,
-      id: parseInt(id, 10),
+      id,
     };
   }
 

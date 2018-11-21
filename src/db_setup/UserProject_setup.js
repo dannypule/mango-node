@@ -4,10 +4,13 @@ import db from '../db_models';
 export default () => {
   return new Promise(async (resolve, reject) => {
     try {
+      const { rows: users, count: usersCount } = await db.User.findAndCountAll();
+      const { rows: project, count: projectCount } = await db.Project.findAndCountAll();
+
       for (let i = 0; i < 200; i++) {
         db.UserProject.create({
-          user_id: Math.floor(Math.random() * 50) + 1,
-          project_id: Math.floor(Math.random() * 50) + 1,
+          user_id: users[Math.floor(Math.random() * (usersCount - 1))].id,
+          project_id: project[Math.floor(Math.random() * (projectCount - 1))].id,
           access_type: ['FULL', 'EDITOR', 'VIEWER'][Math.floor(Math.random() * 3)],
         }).then(() => {
           if (i === 199) {

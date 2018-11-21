@@ -1,11 +1,13 @@
 import colors from 'colors/safe';
-import db from '../db_models';
 import faker from 'faker';
+import db from '../db_models';
 
 export default () => {
   return new Promise(async (resolve, reject) => {
     try {
       let user;
+
+      const { rows: companies, count: companiesCount } = await db.Company.findAndCountAll();
 
       // *** USER 1 - super admin ***
       user = await db.User.create({
@@ -15,7 +17,7 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 110, // super admin role
         verified: true,
-        company_id: 1,
+        company_id: companies[0].id,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
@@ -43,7 +45,7 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 100, // admin role
         verified: true,
-        company_id: 1,
+        company_id: companies[0].id,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
@@ -71,7 +73,7 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 50,
         verified: true,
-        company_id: 1,
+        company_id: companies[0].id,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
@@ -99,7 +101,7 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 40,
         verified: true,
-        company_id: 1,
+        company_id: companies[0].id,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
@@ -127,7 +129,7 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 30,
         verified: true,
-        company_id: 1,
+        company_id: companies[0].id,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
@@ -155,7 +157,7 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 20,
         verified: true,
-        company_id: 1,
+        company_id: companies[0].id,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
@@ -186,12 +188,12 @@ export default () => {
           password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
           user_role_code: [50, 40, 30, 20][Math.floor(Math.random() * 3)],
           verified: true,
-          company_id: 2,
-        }).then((user) => {
+          company_id: companies[Math.floor(Math.random() * (companiesCount - 1))].id,
+        }).then(user => {
           console.log(colors.green(user.email));
           if (i === amount) {
             console.log(colors.green('Demo items inserted into User table.'));
-            resolve();
+            resolve({ companies, companiesCount });
           }
         });
       }
