@@ -1,10 +1,10 @@
 export default (sequelize, DataTypes) => {
   const CompanyPhoneNumber = sequelize.define('CompanyPhoneNumber', {
     id: {
+      type: DataTypes.UUID,
       allowNull: false,
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
     },
     phone: {
       allowNull: false,

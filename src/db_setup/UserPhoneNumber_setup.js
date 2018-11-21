@@ -1,15 +1,17 @@
 import colors from 'colors/safe';
-import db from '../db_models';
 import faker from 'faker';
+import db from '../db_models';
 
 export default () => {
   return new Promise(async (resolve, reject) => {
     try {
+      const { rows: users, count: usersCount } = await db.User.findAndCountAll();
+
       for (let i = 0; i < 200; i++) {
         db.UserPhoneNumber.create({
           phone: faker.phone.phoneNumber(),
           type_code: Math.floor(Math.random() * 3) + 1,
-          user_id: Math.floor(Math.random() * 200) + 1,
+          user_id: users[Math.floor(Math.random() * (usersCount - 1))].id,
         }).then(() => {
           if (i === 199) {
             console.log(colors.green('Demo items inserted into UserPhoneNumber table.'));

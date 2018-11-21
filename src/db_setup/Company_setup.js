@@ -1,6 +1,6 @@
 import colors from 'colors/safe';
-import db from '../db_models';
 import faker from 'faker';
+import db from '../db_models';
 
 export default () => {
   return new Promise(async (resolve, reject) => {
