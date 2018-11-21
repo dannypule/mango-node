@@ -1,5 +1,5 @@
 import { getStatusText, FORBIDDEN } from 'http-status-codes';
-import utils from '../utils/responseUtils';
+import responseUtils from '../utils/responseUtils';
 
 export const SELF = 'SELF';
 export const COMPANY_REGULAR = 20;
