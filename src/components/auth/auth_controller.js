@@ -35,15 +35,20 @@ const login = async (req, res) => {
 const register = (req, res) => {
   const user = req.body;
 
-  usersService.addUser(req, res, {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    password: user.password,
-    companyId: user.companyId,
-    userRoleCode: 30, // todo basic user - should use constants file
-    status: 'ACTIVE',
-  }, true);
+  usersService.addUser(
+    req,
+    res,
+    {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      password: user.password,
+      companyId: user.companyId,
+      userRoleCode: 30, // todo basic user - should use constants file
+      status: 'ACTIVE',
+    },
+    true,
+  );
 };
 
 export default {
