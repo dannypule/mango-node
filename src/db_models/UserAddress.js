@@ -1,10 +1,10 @@
 export default (sequelize, DataTypes) => {
   const UserAddress = sequelize.define('UserAddress', {
     id: {
+      type: DataTypes.UUID,
       allowNull: false,
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
     },
     address_line_1: {
       allowNull: false,
