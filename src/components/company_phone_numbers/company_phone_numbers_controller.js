@@ -1,51 +1,25 @@
 import db from '../../db_models';
-import utils from '../../utils/utils';
-import queryUtils from '../../utils/queryUtils';
+import responseUtils from '../../utils/responseUtils';
+import getRequestUtils from '../../utils/getRequestUtils';
 import companyPhoneNumbersService from './company_phone_numbers_service';
 
 const model = db.CompanyPhoneNumber;
 
 const getCompanyPhoneNumbers = async (req, res) => {
   try {
-    const limit = 15; // number of records per page
+    const { companyId, postCode } = req.query;
 
-    const { id, companyId } = req.query;
-
-    const page = parseInt(req.query.page, 10) || 1; // page 1 default
-
-    const offset = limit * (page - 1); // define offset
-
-    // default db query
-    const dbQuery = {
-      where: {},
-      limit,
-      offset,
-      order: [['id', 'DESC']],
-    };
-
-    // ability to search by id
-    if (id !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
-        id: parseInt(id, 10),
-      };
-    }
-
-    // ability to search by companyId
-    if (companyId !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
+    const dbQuery = getRequestUtils.getDbQuery(req, {
+      where: {
         company_id: parseInt(companyId, 10),
-      };
-    }
-
+        post_code: postCode,
+      },
+    });
     const data = await model.findAndCountAll(dbQuery);
-
-    const pages = Math.ceil(data.count / limit);
-    const formatted = data.rows.map(companyPhoneNumbersService.formatFromDb);
-    utils.success(res, { content: formatted, count: data.count, pages, page });
+    const responseBody = getRequestUtils.getResponseBody(req, data, companyPhoneNumbersService.formatFromDb);
+    responseUtils.success(res, responseBody);
   } catch (err) {
-    utils.success(res, err);
+    responseUtils.success(res, err);
   }
 };
 
@@ -54,9 +28,9 @@ const addCompanyPhoneNumber = async (req, res) => {
 
   try {
     const companyPhoneNumber = await model.create(formatted);
-    utils.success(res, companyPhoneNumbersService.formatFromDb(companyPhoneNumber));
+    responseUtils.success(res, companyPhoneNumbersService.formatFromDb(companyPhoneNumber));
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
@@ -74,9 +48,9 @@ const updateCompanyPhoneNumber = async (req, res) => {
         id: req.body.id,
       },
     });
-    utils.success(res, { content: companyPhoneNumbersService.formatFromDb(_companyPhoneNumber) });
+    responseUtils.success(res, { content: companyPhoneNumbersService.formatFromDb(_companyPhoneNumber) });
   } catch (err) {
-    utils.fail(res, { message: 'Unable to update phone number.' });
+    responseUtils.fail(res, { message: 'Unable to update phone number.' });
   }
 };
 
@@ -88,14 +62,14 @@ const deleteCompanyPhoneNumber = async (req, res) => {
       },
     });
     if (result === 1) {
-      utils.success(res, {
+      responseUtils.success(res, {
         message: 'Successfully deleted phone number.',
       });
     } else {
-      utils.fail(res, { message: 'Unable to delete phone number.' });
+      responseUtils.fail(res, { message: 'Unable to delete phone number.' });
     }
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
