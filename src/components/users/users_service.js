@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { validateUser } from '../../form_validation/user';
 import { getJWT } from '../../utils/jwt';
-import utils from '../../utils/utils';
+import responseUtils from '../../utils/responseUtils';
 import db from '../../db_models';
 
 const model = db.User;
@@ -45,9 +45,9 @@ const addUser = async (req, res, user, sendToken) => {
     const _user = await model.create(formatted, { individualHooks: true });
     const token = sendToken ? getJWT(_user) : '';
 
-    utils.success(res, { user: formatFromDb(_user), token });
+    responseUtils.success(res, { user: formatFromDb(_user), token });
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
@@ -73,16 +73,16 @@ const updateUser = async (req, res, userId, objectToUpdate) => {
       },
     });
     if (result[0] !== 1) {
-      utils.fail(res, { message: 'Unable to update this user.' });
+      responseUtils.fail(res, { message: 'Unable to update this user.' });
     }
     const _user = await model.findOne({
       where: {
         id: req.body.id,
       },
     });
-    utils.success(res, { content: formatFromDb(_user) });
+    responseUtils.success(res, { content: formatFromDb(_user) });
   } catch (err) {
-    utils.fail(res, { message: 'Unable to update this user.' });
+    responseUtils.fail(res, { message: 'Unable to update this user.' });
   }
 };
 

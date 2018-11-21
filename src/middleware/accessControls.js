@@ -1,5 +1,5 @@
 import { getStatusText, FORBIDDEN } from 'http-status-codes';
-import utils from '../utils/utils';
+import utils from '../utils/responseUtils';
 
 export const SELF = 'SELF';
 export const COMPANY_REGULAR = 20;
@@ -10,7 +10,7 @@ export const ADMIN = 100;
 export const SUPERADMIN = 110;
 
 const authorised = next => next();
-const notAuthorised = res => utils.fail(res, { message: getStatusText(FORBIDDEN) }, FORBIDDEN);
+const notAuthorised = res => responseUtils.fail(res, { message: getStatusText(FORBIDDEN) }, FORBIDDEN);
 
 export const access = allowedRoles => async (req, res, next) => {
   const { user: dbUser } = req;

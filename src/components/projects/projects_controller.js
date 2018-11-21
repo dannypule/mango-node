@@ -1,59 +1,26 @@
 import db from '../../db_models';
-import utils from '../../utils/utils';
-import queryUtils from '../../utils/queryUtils';
+import responseUtils from '../../utils/responseUtils';
+import getRequestUtils from '../../utils/getRequestUtils';
 import projectsService from './projects_service';
 
 const model = db.Project;
 
 const getProjects = async (req, res) => {
   try {
-    const limit = 15; // number of records per page
+    const { companyId, projectCreatorId, postCode } = req.query;
 
-    const { id, companyId, projectCreatorId } = req.query;
-
-    const page = parseInt(req.query.page, 10) || 1; // page 1 default
-
-    const offset = limit * (page - 1); // define offset
-
-    // default db query
-    const dbQuery = {
-      where: {},
-      limit,
-      offset,
-      order: [['id', 'DESC']],
-    };
-
-    // ability to search by id
-    if (id !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
-        id: parseInt(id, 10),
-      };
-    }
-
-    // ability to search by companyId
-    if (companyId !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
+    const dbQuery = getRequestUtils.getDbQuery(req, {
+      where: {
         company_id: parseInt(companyId, 10),
-      };
-    }
-
-    // ability to search by projectCreatorId
-    if (projectCreatorId !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
         project_creator_id: parseInt(projectCreatorId, 10),
-      };
-    }
-
-    const projects = await model.findAndCountAll(dbQuery);
-
-    const pages = Math.ceil(projects.count / limit);
-    const formatted = projects.rows.map(projectsService.formatFromDb);
-    utils.success(res, { content: formatted, count: projects.count, pages, page });
+        post_code: postCode,
+      },
+    });
+    const data = await model.findAndCountAll(dbQuery);
+    const responseBody = getRequestUtils.getResponseBody(req, data, projectsService.formatFromDb);
+    responseUtils.success(res, responseBody);
   } catch (err) {
-    utils.success(res, err);
+    responseUtils.success(res, err);
   }
 };
 
@@ -62,9 +29,9 @@ const addProject = async (req, res) => {
 
   try {
     const project = await model.create(formatted);
-    utils.success(res, projectsService.formatFromDb(project));
+    responseUtils.success(res, projectsService.formatFromDb(project));
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
@@ -82,9 +49,9 @@ const updateProject = async (req, res) => {
         id: req.body.id,
       },
     });
-    utils.success(res, { project: projectsService.formatFromDb(updated) });
+    responseUtils.success(res, { project: projectsService.formatFromDb(updated) });
   } catch (err) {
-    utils.fail(res, { message: 'Unable to update this project.' });
+    responseUtils.fail(res, { message: 'Unable to update this project.' });
   }
 };
 
@@ -96,14 +63,14 @@ const deleteProject = async (req, res) => {
       },
     });
     if (result === 1) {
-      utils.success(res, {
+      responseUtils.success(res, {
         message: 'Successfully deleted project.',
       });
     } else {
-      utils.fail(res, { message: 'Unable to delete this project.' });
+      responseUtils.fail(res, { message: 'Unable to delete this project.' });
     }
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
