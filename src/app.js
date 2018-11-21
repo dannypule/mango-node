@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import passport from 'passport';
 // import cors from 'cors'
-import utils from './utils/utils';
+import utils from './utils/responseUtils';
 
 import apiRoutes from './routes/routes';
 
@@ -76,7 +76,7 @@ app.use('/api', apiRoutes);
 // ping endpoint
 // ////////////////////////////////////////
 app.use('/', (req, res) => {
-  utils.success(res, 'PONG');
+  responseUtils.success(res, 'PONG');
 });
 
 export default app;

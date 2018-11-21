@@ -1,58 +1,26 @@
 import db from '../../db_models';
-import utils from '../../utils/utils';
-import queryUtils from '../../utils/queryUtils';
+import responseUtils from '../../utils/responseUtils';
+import getRequestUtils from '../../utils/getRequestUtils';
 import userProjectsService from './user_projects_service';
 
 const model = db.UserProject;
 
 const getUserProjects = async (req, res) => {
   try {
-    const limit = 15; // number of records per page
+    const { userId, projectId, postCode } = req.query;
 
-    const { id, projectId, userId } = req.query;
-
-    const page = parseInt(req.query.page, 10) || 1; // page 1 default
-
-    const offset = limit * (page - 1); // define offset
-
-    // default db query
-    const dbQuery = {
-      where: {},
-      limit,
-      offset,
-      order: [['id', 'DESC']],
-    };
-
-    // ability to search by id
-    if (id !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
-        id: parseInt(id, 10),
-      };
-    }
-
-    // ability to search by projectId
-    if (projectId !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
-        project_id: parseInt(projectId, 10),
-      };
-    }
-
-    // ability to search by userId
-    if (userId !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
+    const dbQuery = getRequestUtils.getDbQuery(req, {
+      where: {
         user_id: parseInt(userId, 10),
-      };
-    }
-    const userProjects = await model.findAndCountAll(dbQuery);
-
-    const pages = Math.ceil(userProjects.count / limit);
-    const formatted = userProjects.rows.map(userProjectsService.formatFromDb);
-    utils.success(res, { content: formatted, count: userProjects.count, pages, page });
+        project_id: parseInt(projectId, 10),
+        post_code: postCode,
+      },
+    });
+    const data = await model.findAndCountAll(dbQuery);
+    const responseBody = getRequestUtils.getResponseBody(req, data, userProjectsService.formatFromDb);
+    responseUtils.success(res, responseBody);
   } catch (err) {
-    utils.success(res, err);
+    responseUtils.success(res, err);
   }
 };
 
@@ -61,9 +29,9 @@ const addUserProject = async (req, res) => {
 
   try {
     const userProject = await model.create(formatted);
-    utils.success(res, userProjectsService.formatFromDb(userProject));
+    responseUtils.success(res, userProjectsService.formatFromDb(userProject));
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
@@ -81,9 +49,9 @@ const updateUserProject = async (req, res) => {
         id: req.body.id,
       },
     });
-    utils.success(res, { content: userProjectsService.formatFromDb(updated) });
+    responseUtils.success(res, { content: userProjectsService.formatFromDb(updated) });
   } catch (err) {
-    utils.fail(res, { message: 'Unable to update this project.' });
+    responseUtils.fail(res, { message: 'Unable to update this project.' });
   }
 };
 
@@ -95,14 +63,14 @@ const deleteUserProject = async (req, res) => {
       },
     });
     if (result === 1) {
-      utils.success(res, {
+      responseUtils.success(res, {
         message: 'Successfully deleted project.',
       });
     } else {
-      utils.fail(res, { message: 'Unable to delete this project.' });
+      responseUtils.fail(res, { message: 'Unable to delete this project.' });
     }
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 

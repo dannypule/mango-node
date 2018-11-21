@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { getJWT } from '../../utils/jwt';
 import usersService from '../users/users_service';
-import utils from '../../utils/utils';
+import responseUtils from '../../utils/responseUtils';
 import db from '../../db_models';
 
 const model = db.User;
@@ -14,21 +14,21 @@ const login = async (req, res) => {
       },
     });
 
-    if (!user) utils.fail(res, { message: `Couldn't log in.` });
+    if (!user) responseUtils.fail(res, { message: `Couldn't log in.` });
 
     bcrypt.compare(req.body.password, user.password, (err, r) => {
       if (err) {
-        utils.fail(res, err);
+        responseUtils.fail(res, err);
         return;
       }
       if (r) {
-        utils.success(res, { token: getJWT(user) });
+        responseUtils.success(res, { token: getJWT(user) });
       } else {
-        utils.fail(res, { message: `Couldn't log in.` }, 403);
+        responseUtils.fail(res, { message: `Couldn't log in.` }, 403);
       }
     });
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 

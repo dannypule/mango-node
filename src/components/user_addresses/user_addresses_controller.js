@@ -1,51 +1,25 @@
 import db from '../../db_models';
-import utils from '../../utils/utils';
-import queryUtils from '../../utils/queryUtils';
+import responseUtils from '../../utils/responseUtils';
+import getRequestUtils from '../../utils/getRequestUtils';
 import userAddressService from './user_addresses_service';
 
 const model = db.UserAddress;
 
 const getUserAddresses = async (req, res) => {
   try {
-    const limit = 15; // number of records per page
+    const { userId, postCode } = req.query;
 
-    const { id, userId } = req.query;
-
-    const page = parseInt(req.query.page, 10) || 1; // page 1 default
-
-    const offset = limit * (page - 1); // define offset
-
-    // default db query
-    const dbQuery = {
-      where: {},
-      limit,
-      offset,
-      order: [['id', 'DESC']],
-    };
-
-    // ability to search by id
-    if (id !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
-        id: parseInt(id, 10),
-      };
-    }
-
-    // ability to search by userId
-    if (userId !== undefined) {
-      dbQuery.where = {
-        ...dbQuery.where,
+    const dbQuery = getRequestUtils.getDbQuery(req, {
+      where: {
         user_id: parseInt(userId, 10),
-      };
-    }
-
+        post_code: postCode,
+      },
+    });
     const data = await model.findAndCountAll(dbQuery);
-
-    const pages = Math.ceil(data.count / limit);
-    const formatted = data.rows.map(userAddressService.formatFromDb);
-    utils.success(res, { content: formatted, count: data.count, pages, page });
+    const responseBody = getRequestUtils.getResponseBody(req, data, userAddressService.formatFromDb);
+    responseUtils.success(res, responseBody);
   } catch (err) {
-    utils.success(res, err);
+    responseUtils.success(res, err);
   }
 };
 
@@ -54,9 +28,9 @@ const addUserAddress = async (req, res) => {
 
   try {
     const userAddress = await model.create(formatted);
-    utils.success(res, userAddressService.formatFromDb(userAddress));
+    responseUtils.success(res, userAddressService.formatFromDb(userAddress));
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
@@ -74,9 +48,9 @@ const updateUserAddress = async (req, res) => {
         id: req.body.id,
       },
     });
-    utils.success(res, { content: userAddressService.formatFromDb(_userAddress) });
+    responseUtils.success(res, { content: userAddressService.formatFromDb(_userAddress) });
   } catch (err) {
-    utils.fail(res, { message: 'Unable to update user address.' });
+    responseUtils.fail(res, { message: 'Unable to update user address.' });
   }
 };
 
@@ -88,14 +62,14 @@ const deleteUserAddress = async (req, res) => {
       },
     });
     if (result === 1) {
-      utils.success(res, {
+      responseUtils.success(res, {
         message: 'Successfully deleted user address.',
       });
     } else {
-      utils.fail(res, { message: 'Unable to delete user address.' });
+      responseUtils.fail(res, { message: 'Unable to delete user address.' });
     }
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 

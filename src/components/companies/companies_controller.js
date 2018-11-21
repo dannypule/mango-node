@@ -1,18 +1,18 @@
 import db from '../../db_models';
-import utils from '../../utils/utils';
-import queryUtils from '../../utils/queryUtils';
+import responseUtils from '../../utils/responseUtils';
+import getRequestUtils from '../../utils/getRequestUtils';
 import companiesService from './companies_service';
 
 const model = db.Company;
 
 const getCompanies = async (req, res) => {
   try {
-    const dbQuery = queryUtils.getDbQuery(req);
+    const dbQuery = getRequestUtils.getDbQuery(req);
     const data = await model.findAndCountAll(dbQuery);
-    const responseBody = queryUtils.getResponseBody(req, data, companiesService.formatFromDb);
-    utils.success(res, responseBody);
+    const responseBody = getRequestUtils.getResponseBody(req, data, companiesService.formatFromDb);
+    responseUtils.success(res, responseBody);
   } catch (err) {
-    utils.success(res, err);
+    responseUtils.success(res, err);
   }
 };
 
@@ -22,9 +22,9 @@ const addCompany = async (req, res) => {
 
   try {
     const company = await model.create(formatted);
-    utils.success(res, { company: companiesService.formatFromDb(company) });
+    responseUtils.success(res, { company: companiesService.formatFromDb(company) });
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
@@ -42,9 +42,9 @@ const updateCompany = async (req, res) => {
         id: req.body.id,
       },
     });
-    utils.success(res, { content: companiesService.formatFromDb(_company) });
+    responseUtils.success(res, { content: companiesService.formatFromDb(_company) });
   } catch (err) {
-    utils.fail(res, { message: 'Unable to update this company.' });
+    responseUtils.fail(res, { message: 'Unable to update this company.' });
   }
 };
 
@@ -56,14 +56,14 @@ const deleteCompany = async (req, res) => {
       },
     });
     if (result === 1) {
-      utils.success(res, {
+      responseUtils.success(res, {
         message: 'Successfully deleted company.',
       });
     } else {
-      utils.fail(res, { message: 'Unable to delete this company.' });
+      responseUtils.fail(res, { message: 'Unable to delete this company.' });
     }
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 

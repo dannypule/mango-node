@@ -1,18 +1,18 @@
 import usersService from './users_service';
 import db from '../../db_models';
-import utils from '../../utils/utils';
-import queryUtils from '../../utils/queryUtils';
+import responseUtils from '../../utils/responseUtils';
+import getRequestUtils from '../../utils/getRequestUtils';
 
 const model = db.User;
 
 const getUsers = async (req, res) => {
   try {
-    const dbQuery = queryUtils.getDbQuery(req);
+    const dbQuery = getRequestUtils.getDbQuery(req);
     const data = await model.findAndCountAll(dbQuery);
-    const responseBody = queryUtils.getResponseBody(req, data, usersService.formatFromDb);
-    utils.success(res, responseBody);
+    const responseBody = getRequestUtils.getResponseBody(req, data, usersService.formatFromDb);
+    responseUtils.success(res, responseBody);
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
@@ -96,12 +96,12 @@ const removeUser = async (req, res) => {
       },
     });
     if (result === 1) {
-      utils.success(res);
+      responseUtils.success(res);
     } else {
-      utils.fail(res, { message: 'Unable to delete this user.' });
+      responseUtils.fail(res, { message: 'Unable to delete this user.' });
     }
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
@@ -113,12 +113,12 @@ const removeUserByEmail = async (req, res) => {
       },
     });
     if (result === 1) {
-      utils.success(res, { result });
+      responseUtils.success(res, { result });
     } else {
-      utils.fail(res, { message: 'Unable to delete this user.', result });
+      responseUtils.fail(res, { message: 'Unable to delete this user.', result });
     }
   } catch (err) {
-    utils.fail(res, err);
+    responseUtils.fail(res, err);
   }
 };
 
