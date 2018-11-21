@@ -20,7 +20,7 @@ const formatFromDb = user => {
   };
 };
 
-const saltAndHashPassword = async (plainTextPassword) => {
+const saltAndHashPassword = async plainTextPassword => {
   const saltFactor = 13;
   const salt = await bcrypt.genSalt(saltFactor);
   const hash = await bcrypt.hash(plainTextPassword, salt, null);
