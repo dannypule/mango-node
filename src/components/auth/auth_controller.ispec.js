@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 
 describe('Given AuthController', () => {
   describe('and a super user is logged in', () => {
-    beforeAll((done) => {
+    beforeAll(done => {
       axiosInstance
         .post('/api/auth/login', {
           email: 'super.admin@email.fake',
@@ -30,10 +30,10 @@ describe('Given AuthController', () => {
         password: 'supersecure',
       };
 
-      it('should log user in', (done) => {
+      it('should log user in', done => {
         axiosInstance
           .post('/api/auth/login', postData)
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
             expect(res.data.data.token.includes('Bearer')).toBe(true);
@@ -49,7 +49,7 @@ describe('Given AuthController', () => {
     /* /api/auth/register */
     describe('and user tries to register an account', () => {
       let postData;
-      let newUserId;
+      let newUserUuid;
 
       beforeEach(() => {
         postData = {
@@ -57,23 +57,23 @@ describe('Given AuthController', () => {
           lastName: 'user',
           email: 'auth.test@test-email.fake',
           password: 'supersecure',
-          companyId: 1,
+          companyUuid: 1,
         };
       });
 
-      afterEach((done) => {
-        if (newUserId) {
-          const postData = { id: newUserId };
-          console.log(`Deleting user #${newUserId}`);
+      afterEach(done => {
+        if (newUserUuid) {
+          const postData = { uuid: newUserUuid };
+          console.log(`Deleting user #${newUserUuid}`);
           axiosInstance
             .delete('/api/users/remove_user', {
               data: postData,
             })
-            .then((res) => {
+            .then(res => {
               if (res.data.ok) {
-                console.log(`User #${newUserId} was deleted`);
+                console.log(`User #${newUserUuid} was deleted`);
               } else {
-                console.log(`Unable to delete user #${newUserId}`);
+                console.log(`Unable to delete user #${newUserUuid}`);
               }
               done();
             });
@@ -82,15 +82,15 @@ describe('Given AuthController', () => {
         }
       });
 
-      it('should register a new user', (done) => {
+      it('should register a new user', done => {
         axiosInstance
           .post('/api/auth/register', postData)
-          .then((res) => {
+          .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
             expect(res.data.data.user).toBeTruthy();
             expect(res.data.data.token.includes('Bearer')).toBe(true);
-            newUserId = res.data.data.user.id;
+            newUserUuid = res.data.data.user.uuid;
             done();
           })
           .catch(err => {

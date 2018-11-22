@@ -1,6 +1,6 @@
 const formatFromDb = item => {
   return {
-    id: item.id,
+    uuid: item.uuid,
     name: item.name,
     createdAt: item.created_at,
     updatedAt: item.updated_at,

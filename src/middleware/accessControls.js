@@ -16,7 +16,7 @@ export const access = allowedRoles => async (req, res, next) => {
   const { user: dbUser } = req;
   const sessionUser = req.body;
 
-  if (allowedRoles.includes(SELF) && sessionUser && sessionUser.id && dbUser.id === sessionUser.id) {
+  if (allowedRoles.includes(SELF) && sessionUser && sessionUser.uuid && dbUser.uuid === sessionUser.uuid) {
     return authorised(next);
   }
   if (allowedRoles.includes(COMPANY_VIEWER) && dbUser.userRoleCode === COMPANY_VIEWER) {

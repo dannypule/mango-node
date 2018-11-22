@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   const CompanyPhoneNumber = sequelize.define('CompanyPhoneNumber', {
-    id: {
+    uuid: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,

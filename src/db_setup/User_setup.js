@@ -17,12 +17,12 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 110, // super admin role
         verified: true,
-        company_id: companies[0].id,
+        company_uuid: companies[0].uuid,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
       await db.UserAddress.create({
         address_line_1: faker.address.streetAddress(),
@@ -34,7 +34,7 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
 
       // *** USER 2 - admin ***
@@ -45,12 +45,12 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 100, // admin role
         verified: true,
-        company_id: companies[0].id,
+        company_uuid: companies[0].uuid,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
       await db.UserAddress.create({
         address_line_1: faker.address.streetAddress(),
@@ -62,7 +62,7 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
 
       // *** USER 3 - company admin ***
@@ -73,12 +73,12 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 50,
         verified: true,
-        company_id: companies[0].id,
+        company_uuid: companies[0].uuid,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
       await db.UserAddress.create({
         address_line_1: faker.address.streetAddress(),
@@ -90,7 +90,7 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
 
       // *** USER 4 - company editor ***
@@ -101,12 +101,12 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 40,
         verified: true,
-        company_id: companies[0].id,
+        company_uuid: companies[0].uuid,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
       await db.UserAddress.create({
         address_line_1: faker.address.streetAddress(),
@@ -118,7 +118,7 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
 
       // *** USER 5 - company viewer ***
@@ -129,12 +129,12 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 30,
         verified: true,
-        company_id: companies[0].id,
+        company_uuid: companies[0].uuid,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
       await db.UserAddress.create({
         address_line_1: faker.address.streetAddress(),
@@ -146,7 +146,7 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
 
       // *** USER 6 - company regular ***
@@ -157,12 +157,12 @@ export default () => {
         password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
         user_role_code: 20,
         verified: true,
-        company_id: companies[0].id,
+        company_uuid: companies[0].uuid,
       });
       await db.UserPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
       await db.UserAddress.create({
         address_line_1: faker.address.streetAddress(),
@@ -174,7 +174,7 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        user_id: user.id,
+        user_uuid: user.uuid,
       });
 
       const amount = 400;
@@ -188,7 +188,7 @@ export default () => {
           password: '$2a$07$IcYHfXSjnMBS0M9BBEL/6ejBYCpZh7n6Q7Yw3ujSW9TR4pRz0l1.q', // login with the password `supersecure`
           user_role_code: [50, 40, 30, 20][Math.floor(Math.random() * 3)],
           verified: true,
-          company_id: companies[Math.floor(Math.random() * (companiesCount - 1))].id,
+          company_uuid: companies[Math.floor(Math.random() * (companiesCount - 1))].uuid,
         }).then(user => {
           console.log(colors.green(user.email));
           if (i === amount) {

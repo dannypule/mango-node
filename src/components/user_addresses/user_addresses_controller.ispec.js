@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 });
 
 describe('Given /api/user_addresses', () => {
-  let newPhoneNumberId;
+  let newPhoneNumberUuid;
 
   describe('and a super user is logged in', () => {
     beforeAll(done => {
@@ -40,7 +40,7 @@ describe('Given /api/user_addresses', () => {
             expect(res.data.data).toHaveProperty('pages');
             expect(res.data.data).toHaveProperty('page');
 
-            expect(res.data.data.content[0]).toHaveProperty('id');
+            expect(res.data.data.content[0]).toHaveProperty('uuid');
             expect(res.data.data.content[0]).toHaveProperty('addressLine1');
             expect(res.data.data.content[0]).toHaveProperty('addressLine2');
             expect(res.data.data.content[0]).toHaveProperty('addressLine3');
@@ -50,7 +50,7 @@ describe('Given /api/user_addresses', () => {
             expect(res.data.data.content[0]).toHaveProperty('country');
             expect(res.data.data.content[0]).toHaveProperty('postCode');
             expect(res.data.data.content[0]).toHaveProperty('typeCode');
-            expect(res.data.data.content[0]).toHaveProperty('userId');
+            expect(res.data.data.content[0]).toHaveProperty('userUuid');
             expect(res.data.data.content[0]).toHaveProperty('createdAt');
             expect(res.data.data.content[0]).toHaveProperty('updatedAt');
             expect(res.data.data.content[0]).toHaveProperty('status');
@@ -87,11 +87,11 @@ describe('Given /api/user_addresses', () => {
       });
     });
 
-    /* GET /api/user_addresses?id=5 */
-    describe('GET /api/user_addresses?id=5', () => {
-      it('should return user with id of 5', done => {
+    /* GET /api/user_addresses?uuid=5 */
+    describe('GET /api/user_addresses?uuid=5', () => {
+      it('should return user with uuid of 5', done => {
         axiosInstance
-          .get('/api/user_addresses?id=5')
+          .get('/api/user_addresses?uuid=5')
           .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
@@ -109,11 +109,11 @@ describe('Given /api/user_addresses', () => {
       });
     });
 
-    /* GET /api/user_addresses?userId=1 */
-    describe('GET /api/user_addresses?userId=1', () => {
-      it('should return user with userId of 1', done => {
+    /* GET /api/user_addresses?userUuid=1 */
+    describe('GET /api/user_addresses?userUuid=1', () => {
+      it('should return user with userUuid of 1', done => {
         axiosInstance
-          .get('/api/user_addresses?userId=1')
+          .get('/api/user_addresses?userUuid=1')
           .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
@@ -136,7 +136,7 @@ describe('Given /api/user_addresses', () => {
         const postData = {
           phone: '840.649.2349',
           typeCode: 1,
-          userId: 1,
+          userUuid: 1,
         };
         axiosInstance
           .post('/api/user_addresses', postData)
@@ -144,15 +144,15 @@ describe('Given /api/user_addresses', () => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
-            expect(res.data.data.content).toHaveProperty('id');
+            expect(res.data.data.content).toHaveProperty('uuid');
             expect(res.data.data.content).toHaveProperty('phone');
             expect(res.data.data.content).toHaveProperty('typeCode');
-            expect(res.data.data.content).toHaveProperty('userId');
+            expect(res.data.data.content).toHaveProperty('userUuid');
             expect(res.data.data.content).toHaveProperty('createdAt');
             expect(res.data.data.content).toHaveProperty('updatedAt');
             expect(res.data.data.content).toHaveProperty('status');
 
-            newPhoneNumberId = res.data.data.content.id;
+            newPhoneNumberUuid = res.data.data.content.uuid;
 
             done();
           })
@@ -168,10 +168,10 @@ describe('Given /api/user_addresses', () => {
     xdescribe('PUT /api/user_addresses', () => {
       it('should add user', done => {
         const postData = {
-          id: 203,
+          uuid: 203,
           phone: '840.649.2348',
           typeCode: 3,
-          userId: 14,
+          userUuid: 14,
         };
         axiosInstance
           .put('/api/user_addresses', postData)
@@ -179,10 +179,10 @@ describe('Given /api/user_addresses', () => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
 
-            expect(res.data.data.content.id).toBe(postData.id);
+            expect(res.data.data.content.uuid).toBe(postData.uuid);
             expect(res.data.data.content).toHaveProperty('phone');
             expect(res.data.data.content).toHaveProperty('typeCode');
-            expect(res.data.data.content).toHaveProperty('userId');
+            expect(res.data.data.content).toHaveProperty('userUuid');
 
             done();
           })
@@ -198,7 +198,7 @@ describe('Given /api/user_addresses', () => {
     xdescribe('and user wants to permanently remove user phone number from database', () => {
       it('should remove user phone number from databse', done => {
         const postData = {
-          id: newPhoneNumberId,
+          uuid: newPhoneNumberUuid,
         };
         axiosInstance
           .delete('/api/user_addresses', {
@@ -206,9 +206,9 @@ describe('Given /api/user_addresses', () => {
           })
           .then(res => {
             if (res.data.ok) {
-              console.log(`User phone number #${newPhoneNumberId} was deleted`);
+              console.log(`User phone number #${newPhoneNumberUuid} was deleted`);
             } else {
-              console.log(`Unable to delete user phone number #${newPhoneNumberId}`);
+              console.log(`Unable to delete user phone number #${newPhoneNumberUuid}`);
             }
 
             expect(res.status).toBe(200);
@@ -218,7 +218,7 @@ describe('Given /api/user_addresses', () => {
           })
           .catch(err => {
             console.log(err);
-            console.log(`Error deleting user phone number #${newPhoneNumberId}`);
+            console.log(`Error deleting user phone number #${newPhoneNumberUuid}`);
             done();
             throw new Error(err);
           });

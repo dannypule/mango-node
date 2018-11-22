@@ -43,7 +43,7 @@ const register = (req, res) => {
       lastName: user.lastName,
       email: user.email,
       password: user.password,
-      companyId: user.companyId,
+      companyUuid: user.companyUuid,
       userRoleCode: 30, // todo basic user - should use constants file
       status: 'ACTIVE',
     },

@@ -6,9 +6,9 @@ config.default = {
   jwt_encryption: 'h7dl0skFjCMg902JQLCaP',
 };
 const user = {
-  id: null,
+  uuid: null,
   user_role_code: null,
-  company_id: null,
+  company_uuid: null,
   status: null,
 };
 

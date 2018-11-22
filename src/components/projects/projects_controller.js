@@ -7,12 +7,12 @@ const model = db.Project;
 
 const getProjects = async (req, res) => {
   try {
-    const { companyId, projectCreatorId, postCode } = req.query;
+    const { companyUuid, projectCreatorUuid, postCode } = req.query;
 
     const dbQuery = getRequestUtils.getDbQuery(req, {
       where: {
-        company_id: parseInt(companyId, 10),
-        project_creator_id: parseInt(projectCreatorId, 10),
+        company_uuid: companyUuid,
+        project_creator_uuid: projectCreatorUuid,
         post_code: postCode,
       },
     });
@@ -41,12 +41,12 @@ const updateProject = async (req, res) => {
   try {
     await model.update(projectsService.formatForDb(project), {
       where: {
-        id: project.id,
+        uuid: project.uuid,
       },
     });
     const updated = await model.findOne({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     responseUtils.success(res, { project: projectsService.formatFromDb(updated) });
@@ -59,7 +59,7 @@ const deleteProject = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     if (result === 1) {

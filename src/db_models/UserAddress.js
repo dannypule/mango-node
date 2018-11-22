@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   const UserAddress = sequelize.define('UserAddress', {
-    id: {
+    uuid: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,

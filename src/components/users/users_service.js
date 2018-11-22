@@ -8,7 +8,7 @@ const model = db.User;
 
 const formatFromDb = user => {
   return {
-    id: user.id,
+    uuid: user.uuid,
     firstName: user.first_name,
     lastName: user.last_name,
     email: user.email,
@@ -53,7 +53,7 @@ const addUser = async (req, res, user, sendToken) => {
 
 const isPermitted = (req, allowedUsers) => {
   if (allowedUsers.includes('OWNER')) {
-    if (req.body.id === req.user.id) {
+    if (req.body.uuid === req.user.uuid) {
       return true;
     }
   }
@@ -65,11 +65,11 @@ const isPermitted = (req, allowedUsers) => {
   return false;
 };
 
-const updateUser = async (req, res, userId, objectToUpdate) => {
+const updateUser = async (req, res, userUuid, objectToUpdate) => {
   try {
     const result = await model.update(objectToUpdate, {
       where: {
-        id: userId,
+        uuid: userUuid,
       },
     });
     if (result[0] !== 1) {
@@ -77,7 +77,7 @@ const updateUser = async (req, res, userId, objectToUpdate) => {
     }
     const _user = await model.findOne({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     responseUtils.success(res, { content: formatFromDb(_user) });

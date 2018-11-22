@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   const UserProject = sequelize.define('UserProject', {
-    id: {
+    uuid: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,

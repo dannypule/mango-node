@@ -18,7 +18,7 @@ const getCompanies = async (req, res) => {
 
 const addCompany = async (req, res) => {
   const formatted = companiesService.formatForDb(req.body);
-  // const userId = req.user.id;
+  // const userUuid = req.user.uuid;
 
   try {
     const company = await model.create(formatted);
@@ -34,12 +34,12 @@ const updateCompany = async (req, res) => {
   try {
     await model.update(companiesService.formatForDb(company), {
       where: {
-        id: company.id,
+        uuid: company.uuid,
       },
     });
     const _company = await model.findOne({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     responseUtils.success(res, { content: companiesService.formatFromDb(_company) });
@@ -52,7 +52,7 @@ const deleteCompany = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     if (result === 1) {
