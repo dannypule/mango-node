@@ -7,11 +7,11 @@ const model = db.CompanyAddress;
 
 const getCompanyAddresses = async (req, res) => {
   try {
-    const { companyId, postCode } = req.query;
+    const { companyUuid, postCode } = req.query;
 
     const dbQuery = getRequestUtils.getDbQuery(req, {
       where: {
-        company_id: parseInt(companyId, 10),
+        company_uuid: companyUuid,
         post_code: postCode,
       },
     });
@@ -40,12 +40,12 @@ const updateCompanyAddress = async (req, res) => {
   try {
     await model.update(companyAddressesService.formatForDb(companyAddress), {
       where: {
-        id: companyAddress.id,
+        uuid: companyAddress.uuid,
       },
     });
     const _companyAddress = await model.findOne({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     responseUtils.success(res, { content: companyAddressesService.formatFromDb(_companyAddress) });
@@ -58,7 +58,7 @@ const deleteCompanyAddress = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     if (result === 1) {

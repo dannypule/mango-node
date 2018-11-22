@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   const CompanyAddress = sequelize.define('CompanyAddress', {
-    id: {
+    uuid: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,

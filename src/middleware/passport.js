@@ -14,16 +14,17 @@ module.exports = passport => {
       try {
         const user = await db.User.findOne({
           where: {
-            id: jwtPayload.userId,
+            uuid: jwtPayload.userUuid,
           },
         });
-        if (!user || user.status !== 'ACTIVE') { // @todo - to scale up we would need a redis cache-based solution instead of querying the db
+        if (!user || user.status !== 'ACTIVE') {
+          // @todo - to scale up we would need a redis cache-based solution instead of querying the db
           return done(null, false);
         }
         const userFromJwtPayload = {
-          id: jwtPayload.userId,
+          uuid: jwtPayload.userUuid,
           userRoleCode: jwtPayload.userRoleCode,
-          companyId: jwtPayload.companyId,
+          companyUuid: jwtPayload.companyUuid,
           verified: jwtPayload.verified,
           status: jwtPayload.status,
         };

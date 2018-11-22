@@ -7,11 +7,11 @@ const model = db.UserAddress;
 
 const getUserAddresses = async (req, res) => {
   try {
-    const { userId, postCode } = req.query;
+    const { userUuid, postCode } = req.query;
 
     const dbQuery = getRequestUtils.getDbQuery(req, {
       where: {
-        user_id: parseInt(userId, 10),
+        user_uuid: userUuid,
         post_code: postCode,
       },
     });
@@ -40,12 +40,12 @@ const updateUserAddress = async (req, res) => {
   try {
     await model.update(userAddressService.formatForDb(userAddress), {
       where: {
-        id: userAddress.id,
+        uuid: userAddress.uuid,
       },
     });
     const _userAddress = await model.findOne({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     responseUtils.success(res, { content: userAddressService.formatFromDb(_userAddress) });
@@ -58,7 +58,7 @@ const deleteUserAddress = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     if (result === 1) {

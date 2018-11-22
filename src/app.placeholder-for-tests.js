@@ -96,7 +96,7 @@ xdescribe('When I make an API request', () => {
       //       email: faker.internet.email(),
       //       password: 'admin',
       //       userRoleCode: 30,
-      //       companyId: 2,
+      //       companyUuid: 2,
       //     }
 
       //     axiosInstance
@@ -109,7 +109,7 @@ xdescribe('When I make an API request', () => {
       //         expect(returnedUser.lastName).toBe(user.lastName)
       //         expect(returnedUser.email).toBe(user.email)
       //         expect(returnedUser.userRoleCode).toBe(user.userRoleCode)
-      //         expect(returnedUser.companyId).toBe(user.companyId)
+      //         expect(returnedUser.companyUuid).toBe(user.companyUuid)
 
       //         done()
       //       })

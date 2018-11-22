@@ -7,11 +7,11 @@ const model = db.UserPhoneNumber;
 
 const getUserPhoneNumbers = async (req, res) => {
   try {
-    const { userId, postCode } = req.query;
+    const { userUuid, postCode } = req.query;
 
     const dbQuery = getRequestUtils.getDbQuery(req, {
       where: {
-        user_id: parseInt(userId, 10),
+        user_uuid: userUuid,
         post_code: postCode,
       },
     });
@@ -40,12 +40,12 @@ const updateUserPhoneNumber = async (req, res) => {
   try {
     await model.update(userPhoneNumbersService.formatForDb(userPhoneNumber), {
       where: {
-        id: userPhoneNumber.id,
+        uuid: userPhoneNumber.uuid,
       },
     });
     const _userPhoneNumber = await model.findOne({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     responseUtils.success(res, { content: userPhoneNumbersService.formatFromDb(_userPhoneNumber) });
@@ -58,7 +58,7 @@ const deleteUserPhoneNumber = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     if (result === 1) {
