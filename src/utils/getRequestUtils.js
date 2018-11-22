@@ -9,7 +9,7 @@ const getOffset = req => LIMIT * (getPage(req) - 1);
 const getFormattedFromDB = (data, formatFromDb) => data.rows.map(formatFromDb);
 
 const getDbQuery = (req, options = { where: {} }) => {
-  const { id } = req.query;
+  const { uuid } = req.query;
   const limit = LIMIT;
   const offset = getOffset(req);
   const { where } = options;
@@ -17,13 +17,13 @@ const getDbQuery = (req, options = { where: {} }) => {
     where: {},
     limit,
     offset,
-    order: [['id', 'DESC']],
+    order: [['uuid', 'DESC']],
   };
 
-  if (id) {
+  if (uuid) {
     dbQuery.where = {
       ...dbQuery.where,
-      id,
+      uuid,
     };
   }
 

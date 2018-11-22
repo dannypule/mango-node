@@ -11,7 +11,7 @@ export default () => {
         db.CompanyPhoneNumber.create({
           phone: faker.phone.phoneNumber(),
           type_code: Math.floor(Math.random() * 3) + 1,
-          company_id: companies[Math.floor(Math.random() * (companiesCount - 1))].id,
+          company_uuid: companies[Math.floor(Math.random() * (companiesCount - 1))].uuid,
         }).then(() => {
           if (i === 199) {
             console.log(colors.green('Demo items inserted into CompanyPhoneNumber table.'));

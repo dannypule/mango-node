@@ -1,68 +1,77 @@
-import { access, SUPERADMIN, ADMIN, COMPANY_ADMIN, COMPANY_EDITOR, COMPANY_VIEWER, COMPANY_REGULAR, SELF } from './accessControls';
+import {
+  access,
+  SUPERADMIN,
+  ADMIN,
+  COMPANY_ADMIN,
+  COMPANY_EDITOR,
+  COMPANY_VIEWER,
+  COMPANY_REGULAR,
+  SELF,
+} from './accessControls';
 
 const nextMock = jest.fn();
 const jsonMock = jest.fn();
 const reqMockSuperAdmin = {
   user: {
-    id: 1,
+    uuid: 1,
     userRoleCode: SUPERADMIN,
   },
   body: {
-    id: 22,
+    uuid: 22,
   },
 };
 const reqMockAdmin = {
   user: {
-    id: 1,
+    uuid: 1,
     userRoleCode: ADMIN,
   },
   body: {
-    id: 22,
+    uuid: 22,
   },
 };
 const reqMockCompanyAdmin = {
   user: {
-    id: 1,
+    uuid: 1,
     userRoleCode: COMPANY_ADMIN,
   },
   body: {
-    id: 22,
+    uuid: 22,
   },
 };
 const reqMockCompanyEditor = {
   user: {
-    id: 1,
+    uuid: 1,
     userRoleCode: COMPANY_EDITOR,
   },
   body: {
-    id: 22,
+    uuid: 22,
   },
 };
 const reqMockCompanyViewer = {
   user: {
-    id: 1,
+    uuid: 1,
     userRoleCode: COMPANY_VIEWER,
   },
   body: {
-    id: 22,
+    uuid: 22,
   },
 };
 const reqMockCompanyRegular = {
   user: {
-    id: 1,
+    uuid: 1,
     userRoleCode: COMPANY_REGULAR,
   },
   body: {
-    id: 22,
+    uuid: 22,
   },
 };
 const reqMockSelf = {
   user: {
-    id: 22,
+    uuid: 22,
     userRoleCode: COMPANY_REGULAR,
   },
   body: {
-    id: 22,
+    uuid: 22,
   },
 };
 const resMock = {

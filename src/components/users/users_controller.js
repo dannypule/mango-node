@@ -30,7 +30,7 @@ const updateName = async (req, res) => {
     last_name: user.lastName,
   };
 
-  usersService.updateUser(req, res, user.id, objectToUpdate);
+  usersService.updateUser(req, res, user.uuid, objectToUpdate);
 };
 
 const updateEmail = async (req, res) => {
@@ -40,7 +40,7 @@ const updateEmail = async (req, res) => {
     email: user.email,
   };
 
-  usersService.updateUser(req, res, user.id, objectToUpdate);
+  usersService.updateUser(req, res, user.uuid, objectToUpdate);
 };
 
 const updatePassword = async (req, res) => {
@@ -52,7 +52,7 @@ const updatePassword = async (req, res) => {
     password,
   };
 
-  usersService.updateUser(req, res, user.id, objectToUpdate);
+  usersService.updateUser(req, res, user.uuid, objectToUpdate);
 };
 
 const updateWholeUser = async (req, res) => {
@@ -65,7 +65,7 @@ const updateWholeUser = async (req, res) => {
     status: user.status,
   };
 
-  usersService.updateUser(req, res, user.id, objectToUpdate);
+  usersService.updateUser(req, res, user.uuid, objectToUpdate);
 };
 
 const changeUserStatus = async (req, res) => {
@@ -75,7 +75,7 @@ const changeUserStatus = async (req, res) => {
     status: user.status,
   };
 
-  usersService.updateUser(req, res, user.id, objectToUpdate);
+  usersService.updateUser(req, res, user.uuid, objectToUpdate);
 };
 
 const setStatusToDeleted = async (req, res) => {
@@ -85,14 +85,14 @@ const setStatusToDeleted = async (req, res) => {
     status: 'DELETED',
   };
 
-  usersService.updateUser(req, res, user.id, objectToUpdate);
+  usersService.updateUser(req, res, user.uuid, objectToUpdate);
 };
 
 const removeUser = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     if (result === 1) {

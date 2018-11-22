@@ -1,8 +1,8 @@
 const formatFromDb = item => {
   return {
-    id: item.id,
-    projectId: item.project_id,
-    userId: item.user_id,
+    uuid: item.uuid,
+    projectUuid: item.project_uuid,
+    userUuid: item.user_uuid,
     createdAt: item.created_at,
     updatedAt: item.updated_at,
     status: item.status,
@@ -11,8 +11,8 @@ const formatFromDb = item => {
 
 const formatForDb = item => {
   return {
-    project_id: item.projectId,
-    user_id: item.userId,
+    project_uuid: item.projectUuid,
+    user_uuid: item.userUuid,
     status: item.status,
   };
 };

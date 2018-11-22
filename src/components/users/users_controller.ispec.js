@@ -73,11 +73,11 @@ describe('Given /api/users', () => {
       });
     });
 
-    /* GET /api/users?id=5 */
-    describe('and user with id of 5 is requested', () => {
-      it('should return user with id of 5', done => {
+    /* GET /api/users?uuid=5 */
+    describe('and user with uuid of 5 is requested', () => {
+      it('should return user with uuid of 5', done => {
         axiosInstance
-          .get('/api/users?id=5')
+          .get('/api/users?uuid=5')
           .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);
@@ -98,7 +98,7 @@ describe('Given /api/users', () => {
 
     /* POST /api/users/add_user */
     describe('and user wants to add user', () => {
-      let newUserId;
+      let newUserUuid;
 
       it('should add user', done => {
         const postData = {
@@ -106,7 +106,7 @@ describe('Given /api/users', () => {
           lastName: 'user',
           email: 'some.user@test-email.fake',
           password: 'supersecure',
-          companyId: 1,
+          companyUuid: 1,
         };
         axiosInstance
           .post('/api/users/add_user', postData)
@@ -117,7 +117,7 @@ describe('Given /api/users', () => {
             expect(res.data.data.user).toBeTruthy();
             expect(res.data.data.token.includes('Bearer')).toBe(false);
 
-            newUserId = res.data.data.user.id;
+            newUserUuid = res.data.data.user.uuid;
 
             done();
           })
@@ -132,7 +132,7 @@ describe('Given /api/users', () => {
       describe('and user wants to update user', () => {
         it('should update user', done => {
           const postData = {
-            id: newUserId,
+            uuid: newUserUuid,
             firstName: 'updatedFirstName',
             lastName: 'updatedLastName',
             email: 'updated.email@test-email.fake',
@@ -165,7 +165,7 @@ describe('Given /api/users', () => {
       describe('and user wants to update email', () => {
         it('should update email', done => {
           const postData = {
-            id: newUserId,
+            uuid: newUserUuid,
             email: 'email.is.updated@test-email.fake',
           };
           axiosInstance
@@ -190,7 +190,7 @@ describe('Given /api/users', () => {
       describe("and user wants to update user's names", () => {
         it('should update name', done => {
           const postData = {
-            id: newUserId,
+            uuid: newUserUuid,
             firstName: 'updated_first_name',
             lastName: 'updated_last_name',
           };
@@ -217,7 +217,7 @@ describe('Given /api/users', () => {
       describe("and user wants to update user's password", () => {
         it('should update password', done => {
           const postData = {
-            id: newUserId,
+            uuid: newUserUuid,
             password: 'football',
           };
           axiosInstance
@@ -226,7 +226,7 @@ describe('Given /api/users', () => {
               expect(res.status).toBe(200);
               expect(res.data.ok).toBe(true);
 
-              expect(res.data.data.content.id).toBe(postData.id);
+              expect(res.data.data.content.uuid).toBe(postData.uuid);
 
               done();
             })
@@ -242,7 +242,7 @@ describe('Given /api/users', () => {
       describe("and user wants to update user's status", () => {
         it('should update status', done => {
           const postData = {
-            id: newUserId,
+            uuid: newUserUuid,
             status: 'DELETED',
           };
           axiosInstance
@@ -251,7 +251,7 @@ describe('Given /api/users', () => {
               expect(res.status).toBe(200);
               expect(res.data.ok).toBe(true);
 
-              expect(res.data.data.content.id).toBe(postData.id);
+              expect(res.data.data.content.uuid).toBe(postData.uuid);
 
               done();
             })
@@ -267,7 +267,7 @@ describe('Given /api/users', () => {
       describe('and user wants to permanently remove user from database', () => {
         it('should remove user from database', done => {
           const postData = {
-            id: newUserId,
+            uuid: newUserUuid,
           };
           axiosInstance
             .delete('/api/users/remove_user', {
@@ -275,9 +275,9 @@ describe('Given /api/users', () => {
             })
             .then(res => {
               if (res.data.ok) {
-                console.log(`User #${newUserId} was deleted`);
+                console.log(`User #${newUserUuid} was deleted`);
               } else {
-                console.log(`Unable to delete user #${newUserId}`);
+                console.log(`Unable to delete user #${newUserUuid}`);
               }
 
               expect(res.status).toBe(200);
@@ -287,7 +287,7 @@ describe('Given /api/users', () => {
             })
             .catch(err => {
               console.log(err);
-              console.log(`Error deleting user #${newUserId}`);
+              console.log(`Error deleting user #${newUserUuid}`);
               done();
               throw new Error(err);
             });

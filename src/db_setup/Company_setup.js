@@ -21,12 +21,12 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        company_id: company.id,
+        company_uuid: company.uuid,
       });
       await db.CompanyPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        company_id: company.id,
+        company_uuid: company.uuid,
       });
 
       // *** COMPANY 2 - Apple ***
@@ -43,12 +43,12 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        company_id: company.id,
+        company_uuid: company.uuid,
       });
       await db.CompanyPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        company_id: company.id,
+        company_uuid: company.uuid,
       });
 
       for (let i = 0; i < 200; i++) {

@@ -1,10 +1,9 @@
 export default (sequelize, DataTypes) => {
   const UserRole = sequelize.define('UserRole', {
     id: {
-      type: DataTypes.UUID,
       allowNull: false,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
     },
     code: {
       allowNull: false,

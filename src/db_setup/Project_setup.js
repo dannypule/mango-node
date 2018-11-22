@@ -12,74 +12,74 @@ export default () => {
       // *** PROJECT 1 ***
       project = await db.Project.create({
         title: 'May 2018 - Virtual Reality - Project',
-        project_creator_id: users[2].id,
-        company_id: companies[0].id,
+        project_creator_uuid: users[2].uuid,
+        company_uuid: companies[0].uuid,
       });
       await db.UserProject.create({
-        user_id: users[2].id,
-        project_id: project.id,
+        user_uuid: users[2].uuid,
+        project_uuid: project.uuid,
         access_type: 'FULL',
       });
       await db.UserProject.create({
-        user_id: users[4].id,
-        project_id: project.id,
+        user_uuid: users[4].uuid,
+        project_uuid: project.uuid,
         access_type: 'EDITOR',
       });
       await db.UserProject.create({
-        user_id: users[4].id,
-        project_id: project.id,
+        user_uuid: users[4].uuid,
+        project_uuid: project.uuid,
         access_type: 'VIEWER',
       });
 
       // *** PROJECT 2 ***
       project = await db.Project.create({
         title: 'April 2019 - China Telecomms Installation - Project',
-        project_creator_id: users[2].id,
-        company_id: companies[0].id,
+        project_creator_uuid: users[2].uuid,
+        company_uuid: companies[0].uuid,
       });
       await db.UserProject.create({
-        user_id: users[2].id,
-        project_id: project.id,
+        user_uuid: users[2].uuid,
+        project_uuid: project.uuid,
         access_type: 'FULL',
       });
       await db.UserProject.create({
-        user_id: users[4].id,
-        project_id: project.id,
+        user_uuid: users[4].uuid,
+        project_uuid: project.uuid,
         access_type: 'EDITOR',
       });
       await db.UserProject.create({
-        user_id: users[4].id,
-        project_id: project.id,
+        user_uuid: users[4].uuid,
+        project_uuid: project.uuid,
         access_type: 'VIEWER',
       });
 
       // *** PROJECT 3 ***
       project = await db.Project.create({
         title: 'September 2018 - New iPhone Launch - Project',
-        project_creator_id: users[2].id,
-        company_id: companies[0].id,
+        project_creator_uuid: users[2].uuid,
+        company_uuid: companies[0].uuid,
       });
       await db.UserProject.create({
-        user_id: users[2].id,
-        project_id: project.id,
+        user_uuid: users[2].uuid,
+        project_uuid: project.uuid,
         access_type: 'FULL',
       });
       await db.UserProject.create({
-        user_id: users[4].id,
-        project_id: project.id,
+        user_uuid: users[4].uuid,
+        project_uuid: project.uuid,
         access_type: 'EDITOR',
       });
       await db.UserProject.create({
-        user_id: users[4].id,
-        project_id: project.id,
+        user_uuid: users[4].uuid,
+        project_uuid: project.uuid,
         access_type: 'VIEWER',
       });
 
       for (let i = 0; i < 200; i++) {
         db.Project.create({
           title: `${faker.commerce.productName()} - Project`,
-          project_creator_id: users[Math.floor(Math.random() * (usersCount - 1))].id,
-          company_id: companies[Math.floor(Math.random() * (companiesCount - 1))].id,
+          project_creator_uuid: users[Math.floor(Math.random() * (usersCount - 1))].uuid,
+          company_uuid: companies[Math.floor(Math.random() * (companiesCount - 1))].uuid,
         }).then(() => {
           if (i === 199) {
             console.log(colors.green('Demo items inserted into Project table.'));

@@ -7,12 +7,12 @@ const model = db.UserProject;
 
 const getUserProjects = async (req, res) => {
   try {
-    const { userId, projectId, postCode } = req.query;
+    const { userUuid, projectUuid, postCode } = req.query;
 
     const dbQuery = getRequestUtils.getDbQuery(req, {
       where: {
-        user_id: parseInt(userId, 10),
-        project_id: parseInt(projectId, 10),
+        user_uuid: userUuid,
+        project_uuid: projectUuid,
         post_code: postCode,
       },
     });
@@ -41,12 +41,12 @@ const updateUserProject = async (req, res) => {
   try {
     await model.update(userProjectsService.formatForDb(userProject), {
       where: {
-        id: userProject.id,
+        uuid: userProject.uuid,
       },
     });
     const updated = await model.findOne({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     responseUtils.success(res, { content: userProjectsService.formatFromDb(updated) });
@@ -59,7 +59,7 @@ const deleteUserProject = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        id: req.body.id,
+        uuid: req.body.uuid,
       },
     });
     if (result === 1) {

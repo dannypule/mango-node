@@ -1,6 +1,6 @@
 const formatFromDb = item => {
   return {
-    id: item.id,
+    uuid: item.uuid,
     addressLine1: item.address_line_1,
     addressLine2: item.address_line_2,
     addressLine3: item.address_line_3,
@@ -10,7 +10,7 @@ const formatFromDb = item => {
     country: item.country,
     postCode: item.post_code,
     typeCode: item.type_code,
-    userId: item.user_id,
+    userUuid: item.user_uuid,
     createdAt: item.created_at,
     updatedAt: item.updated_at,
     status: item.status,
@@ -28,7 +28,7 @@ const formatForDb = item => {
     country: item.country,
     post_code: item.postCode,
     type_code: item.typeCode,
-    user_id: item.userId,
+    user_uuid: item.userUuid,
     status: item.status,
   };
 };

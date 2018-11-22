@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   const Project = sequelize.define('Project', {
-    id: {
+    uuid: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
@@ -18,14 +18,11 @@ export default (sequelize, DataTypes) => {
   });
 
   Project.associate = models => {
-    // Project.belongsToMany(models.User, {
-    //   through: 'user_project',
-    // })
     Project.belongsTo(models.User, {
-      foreignKey: 'project_creator_id',
+      foreignKey: 'project_creator_uuid:',
     });
     Project.belongsTo(models.Company, {
-      foreignKey: 'company_id',
+      foreignKey: 'company_uuid:',
     });
   };
 

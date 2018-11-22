@@ -9,8 +9,8 @@ export default () => {
 
       for (let i = 0; i < 200; i++) {
         db.UserProject.create({
-          user_id: users[Math.floor(Math.random() * (usersCount - 1))].id,
-          project_id: project[Math.floor(Math.random() * (projectCount - 1))].id,
+          user_uuid: users[Math.floor(Math.random() * (usersCount - 1))].uuid,
+          project_uuid: project[Math.floor(Math.random() * (projectCount - 1))].uuid,
           access_type: ['FULL', 'EDITOR', 'VIEWER'][Math.floor(Math.random() * 3)],
         }).then(() => {
           if (i === 199) {

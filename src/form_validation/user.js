@@ -8,7 +8,7 @@ export const UserYupSchema = yup.object().shape({
     .email('A valid email is required.')
     .required('An email is required.'),
   password: yup.string().required('A password is required.'),
-  companyId: yup.string(),
+  companyUuid: yup.string(),
   userRoleCode: yup.string(),
 });
 
