@@ -5,223 +5,207 @@ const axiosInstance = axios.create({
   baseURL: `${config.baseURL}`,
   timeout: 5000,
 });
+const ACTIVE = 'ACTIVE';
 
 describe('Given /api/user_phone_numbers', () => {
-  let newPhoneNumberUuid;
+  /* SUPER ADMIN */
+  describe('and a SUPER ADMIN is logged in', () => {
+    let phoneNumbers;
+    let users;
 
-  describe('and a super user is logged in', () => {
-    beforeAll(done => {
-      axiosInstance
-        .post('/api/auth/login', {
-          email: 'super.admin@email.fake',
-          password: 'supersecure',
-        })
-        .then(res => {
-          axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-          setTimeout(done, config.testDelay);
-        });
+    beforeAll(async done => {
+      const res = await axiosInstance.post('/api/auth/login', {
+        email: 'super.admin@email.fake',
+        password: 'supersecure',
+      });
+      axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
+      done();
+    });
+    beforeEach(async done => {
+      const phoneNumberRes = await axiosInstance.get('/api/user_phone_numbers');
+      const usersRes = await axiosInstance.get('/api/users');
+      phoneNumbers = phoneNumberRes.data.data.content;
+      users = usersRes.data.data.content;
+      done();
     });
 
-    /* GET /api/user_phone_numbers */
+    /* ======================== GET ======================== */
+
     describe('GET /api/user_phone_numbers', () => {
-      it('should return user phone numbers', done => {
-        axiosInstance
-          .get('/api/user_phone_numbers')
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
+      it('should return phoneNumbers', async done => {
+        const res = await axiosInstance.get('/api/user_phone_numbers');
 
-            expect(res.data.data.content.length).toBe(15);
-            expect(res.data.data.page).toBe(1);
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
 
-            expect(res.data.data.content).not.toBe(0);
+        expect(res.data.data.content.length).toBe(15);
+        expect(res.data.data.page).toBe(1);
+        expect(res.data.data).toHaveProperty('count');
+        expect(res.data.data).toHaveProperty('pages');
+        expect(res.data.data).toHaveProperty('page');
 
-            expect(res.data.data.content[0]).toHaveProperty('uuid');
-            expect(res.data.data.content[0]).toHaveProperty('phone');
-            expect(res.data.data.content[0]).toHaveProperty('typeCode');
-            expect(res.data.data.content[0]).toHaveProperty('userUuid');
-            expect(res.data.data.content[0]).toHaveProperty('createdAt');
-            expect(res.data.data.content[0]).toHaveProperty('updatedAt');
-            expect(res.data.data.content[0]).toHaveProperty('status');
+        expect(res.data.data.content[0]).toHaveProperty('uuid');
+        expect(res.data.data.content[0]).toHaveProperty('phone');
+        expect(res.data.data.content[0]).toHaveProperty('typeCode');
+        expect(res.data.data.content[0]).toHaveProperty('userUuid');
+        expect(res.data.data.content[0]).toHaveProperty('createdAt');
+        expect(res.data.data.content[0]).toHaveProperty('updatedAt');
+        expect(res.data.data.content[0]).toHaveProperty('status');
 
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
+        done();
       });
     });
 
-    /* GET /api/user_phone_numbers?page=4 */
     describe('GET /api/user_phone_numbers?page=4', () => {
-      it('should return user phone numbers from page 4', done => {
-        axiosInstance
-          .get('/api/user_phone_numbers?page=4')
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
+      it('should return phoneNumbers from page 4', async done => {
+        const res = await axiosInstance.get('/api/user_phone_numbers?page=4');
 
-            expect(res.data.data.content.length).toBe(15);
-            expect(res.data.data.page).toBe(4);
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
 
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
+        expect(res.data.data.content.length).toBe(15);
+        expect(res.data.data.page).toBe(4);
+        expect(res.data.data).toHaveProperty('count');
+        expect(res.data.data).toHaveProperty('pages');
+        expect(res.data.data).toHaveProperty('page');
+
+        done();
       });
     });
 
-    /* GET /api/user_phone_numbers?uuid=5 */
-    describe('GET /api/user_phone_numbers?uuid=5', () => {
-      it('should return user with uuid of 5', done => {
-        axiosInstance
-          .get('/api/user_phone_numbers?uuid=5')
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
-
-            expect(res.data.data.content.length).toBe(1);
-            expect(res.data.data.page).toBe(1);
-
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
-      });
-    });
-
-    /* GET /api/user_phone_numbers?uuid=1 */
-    describe('GET /api/user_phone_numbers?uuid=1', () => {
-      it('should return user with uuid of 1', done => {
-        axiosInstance
-          .get('/api/user_phone_numbers?uuid=1')
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
-
-            expect(res.data.data.content.length).not.toBe(0);
-
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
-      });
-    });
+    /* ======================== POST ======================== */
 
     /* POST /api/user_phone_numbers */
     describe('POST /api/user_phone_numbers', () => {
-      it('should add user', done => {
+      it('should add phone number', async done => {
+        const { uuid } = users[0];
         const postData = {
           phone: '840.649.2349',
           typeCode: 1,
-          userUuid: 1,
+          userUuid: uuid,
         };
-        axiosInstance
-          .post('/api/user_phone_numbers', postData)
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
+        const res = await axiosInstance.post('/api/user_phone_numbers', postData);
 
-            expect(res.data.data.content).toHaveProperty('uuid');
-            expect(res.data.data.content).toHaveProperty('phone');
-            expect(res.data.data.content).toHaveProperty('typeCode');
-            expect(res.data.data.content).toHaveProperty('userUuid');
-            expect(res.data.data.content).toHaveProperty('createdAt');
-            expect(res.data.data.content).toHaveProperty('updatedAt');
-            expect(res.data.data.content).toHaveProperty('status');
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
 
-            newPhoneNumberUuid = res.data.data.content.uuid;
+        expect(res.data.data).toHaveProperty('uuid');
+        expect(res.data.data.phone).toBe(postData.phone);
+        expect(res.data.data.typeCode).toBe(postData.typeCode);
+        expect(res.data.data.userUuid).toBe(postData.userUuid);
+        expect(res.data.data).toHaveProperty('createdAt');
+        expect(res.data.data).toHaveProperty('updatedAt');
+        expect(res.data.data.status).toBe(ACTIVE);
 
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
+        done();
       });
     });
 
-    /* PUT /api/user_phone_numbers */
+    /* ======================== PUT ======================== */
+
     describe('PUT /api/user_phone_numbers', () => {
-      it('should add user', done => {
+      it('should update phone number', async done => {
+        const { uuid } = phoneNumbers[0];
+        const { uuid: userUuid } = users[0];
+
         const postData = {
-          uuid: 203,
+          uuid,
           phone: '840.649.2348',
           typeCode: 3,
-          userUuid: 14,
+          userUuid,
         };
-        axiosInstance
-          .put('/api/user_phone_numbers', postData)
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
 
-            expect(res.data.data.content.uuid).toBe(postData.uuid);
-            expect(res.data.data.content).toHaveProperty('phone');
-            expect(res.data.data.content).toHaveProperty('typeCode');
-            expect(res.data.data.content).toHaveProperty('userUuid');
+        const res = await axiosInstance.put('/api/user_phone_numbers', postData);
 
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
+
+        expect(res.data.data.uuid).toBe(postData.uuid);
+        expect(res.data.data.phone).toBe(postData.phone);
+        expect(res.data.data.typeCode).toBe(postData.typeCode);
+        expect(res.data.data.userUuid).toBe(postData.userUuid);
+        expect(res.data.data).toHaveProperty('createdAt');
+        expect(res.data.data).toHaveProperty('updatedAt');
+        expect(res.data.data.status).toBe(ACTIVE);
+
+        done();
       });
     });
 
-    /* DELETE /api/user_phone_numbers */
-    describe('and user wants to permanently remove user phone number from database', () => {
-      it('should remove user phone number from databse', done => {
+    /* ======================== DELETE ======================== */
+
+    describe('DELETE /api/user_phone_numbers', () => {
+      it('should permanently remove phone number from databse', async done => {
         const postData = {
-          uuid: newPhoneNumberUuid,
+          uuid: phoneNumbers[0].uuid,
         };
-        axiosInstance
-          .delete('/api/user_phone_numbers', {
-            data: postData,
-          })
-          .then(res => {
-            if (res.data.ok) {
-              console.log(`User phone number #${newPhoneNumberUuid} was deleted`);
-            } else {
-              console.log(`Unable to delete user phone number #${newPhoneNumberUuid}`);
-            }
 
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
+        const res = await axiosInstance.delete('/api/user_phone_numbers', {
+          data: postData,
+        });
 
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            console.log(`Error deleting user phone number #${newPhoneNumberUuid}`);
-            done();
-            throw new Error(err);
-          });
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
+
+        expect(res.data.data).toHaveProperty('message');
+
+        done();
+      });
+    });
+  });
+
+  /* COMAPNY ADMIN */
+  describe('and a COMAPNY ADMIN is logged in', () => {
+    beforeAll(async done => {
+      const res = await axiosInstance.post('/api/auth/login', {
+        email: 'company.admin@email.fake',
+        password: 'supersecure',
+      });
+      axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
+      done();
+    });
+
+    /* ======================== GET ======================== */
+    describe('GET /api/user_phone_numbers', () => {
+      it('should return phoneNumbers', async done => {
+        const res = await axiosInstance.get('/api/user_phone_numbers');
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
+
+        expect(res.data.data.content.length).toBe(15);
+        expect(res.data.data.page).toBe(1);
+        expect(res.data.data.length).toBe(15);
+
+        done();
+      });
+    });
+  });
+
+  /* COMAPNY REGULAR USER */
+  describe('and a COMAPNY REGULAR USER is logged in', () => {
+    beforeAll(async done => {
+      const res = await axiosInstance.post('/api/auth/login', {
+        email: 'company.regular@email.fake',
+        password: 'supersecure',
+      });
+      axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
+      done();
+    });
+
+    /* ======================== GET ======================== */
+
+    describe('GET /api/user_phone_numbers', () => {
+      it('should NOT return phoneNumbers', async done => {
+        try {
+          await axiosInstance.get('/api/user_phone_numbers');
+        } catch (err) {
+          expect(err.response.status).toBe(403);
+          expect(err.response.data.ok).toBe(false);
+          expect(err.response.data).toHaveProperty('message');
+        } finally {
+          done();
+        }
       });
     });
   });
 });
-
-// const content = {
-//   uuid: expect.,
-//   phone: '840.649.2348',
-//   typeCode: 3,
-//   userUuid: 14,
-//   createdAt: '2018-09-17T21:16:39.562Z',
-//   updatedAt: '2018-09-19T21:51:45.001Z',
-//   status: 'ACTIVE',
-// };

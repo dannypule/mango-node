@@ -156,8 +156,8 @@ describe('Given /api/user_addresses', () => {
 
     describe('PUT /api/user_addresses', () => {
       it('should update address', async done => {
-        const { uuid } = addresses[1];
-        const { uuid: userUuid } = users[2];
+        const { uuid } = addresses[0];
+        const { uuid: userUuid } = users[0];
 
         const postData = {
           uuid,
