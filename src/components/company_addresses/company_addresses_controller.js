@@ -48,7 +48,7 @@ const updateCompanyAddress = async (req, res) => {
         uuid: req.body.uuid,
       },
     });
-    responseUtils.success(res, { content: companyAddressesService.formatFromDb(_companyAddress) });
+    responseUtils.success(res, companyAddressesService.formatFromDb(_companyAddress));
   } catch (err) {
     responseUtils.fail(res, { message: 'Unable to update address.' });
   }

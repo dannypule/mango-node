@@ -28,7 +28,7 @@ const addUserPhoneNumber = async (req, res) => {
 
   try {
     const userPhoneNumber = await model.create(formatted);
-    responseUtils.success(res, { content: userPhoneNumbersService.formatFromDb(userPhoneNumber) });
+    responseUtils.success(res, userPhoneNumbersService.formatFromDb(userPhoneNumber));
   } catch (err) {
     responseUtils.fail(res, err);
   }
@@ -48,7 +48,7 @@ const updateUserPhoneNumber = async (req, res) => {
         uuid: req.body.uuid,
       },
     });
-    responseUtils.success(res, { content: userPhoneNumbersService.formatFromDb(_userPhoneNumber) });
+    responseUtils.success(res, userPhoneNumbersService.formatFromDb(_userPhoneNumber));
   } catch (err) {
     responseUtils.fail(res, { message: 'Unable to update phone number.' });
   }

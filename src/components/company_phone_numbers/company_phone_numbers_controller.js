@@ -48,7 +48,7 @@ const updateCompanyPhoneNumber = async (req, res) => {
         uuid: req.body.uuid,
       },
     });
-    responseUtils.success(res, { content: companyPhoneNumbersService.formatFromDb(_companyPhoneNumber) });
+    responseUtils.success(res, companyPhoneNumbersService.formatFromDb(_companyPhoneNumber));
   } catch (err) {
     responseUtils.fail(res, { message: 'Unable to update phone number.' });
   }
