@@ -49,7 +49,7 @@ const updateProject = async (req, res) => {
         uuid: req.body.uuid,
       },
     });
-    responseUtils.success(res, { project: projectsService.formatFromDb(updated) });
+    responseUtils.success(res, projectsService.formatFromDb(updated));
   } catch (err) {
     responseUtils.fail(res, { message: 'Unable to update this project.' });
   }
