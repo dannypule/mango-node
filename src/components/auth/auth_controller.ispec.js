@@ -30,19 +30,13 @@ describe('Given AuthController', () => {
         password: 'supersecure',
       };
 
-      it('should log user in', done => {
-        axiosInstance
-          .post('/api/auth/login', postData)
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
-            expect(res.data.data.token.includes('Bearer')).toBe(true);
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            throw new Error(err);
-          });
+      it('should log user in', async done => {
+        const res = await axiosInstance.post('/api/auth/login', postData);
+
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
+        expect(res.data.data.token.includes('Bearer')).toBe(true);
+        done();
       });
     });
 
@@ -61,44 +55,32 @@ describe('Given AuthController', () => {
         };
       });
 
-      afterEach(done => {
+      afterEach(async done => {
         if (newUserUuid) {
           const postData = { uuid: newUserUuid };
           console.log(`Deleting user #${newUserUuid}`);
-          axiosInstance
-            .delete('/api/users/remove_user', {
-              data: postData,
-            })
-            .then(res => {
-              if (res.data.ok) {
-                console.log(`User #${newUserUuid} was deleted`);
-              } else {
-                console.log(`Unable to delete user #${newUserUuid}`);
-              }
-              done();
-            });
-        } else {
-          done();
+          const res = await axiosInstance.delete('/api/users/remove_user', {
+            data: postData,
+          });
+
+          if (res.data.ok) {
+            console.log(`User #${newUserUuid} was deleted`);
+          } else {
+            console.log(`Unable to delete user #${newUserUuid}`);
+          }
         }
+        done();
       });
 
-      it('should register a new user', done => {
-        axiosInstance
-          .post('/api/auth/register', postData)
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
-            expect(res.data.data.user).toBeTruthy();
-            expect(res.data.data.token.includes('Bearer')).toBe(true);
-            newUserUuid = res.data.data.user.uuid;
-            done();
-          })
-          .catch(err => {
-            console.log('Unable to register user.');
-            console.log(err);
-            expect(err).toBe(null);
-            done();
-          });
+      it('should register a new user', async done => {
+        const res = await axiosInstance.post('/api/auth/register', postData);
+
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
+        expect(res.data.data.user).toBeTruthy();
+        expect(res.data.data.token.includes('Bearer')).toBe(true);
+        newUserUuid = res.data.data.user.uuid;
+        done();
       });
     });
   });

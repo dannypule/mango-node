@@ -48,7 +48,7 @@ const updateUserAddress = async (req, res) => {
         uuid: req.body.uuid,
       },
     });
-    responseUtils.success(res, { content: userAddressService.formatFromDb(_userAddress) });
+    responseUtils.success(res, userAddressService.formatFromDb(_userAddress));
   } catch (err) {
     responseUtils.fail(res, { message: 'Unable to update user address.' });
   }

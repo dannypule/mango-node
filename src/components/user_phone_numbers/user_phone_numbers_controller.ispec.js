@@ -98,11 +98,11 @@ describe('Given /api/user_phone_numbers', () => {
       });
     });
 
-    /* GET /api/user_phone_numbers?userUuid=1 */
-    describe('GET /api/user_phone_numbers?userUuid=1', () => {
-      it('should return user with userUuid of 1', done => {
+    /* GET /api/user_phone_numbers?uuid=1 */
+    describe('GET /api/user_phone_numbers?uuid=1', () => {
+      it('should return user with uuid of 1', done => {
         axiosInstance
-          .get('/api/user_phone_numbers?userUuid=1')
+          .get('/api/user_phone_numbers?uuid=1')
           .then(res => {
             expect(res.status).toBe(200);
             expect(res.data.ok).toBe(true);

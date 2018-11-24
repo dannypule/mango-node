@@ -22,7 +22,7 @@ const addCompany = async (req, res) => {
 
   try {
     const company = await model.create(formatted);
-    responseUtils.success(res, { company: companiesService.formatFromDb(company) });
+    responseUtils.success(res, companiesService.formatFromDb(company));
   } catch (err) {
     responseUtils.fail(res, err);
   }
@@ -42,7 +42,7 @@ const updateCompany = async (req, res) => {
         uuid: req.body.uuid,
       },
     });
-    responseUtils.success(res, { content: companiesService.formatFromDb(_company) });
+    responseUtils.success(res, companiesService.formatFromDb(_company));
   } catch (err) {
     responseUtils.fail(res, { message: 'Unable to update this company.' });
   }
