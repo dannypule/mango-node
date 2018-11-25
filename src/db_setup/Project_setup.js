@@ -12,7 +12,7 @@ export default () => {
       // *** PROJECT 1 ***
       project = await db.Project.create({
         title: 'May 2018 - Virtual Reality - Project',
-        project_creator_uuid: users[2].uuid,
+        user_uuid: users[2].uuid,
         company_uuid: companies[0].uuid,
       });
       await db.UserProject.create({
@@ -21,7 +21,7 @@ export default () => {
         access_type: 'FULL',
       });
       await db.UserProject.create({
-        user_uuid: users[4].uuid,
+        user_uuid: users[3].uuid,
         project_uuid: project.uuid,
         access_type: 'EDITOR',
       });
@@ -34,7 +34,7 @@ export default () => {
       // *** PROJECT 2 ***
       project = await db.Project.create({
         title: 'April 2019 - China Telecomms Installation - Project',
-        project_creator_uuid: users[2].uuid,
+        user_uuid: users[2].uuid,
         company_uuid: companies[0].uuid,
       });
       await db.UserProject.create({
@@ -43,7 +43,7 @@ export default () => {
         access_type: 'FULL',
       });
       await db.UserProject.create({
-        user_uuid: users[4].uuid,
+        user_uuid: users[3].uuid,
         project_uuid: project.uuid,
         access_type: 'EDITOR',
       });
@@ -56,7 +56,7 @@ export default () => {
       // *** PROJECT 3 ***
       project = await db.Project.create({
         title: 'September 2018 - New iPhone Launch - Project',
-        project_creator_uuid: users[2].uuid,
+        user_uuid: users[2].uuid,
         company_uuid: companies[0].uuid,
       });
       await db.UserProject.create({
@@ -65,7 +65,7 @@ export default () => {
         access_type: 'FULL',
       });
       await db.UserProject.create({
-        user_uuid: users[4].uuid,
+        user_uuid: users[3].uuid,
         project_uuid: project.uuid,
         access_type: 'EDITOR',
       });
@@ -78,7 +78,7 @@ export default () => {
       for (let i = 0; i < 200; i++) {
         db.Project.create({
           title: `${faker.commerce.productName()} - Project`,
-          project_creator_uuid: users[Math.floor(Math.random() * (usersCount - 1))].uuid,
+          user_uuid: users[Math.floor(Math.random() * (usersCount - 1))].uuid,
           company_uuid: companies[Math.floor(Math.random() * (companiesCount - 1))].uuid,
         }).then(() => {
           if (i === 199) {

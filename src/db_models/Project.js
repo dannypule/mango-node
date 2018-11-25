@@ -18,12 +18,8 @@ export default (sequelize, DataTypes) => {
   });
 
   Project.associate = models => {
-    Project.belongsTo(models.User, {
-      foreignKey: 'project_creator_uuid:',
-    });
-    Project.belongsTo(models.Company, {
-      foreignKey: 'company_uuid:',
-    });
+    Project.belongsTo(models.User);
+    Project.belongsTo(models.Company);
   };
 
   return Project;
