@@ -50,47 +50,38 @@ router.get(
   access([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
   usersController.getUsers,
 );
-
 router.post('/users/add_user', authenticateViaToken, access([COMPANY_EDITOR, COMPANY_ADMIN]), usersController.addUser);
-
 router.put(
   '/users/update_user',
   authenticateViaToken,
   access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
   usersController.updateWholeUser,
 );
-
 router.put(
   '/users/update_email',
   authenticateViaToken,
   access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
   usersController.updateEmail,
 );
-
 router.put(
   '/users/update_name',
   authenticateViaToken,
   access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
   usersController.updateName,
 );
-
 router.put(
   '/users/update_password',
   authenticateViaToken,
   access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
   usersController.updatePassword,
 );
-
 router.put(
   '/users/update_status',
   authenticateViaToken,
   access([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
   usersController.changeUserStatus,
 );
-
 router.delete('/users/remove_user', authenticateViaToken, access([]), usersController.removeUser);
-
-router.delete('/users/remove_user_by_email', authenticateViaToken, access([]), usersController.removeUserByEmail);
 
 // ===================================================
 // '/api/projects'

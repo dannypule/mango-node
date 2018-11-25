@@ -9,288 +9,226 @@ const axiosInstance = axios.create({
 // todo delete user by email at beginning of tests
 
 describe('Given /api/users', () => {
-  beforeAll(done => {
-    setTimeout(done, config.testDelay);
-  });
+  describe('and a SUPER ADMIN is logged in', () => {
+    beforeAll(async done => {
+      const res = await axiosInstance.post('/api/auth/login', {
+        email: 'super.admin@email.fake',
+        password: 'supersecure',
+      });
 
-  /* super user */
-  describe('and a "super user" is logged in', () => {
-    beforeAll(done => {
-      axiosInstance
-        .post('/api/auth/login', {
-          email: 'super.admin@email.fake',
-          password: 'supersecure',
-        })
-        .then(res => {
-          axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-          setTimeout(done, config.testDelay);
+      axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
+      done();
+    });
+
+    describe('GET', () => {
+      describe('/api/users GET', () => {
+        it('should return users', async done => {
+          const res = await axiosInstance.get('/api/users');
+
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
+
+          expect(res.data.data.content.length).toBe(15);
+          expect(res.data.data.page).toBe(1);
+          expect(res.data.data.length).toBe(15);
+
+          done();
         });
-    });
-
-    /* GET /api/users */
-    describe('/api/users GET', () => {
-      it('should return users', done => {
-        axiosInstance
-          .get('/api/users')
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
-
-            expect(res.data.data.content.length).toBe(15);
-            expect(res.data.data.page).toBe(1);
-            expect(res.data.data.length).toBe(15);
-
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
       });
     });
 
-    /* GET /api/users?page=4 */
-    describe('and page 4 is requested', () => {
-      it('should return users from page 4', done => {
-        axiosInstance
-          .get('/api/users?page=4')
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
+    describe('GET /api/users?page=4', () => {
+      it('should return users from page 4', async done => {
+        const res = await axiosInstance.get('/api/users?page=4');
 
-            expect(res.data.data.content.length).toBe(15);
-            expect(res.data.data.page).toBe(4);
-            expect(res.data.data.length).toBe(15);
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
 
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
+        expect(res.data.data.content.length).toBe(15);
+        expect(res.data.data.page).toBe(4);
+        expect(res.data.data.length).toBe(15);
+
+        done();
       });
     });
 
-    /* GET /api/users?uuid=5 */
-    describe('and user with uuid of 5 is requested', () => {
-      it('should return user with uuid of 5', done => {
-        axiosInstance
-          .get('/api/users?uuid=5')
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
+    describe('GET /api/users?uuid=:uuid', () => {
+      let user;
+      beforeEach(async done => {
+        const res = await axiosInstance.get('/api/users');
+        [user] = res.data.data.content;
+        done();
+      });
 
-            expect(res.data.data.content.length).toBe(1);
-            expect(res.data.data.page).toBe(1);
-            expect(res.data.data.length).toBe(1);
+      it('should return user with uuid of 5', async done => {
+        const res = await axiosInstance.get(`/api/users?uuid=${user.uuid}`);
 
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
+
+        expect(res.data.data.content.length).toBe(1);
+        expect(res.data.data.page).toBe(1);
+        expect(res.data.data.length).toBe(1);
+
+        done();
       });
     });
 
-    /* POST /api/users/add_user */
-    describe('and user wants to add user', () => {
-      let newUserUuid;
-
-      it('should add user', done => {
-        const postData = {
-          firstName: 'some',
-          lastName: 'user',
-          email: 'some.user@test-email.fake',
-          password: 'supersecure',
-          companyUuid: 1,
-        };
-        axiosInstance
-          .post('/api/users/add_user', postData)
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
-
-            expect(res.data.data.user).toBeTruthy();
-            expect(res.data.data.token.includes('Bearer')).toBe(false);
-
-            newUserUuid = res.data.data.user.uuid;
-
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
-      });
-
-      /* PUT /api/users/update_user */
-      describe('and user wants to update user', () => {
-        it('should update user', done => {
+    describe('POST', () => {
+      describe('POST /api/users/add_user', () => {
+        it('should add user', async done => {
+          const time = new Date().getTime();
           const postData = {
-            uuid: newUserUuid,
+            firstName: 'some',
+            lastName: 'user',
+            email: `test_user_${time}@test-email.fake`,
+            password: 'supersecure',
+            companyUuid: 1,
+          };
+          const res = await axiosInstance.post('/api/users/add_user', postData);
+
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
+
+          expect(res.data.data.user).toBeTruthy();
+          expect(res.data.data.token.includes('Bearer')).toBe(false);
+
+          done();
+        });
+      });
+    });
+
+    describe('PUT', () => {
+      let user;
+      beforeEach(async done => {
+        const res = await axiosInstance.get('/api/users');
+        [user] = res.data.data.content;
+        done();
+      });
+
+      describe('PUT /api/users/update_user', () => {
+        it('should update user', async done => {
+          const postData = {
+            uuid: user.uuid,
             firstName: 'updatedFirstName',
             lastName: 'updatedLastName',
             email: 'updated.email@test-email.fake',
             userRoleCode: 40,
             status: 'INACTIVE',
           };
-          axiosInstance
-            .put('/api/users/update_user', postData)
-            .then(res => {
-              expect(res.status).toBe(200);
-              expect(res.data.ok).toBe(true);
+          const res = await axiosInstance.put('/api/users/update_user', postData);
 
-              expect(res.data.data.content.firstName).toBe(postData.firstName);
-              expect(res.data.data.content.lastName).toBe(postData.lastName);
-              expect(res.data.data.content.email).toBe(postData.email);
-              expect(res.data.data.content.userRoleCode).toBe(postData.userRoleCode);
-              expect(res.data.data.content.status).toBe(postData.status);
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
 
-              done();
-            })
-            .catch(err => {
-              console.log(err);
-              done();
-              throw new Error(err);
-            });
+          expect(res.data.data.content.firstName).toBe(postData.firstName);
+          expect(res.data.data.content.lastName).toBe(postData.lastName);
+          expect(res.data.data.content.email).toBe(postData.email);
+          expect(res.data.data.content.userRoleCode).toBe(postData.userRoleCode);
+          expect(res.data.data.content.status).toBe(postData.status);
+
+          done();
         });
       });
 
-      /* PUT /api/users/update_email */
-      describe('and user wants to update email', () => {
-        it('should update email', done => {
+      describe('PUT /api/users/update_email', () => {
+        it('should update email', async done => {
           const postData = {
-            uuid: newUserUuid,
+            uuid: user.uuid,
             email: 'email.is.updated@test-email.fake',
           };
-          axiosInstance
-            .put('/api/users/update_email', postData)
-            .then(res => {
-              expect(res.status).toBe(200);
-              expect(res.data.ok).toBe(true);
+          const res = await axiosInstance.put('/api/users/update_email', postData);
 
-              expect(res.data.data.content.email).toBe(postData.email);
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
 
-              done();
-            })
-            .catch(err => {
-              console.log(err);
-              done();
-              throw new Error(err);
-            });
+          expect(res.data.data.content.email).toBe(postData.email);
+
+          done();
         });
       });
 
-      /* PUT /api/users/update_name */
-      describe("and user wants to update user's names", () => {
-        it('should update name', done => {
+      describe('PUT /api/users/update_name', () => {
+        it('should update name', async done => {
           const postData = {
-            uuid: newUserUuid,
+            uuid: user.uuid,
             firstName: 'updated_first_name',
             lastName: 'updated_last_name',
           };
-          axiosInstance
-            .put('/api/users/update_name', postData)
-            .then(res => {
-              expect(res.status).toBe(200);
-              expect(res.data.ok).toBe(true);
+          const res = await axiosInstance.put('/api/users/update_name', postData);
 
-              expect(res.data.data.content.firstName).toBe(postData.firstName);
-              expect(res.data.data.content.lastName).toBe(postData.lastName);
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
 
-              done();
-            })
-            .catch(err => {
-              console.log(err);
-              done();
-              throw new Error(err);
-            });
+          expect(res.data.data.content.firstName).toBe(postData.firstName);
+          expect(res.data.data.content.lastName).toBe(postData.lastName);
+
+          done();
         });
       });
 
-      /* PUT /api/users/update_password */
-      describe("and user wants to update user's password", () => {
-        it('should update password', done => {
+      describe('PUT /api/users/update_password', () => {
+        it('should update password', async done => {
           const postData = {
-            uuid: newUserUuid,
+            uuid: user.uuid,
             password: 'football',
           };
-          axiosInstance
-            .put('/api/users/update_password', postData)
-            .then(res => {
-              expect(res.status).toBe(200);
-              expect(res.data.ok).toBe(true);
+          const res = await axiosInstance.put('/api/users/update_password', postData);
 
-              expect(res.data.data.content.uuid).toBe(postData.uuid);
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
 
-              done();
-            })
-            .catch(err => {
-              console.log(err);
-              done();
-              throw new Error(err);
-            });
+          expect(res.data.data.content.uuid).toBe(postData.uuid);
+
+          done();
         });
       });
 
-      /* PUT /api/users/update_status */
-      describe("and user wants to update user's status", () => {
-        it('should update status', done => {
+      describe('PUT /api/users/update_status', () => {
+        it('should update status', async done => {
           const postData = {
-            uuid: newUserUuid,
+            uuid: user.uuid,
             status: 'DELETED',
           };
-          axiosInstance
-            .put('/api/users/update_status', postData)
-            .then(res => {
-              expect(res.status).toBe(200);
-              expect(res.data.ok).toBe(true);
+          const res = await axiosInstance.put('/api/users/update_status', postData);
 
-              expect(res.data.data.content.uuid).toBe(postData.uuid);
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
 
-              done();
-            })
-            .catch(err => {
-              console.log(err);
-              done();
-              throw new Error(err);
-            });
+          expect(res.data.data.content.uuid).toBe(postData.uuid);
+
+          done();
         });
       });
+    });
 
-      /* DELETE /api/users/remove_user */
-      describe('and user wants to permanently remove user from database', () => {
-        it('should remove user from database', done => {
+    describe('DELETE', () => {
+      let user;
+      beforeEach(async done => {
+        const res = await axiosInstance.get('/api/users');
+        [user] = res.data.data.content;
+        done();
+      });
+
+      describe('DELETE /api/users/remove_user', () => {
+        it('should permanently remove user from database', async done => {
           const postData = {
-            uuid: newUserUuid,
+            uuid: user.uuid,
           };
-          axiosInstance
-            .delete('/api/users/remove_user', {
-              data: postData,
-            })
-            .then(res => {
-              if (res.data.ok) {
-                console.log(`User #${newUserUuid} was deleted`);
-              } else {
-                console.log(`Unable to delete user #${newUserUuid}`);
-              }
+          const res = await axiosInstance.delete('/api/users/remove_user', {
+            data: postData,
+          });
 
-              expect(res.status).toBe(200);
-              expect(res.data.ok).toBe(true);
+          if (res.data.ok) {
+            console.log(`User #${user.uuid} was deleted`);
+          } else {
+            console.log(`Unable to delete user #${user.uuid}`);
+          }
 
-              done();
-            })
-            .catch(err => {
-              console.log(err);
-              console.log(`Error deleting user #${newUserUuid}`);
-              done();
-              throw new Error(err);
-            });
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
+
+          done();
         });
       });
     });
@@ -298,73 +236,57 @@ describe('Given /api/users', () => {
 
   /* company admin user */
   describe('and a "company admin" is logged in', () => {
-    beforeAll(done => {
-      axiosInstance
-        .post('/api/auth/login', {
-          email: 'company.admin@email.fake',
-          password: 'supersecure',
-        })
-        .then(res => {
-          axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-          done();
-        });
+    beforeEach(async done => {
+      const res = await axiosInstance.post('/api/auth/login', {
+        email: 'company.admin@email.fake',
+        password: 'supersecure',
+      });
+
+      axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
+      done();
     });
 
     /* GET /api/users */
     describe('/api/users GET', () => {
-      it('should return users', done => {
-        axiosInstance
-          .get('/api/users')
-          .then(res => {
-            expect(res.status).toBe(200);
-            expect(res.data.ok).toBe(true);
+      it('should return users', async done => {
+        const res = await axiosInstance.get('/api/users');
 
-            expect(res.data.data.content.length).toBe(15);
-            expect(res.data.data.page).toBe(1);
-            expect(res.data.data.length).toBe(15);
+        expect(res.status).toBe(200);
+        expect(res.data.ok).toBe(true);
 
-            done();
-          })
-          .catch(err => {
-            console.log(err);
-            done();
-            throw new Error(err);
-          });
+        expect(res.data.data.content.length).toBe(15);
+        expect(res.data.data.page).toBe(1);
+        expect(res.data.data.length).toBe(15);
+
+        done();
       });
     });
   });
 
   /* company regular user */
   describe('and a "company regular user" is logged in', () => {
-    beforeAll(done => {
-      axiosInstance
-        .post('/api/auth/login', {
-          email: 'company.regular@email.fake',
-          password: 'supersecure',
-        })
-        .then(res => {
-          axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-          done();
-        });
+    beforeEach(async done => {
+      const res = await axiosInstance.post('/api/auth/login', {
+        email: 'company.regular@email.fake',
+        password: 'supersecure',
+      });
+
+      axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
+      done();
     });
 
     /* GET /api/users */
     describe('/api/users GET', () => {
-      it('should NOT return users', done => {
-        axiosInstance
-          .get('/api/users')
-          .then(res => {
-            done();
-            throw new Error(res);
-          })
-          .catch(err => {
-            const res = err.response;
-            expect(res.status).toBe(403);
-            expect(res.data.ok).toBe(false);
-            expect(res.data).toHaveProperty('message');
-
-            done();
-          });
+      it('should NOT return users', async done => {
+        try {
+          await axiosInstance.get('/api/users');
+        } catch (err) {
+          expect(err.response.status).toBe(403);
+          expect(err.response.data.ok).toBe(false);
+          expect(err.response.data).toHaveProperty('message');
+        } finally {
+          done();
+        }
       });
     });
   });
