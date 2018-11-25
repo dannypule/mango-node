@@ -189,8 +189,7 @@ export default () => {
           user_role_code: [50, 40, 30, 20][Math.floor(Math.random() * 3)],
           verified: true,
           company_uuid: companies[Math.floor(Math.random() * (companiesCount - 1))].uuid,
-        }).then(user => {
-          console.log(colors.green(user.email));
+        }).then(() => {
           if (i === amount) {
             console.log(colors.green('Demo items inserted into User table.'));
             resolve({ companies, companiesCount });
