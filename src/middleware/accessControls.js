@@ -12,11 +12,14 @@ export const SUPERADMIN = 110;
 const authorised = next => next();
 const notAuthorised = res => responseUtils.fail(res, { message: getStatusText(FORBIDDEN) }, FORBIDDEN);
 
-export const access = allowedRoles => async (req, res, next) => {
+export const accessControls = allowedRoles => async (req, res, next) => {
   const { user: dbUser } = req;
   const sessionUser = req.body;
 
   if (allowedRoles.includes(SELF) && sessionUser && sessionUser.uuid && dbUser.uuid === sessionUser.uuid) {
+    return authorised(next);
+  }
+  if (allowedRoles.includes(COMPANY_REGULAR) && dbUser.userRoleCode === COMPANY_REGULAR) {
     return authorised(next);
   }
   if (allowedRoles.includes(COMPANY_VIEWER) && dbUser.userRoleCode === COMPANY_VIEWER) {

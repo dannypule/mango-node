@@ -12,7 +12,7 @@ const getProjects = async (req, res) => {
     const dbQuery = getRequestUtils.getDbQuery(req, {
       where: {
         company_uuid: companyUuid,
-        project_creator_uuid: projectCreatorUuid,
+        user_uuid: projectCreatorUuid,
         post_code: postCode,
       },
     });
