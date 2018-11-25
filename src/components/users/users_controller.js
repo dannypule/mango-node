@@ -105,23 +105,6 @@ const removeUser = async (req, res) => {
   }
 };
 
-const removeUserByEmail = async (req, res) => {
-  try {
-    const result = await model.destroy({
-      where: {
-        email: req.body.email,
-      },
-    });
-    if (result === 1) {
-      responseUtils.success(res, { result });
-    } else {
-      responseUtils.fail(res, { message: 'Unable to delete this user.', result });
-    }
-  } catch (err) {
-    responseUtils.fail(res, err);
-  }
-};
-
 export default {
   getUsers,
   addUser,
@@ -132,5 +115,4 @@ export default {
   changeUserStatus,
   setStatusToDeleted,
   removeUser,
-  removeUserByEmail,
 };
