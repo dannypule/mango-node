@@ -8,11 +8,7 @@ const axiosInstance = axios.create({
 const ACTIVE = 'ACTIVE';
 
 describe('Given /api/user_addresses', () => {
-  /* SUPER ADMIN */
   describe('and a SUPER ADMIN is logged in', () => {
-    let addresses;
-    let users;
-
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'super.admin@email.fake',
@@ -21,15 +17,6 @@ describe('Given /api/user_addresses', () => {
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();
     });
-    beforeEach(async done => {
-      const addressRes = await axiosInstance.get('/api/user_addresses');
-      const usersRes = await axiosInstance.get('/api/users');
-      addresses = addressRes.data.data.content;
-      users = usersRes.data.data.content;
-      done();
-    });
-
-    /* ======================== GET ======================== */
 
     describe('GET /api/user_addresses', () => {
       it('should return addresses', async done => {
@@ -81,6 +68,14 @@ describe('Given /api/user_addresses', () => {
     });
 
     describe('GET /api/user_addresses?uuid=<dynamic-uuid>', () => {
+      let addresses;
+
+      beforeEach(async done => {
+        const addressRes = await axiosInstance.get('/api/user_addresses');
+        addresses = addressRes.data.data.content;
+        done();
+      });
+
       it('should return user address based on uuid', async done => {
         const { uuid } = addresses[0];
         const res = await axiosInstance.get(`/api/user_addresses?uuid=${uuid}`);
@@ -110,10 +105,15 @@ describe('Given /api/user_addresses', () => {
       });
     });
 
-    /* ======================== POST ======================== */
-
-    /* POST /api/user_addresses */
     describe('POST /api/user_addresses', () => {
+      let users;
+
+      beforeEach(async done => {
+        const usersRes = await axiosInstance.get('/api/users');
+        users = usersRes.data.data.content;
+        done();
+      });
+
       it('should add address', async done => {
         const { uuid } = users[0];
         const postData = {
@@ -152,9 +152,18 @@ describe('Given /api/user_addresses', () => {
       });
     });
 
-    /* ======================== PUT ======================== */
-
     describe('PUT /api/user_addresses', () => {
+      let addresses;
+      let users;
+
+      beforeEach(async done => {
+        const addressRes = await axiosInstance.get('/api/user_addresses');
+        const usersRes = await axiosInstance.get('/api/users');
+        addresses = addressRes.data.data.content;
+        users = usersRes.data.data.content;
+        done();
+      });
+
       it('should update address', async done => {
         const { uuid } = addresses[0];
         const { uuid: userUuid } = users[0];
@@ -196,9 +205,15 @@ describe('Given /api/user_addresses', () => {
       });
     });
 
-    /* ======================== DELETE ======================== */
-
     describe('DELETE /api/user_addresses', () => {
+      let addresses;
+
+      beforeEach(async done => {
+        const addressRes = await axiosInstance.get('/api/user_addresses');
+        addresses = addressRes.data.data.content;
+        done();
+      });
+
       it('should permanently remove address from databse', async done => {
         const postData = {
           uuid: addresses[0].uuid,
@@ -218,8 +233,7 @@ describe('Given /api/user_addresses', () => {
     });
   });
 
-  /* COMAPNY ADMIN */
-  describe('and a COMAPNY ADMIN is logged in', () => {
+  describe('and a COMPANY ADMIN is logged in', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
@@ -229,7 +243,6 @@ describe('Given /api/user_addresses', () => {
       done();
     });
 
-    /* ======================== GET ======================== */
     describe('GET /api/user_addresses', () => {
       it('should return addresses', async done => {
         const res = await axiosInstance.get('/api/user_addresses');
@@ -245,8 +258,7 @@ describe('Given /api/user_addresses', () => {
     });
   });
 
-  /* COMAPNY REGULAR USER */
-  describe('and a COMAPNY REGULAR USER is logged in', () => {
+  describe('and a COMPANY REGULAR USER is logged in', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
@@ -255,8 +267,6 @@ describe('Given /api/user_addresses', () => {
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();
     });
-
-    /* ======================== GET ======================== */
 
     describe('GET /api/user_addresses', () => {
       it('should NOT return addresses', async done => {

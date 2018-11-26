@@ -96,7 +96,9 @@ const removeUser = async (req, res) => {
       },
     });
     if (result === 1) {
-      responseUtils.success(res);
+      responseUtils.success(res, {
+        message: 'Successfully deleted user.',
+      });
     } else {
       responseUtils.fail(res, { message: 'Unable to delete this user.' });
     }

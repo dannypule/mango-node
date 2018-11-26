@@ -154,8 +154,8 @@ describe('Given /api/user_phone_numbers', () => {
     });
   });
 
-  /* COMAPNY ADMIN */
-  describe('and a COMAPNY ADMIN is logged in', () => {
+  /* COMPANY ADMIN */
+  describe('and a COMPANY ADMIN is logged in', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
@@ -181,8 +181,8 @@ describe('Given /api/user_phone_numbers', () => {
     });
   });
 
-  /* COMAPNY REGULAR USER */
-  describe('and a COMAPNY REGULAR USER is logged in', () => {
+  /* COMPANY REGULAR USER */
+  describe('and a COMPANY REGULAR USER is logged in', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
