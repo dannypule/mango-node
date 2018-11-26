@@ -2,7 +2,7 @@ const formatFromDb = item => {
   return {
     uuid: item.uuid,
     title: item.title,
-    projectCreatorUuid: item.user_uuid,
+    userUuid: item.user_uuid,
     companyUuid: item.company_uuid,
     createdAt: item.created_at,
     updatedAt: item.updated_at,
@@ -13,7 +13,7 @@ const formatFromDb = item => {
 const formatForDb = item => {
   return {
     title: item.title,
-    user_uuid: item.projectCreatorUuid,
+    user_uuid: item.userUuid,
     company_uuid: item.companyUuid,
     status: item.status,
   };
