@@ -6,8 +6,6 @@ const axiosInstance = axios.create({
   timeout: 5000,
 });
 
-// todo delete user by email at beginning of tests
-
 describe('Given /api/users', () => {
   describe('and a SUPER ADMIN is logged in', () => {
     beforeAll(async done => {
@@ -32,45 +30,54 @@ describe('Given /api/users', () => {
           expect(res.data.data.page).toBe(1);
           expect(res.data.data.length).toBe(15);
 
+          expect(res.data.data.content[0]).toHaveProperty('uuid');
+          expect(res.data.data.content[0]).toHaveProperty('firstName');
+          expect(res.data.data.content[0]).toHaveProperty('lastName');
+          expect(res.data.data.content[0]).toHaveProperty('email');
+          expect(res.data.data.content[0]).toHaveProperty('createdAt');
+          expect(res.data.data.content[0]).toHaveProperty('updatedAt');
+          expect(res.data.data.content[0]).toHaveProperty('userRoleCode');
+          expect(res.data.data.content[0]).toHaveProperty('status');
+
           done();
         });
       });
-    });
 
-    describe('GET /api/users?page=4', () => {
-      it('should return users from page 4', async done => {
-        const res = await axiosInstance.get('/api/users?page=4');
+      describe('GET /api/users?page=4', () => {
+        it('should return users from page 4', async done => {
+          const res = await axiosInstance.get('/api/users?page=4');
 
-        expect(res.status).toBe(200);
-        expect(res.data.ok).toBe(true);
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
 
-        expect(res.data.data.content.length).toBe(15);
-        expect(res.data.data.page).toBe(4);
-        expect(res.data.data.length).toBe(15);
+          expect(res.data.data.content.length).toBe(15);
+          expect(res.data.data.page).toBe(4);
+          expect(res.data.data.length).toBe(15);
 
-        done();
-      });
-    });
-
-    describe('GET /api/users?uuid=:uuid', () => {
-      let user;
-      beforeEach(async done => {
-        const res = await axiosInstance.get('/api/users');
-        [user] = res.data.data.content;
-        done();
+          done();
+        });
       });
 
-      it('should return user with uuid of 5', async done => {
-        const res = await axiosInstance.get(`/api/users?uuid=${user.uuid}`);
+      describe('GET /api/users?uuid=:uuid', () => {
+        let user;
+        beforeEach(async done => {
+          const res = await axiosInstance.get('/api/users');
+          [user] = res.data.data.content;
+          done();
+        });
 
-        expect(res.status).toBe(200);
-        expect(res.data.ok).toBe(true);
+        it('should return user with uuid', async done => {
+          const res = await axiosInstance.get(`/api/users?uuid=${user.uuid}`);
 
-        expect(res.data.data.content.length).toBe(1);
-        expect(res.data.data.page).toBe(1);
-        expect(res.data.data.length).toBe(1);
+          expect(res.status).toBe(200);
+          expect(res.data.ok).toBe(true);
 
-        done();
+          expect(res.data.data.content.length).toBe(1);
+          expect(res.data.data.page).toBe(1);
+          expect(res.data.data.length).toBe(1);
+
+          done();
+        });
       });
     });
 
@@ -219,14 +226,9 @@ describe('Given /api/users', () => {
             data: postData,
           });
 
-          if (res.data.ok) {
-            console.log(`User #${user.uuid} was deleted`);
-          } else {
-            console.log(`Unable to delete user #${user.uuid}`);
-          }
-
           expect(res.status).toBe(200);
           expect(res.data.ok).toBe(true);
+          expect(res.data.data).toHaveProperty('message');
 
           done();
         });
