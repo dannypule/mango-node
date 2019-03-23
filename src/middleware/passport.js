@@ -5,9 +5,10 @@ import config from '../config';
 const { ExtractJwt, Strategy } = passportJWT;
 
 module.exports = passport => {
-  const opts = {};
-  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-  opts.secretOrKey = config.jwt_encryption;
+  const opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: config.jwt_encryption,
+  };
 
   passport.use(
     new Strategy(opts, async (jwtPayload, done) => {
