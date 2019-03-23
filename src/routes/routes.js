@@ -52,7 +52,7 @@ router.delete('/companies', authenticateViaToken, accessControls([]), companiesC
 router.get(
   '/users',
   authenticateViaToken,
-  accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]), // todo limit self
+  accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
   usersController.getUsers,
 );
 router.post(

@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import passport from 'passport';
 // import cors from 'cors'
-import utils from './utils/responseUtils';
+import responseUtils from './utils/responseUtils';
 
 import apiRoutes from './routes/routes';
 
