@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
 import config from '../config';
 
+const { jwtExpiration, jwtEncryption } = config;
+
 export const getJWT = user => {
-  const expirationTime = parseInt(config.jwt_expiration, 10);
+  const expirationTime = parseInt(jwtExpiration, 10);
   const token = jwt.sign(
     {
       userUuid: user.uuid,
@@ -11,7 +13,7 @@ export const getJWT = user => {
       verified: user.verified,
       status: user.status,
     },
-    config.jwt_encryption,
+    jwtEncryption,
     {
       expiresIn: expirationTime,
     },

@@ -27,8 +27,8 @@ const configuration = {
         logging: false,
       },
     },
-    jwt_encryption: process.env.DEVELOPMENT_JWT_ENCRYPTION,
-    jwt_expiration: process.env.DEVELOPMENT_JWT_EXPIRATION,
+    jwtEncryption: process.env.DEVELOPMENT_JWT_ENCRYPTION,
+    jwtExpiration: process.env.DEVELOPMENT_JWT_EXPIRATION,
   },
   staging: {
     baseURL: `todo`,
@@ -54,8 +54,8 @@ const configuration = {
         },
       },
     },
-    jwt_encryption: process.env.STAGING_JWT_ENCRYPTION,
-    jwt_expiration: process.env.STAGING_JWT_EXPIRATION,
+    jwtEncryption: process.env.STAGING_JWT_ENCRYPTION,
+    jwtExpiration: process.env.STAGING_JWT_EXPIRATION,
   },
   production: {
     baseURL: `todo`,
@@ -73,8 +73,8 @@ const configuration = {
         define: { underscored: true },
       },
     },
-    jwt_encryption: process.env.PROD_JWT_ENCRYPTION,
-    jwt_expiration: process.env.PROD_JWT_EXPIRATION,
+    jwtEncryption: process.env.PROD_JWT_ENCRYPTION,
+    jwtExpiration: process.env.PROD_JWT_EXPIRATION,
   },
 };
-module.exports = configuration[env];
+export default configuration[env];
