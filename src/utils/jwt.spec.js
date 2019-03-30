@@ -2,8 +2,8 @@ import { getJWT } from './jwt';
 import * as config from '../config';
 
 config.default = {
-  jwt_expiration: '25920000000',
-  jwt_encryption: 'h7dl0skFjCMg902JQLCaP',
+  jwtExpiration: '25920000000',
+  jwtEncryption: 'h7dl0skFjCMg902JQLCaP',
 };
 const user = {
   uuid: null,
