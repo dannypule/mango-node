@@ -11,7 +11,7 @@ NPM 5.6.0 or higher
 Setup your `.env` file. An example `.env-example` file is included with this project for
 your reference. Assign values to the properties prefixed with `STAGING_DB_`.
 
-## Getting started 
+## Getting started
 
 `npm install`
 
@@ -53,8 +53,11 @@ View mock users using this test command `http://localhost:5566/api/users`
 
 This application does not have full test coverage by any stretch but some unit and integrations tests have been setup to provide a baseline for further test coverage.
 
-`npm run test` to run unit and jest tests in watch mode
-`npm run test:c` to run unit and jest tests and generate a coverage report
+`npm run test` to run unit tests in watch mode
+
+`npm run test:cov` to run unit tests and generate a coverage report
+
+`npm run test:int` to run integration tests
 
 ## Heroku support
 
@@ -85,14 +88,7 @@ If you have heroku installed you can view the logs of your app by typing
 something like `heroku logs --app your-heroku-project` in the command line.
 
 ## Updating npm dependencies
+
 https://flaviocopes.com/update-npm-dependencies/
 
-## AWS CD pipeline
-https://docs.aws.amazon.com/AWSGettingStartedContinuousDeliveryPipeline/latest/GettingStarted/CICD_Jenkins_Pipeline.html
-https://medium.com/@yogeshdarji99/steps-to-install-awscli-on-mac-5bad783483a
-
 ### Contributor(s) Danny Pule - open sourced under the MIT Liscense https://github.com/dannypule
-
-
-
-
