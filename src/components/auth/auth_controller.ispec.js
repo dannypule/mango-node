@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 });
 
 describe('Given AuthController', () => {
-  describe('and a super user is logged in', () => {
+  describe('when a super user is logged in', () => {
     beforeAll(done => {
       axiosInstance
         .post('/api/auth/login', {
