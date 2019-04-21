@@ -5,6 +5,7 @@ const { jwtExpiration, jwtEncryption } = config;
 
 export const getJWT = user => {
   const expirationTime = parseInt(jwtExpiration, 10);
+  console.log(user);
   const token = jwt.sign(
     {
       userUuid: user.uuid,
