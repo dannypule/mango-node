@@ -37,7 +37,8 @@ const addUser = async (req, res, user, sendToken) => {
       email: user.email,
       password: user.password,
       user_role_code: user.userRoleCode,
-      status: user.status,
+      company_uuid: user.companyUuid,
+      status: user.status
     };
 
     formatted.password = await saltAndHashPassword(formatted.password);

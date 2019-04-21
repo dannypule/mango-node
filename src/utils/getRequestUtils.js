@@ -17,13 +17,13 @@ const getDbQuery = (req, options = { where: {} }) => {
     where: {},
     limit,
     offset,
-    order: [['uuid', 'DESC']],
+    order: [['createdAt', 'DESC']]
   };
 
   if (uuid) {
     dbQuery.where = {
       ...dbQuery.where,
-      uuid,
+      uuid
     };
   }
 
@@ -31,7 +31,7 @@ const getDbQuery = (req, options = { where: {} }) => {
     if (where[key]) {
       dbQuery.where = {
         ...dbQuery.where,
-        [key]: where[key],
+        [key]: where[key]
       };
     }
   });
@@ -48,5 +48,5 @@ const getResponseBody = (req, data, formatFromDb) => {
 
 export default {
   getDbQuery,
-  getResponseBody,
+  getResponseBody
 };

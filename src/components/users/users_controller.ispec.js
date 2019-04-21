@@ -85,13 +85,18 @@ describe('Given /api/users', () => {
       describe('POST /api/users/add_user', () => {
         it('should add user', async done => {
           const time = new Date().getTime();
+          const companies = await axiosInstance.get('/api/companies');
           const postData = {
             firstName: 'some',
             lastName: 'user',
             email: `test_user_${time}@test-email.fake`,
             password: 'supersecure',
-            companyUuid: 1,
+            companyUuid: companies.data.data.content[0].uuid,
+            userRoleCode: 40,
+            status: 'ACTIVE'
           };
+          console.log(postData)
+          console.log('===============================================')
           const res = await axiosInstance.post('/api/users/add_user', postData);
 
           expect(res.status).toBe(200);

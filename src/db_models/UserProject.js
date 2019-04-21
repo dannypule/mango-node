@@ -4,18 +4,34 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
+      defaultValue: DataTypes.UUIDV4
     },
     status: {
       allowNull: false,
       type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
-      defaultValue: 'ACTIVE',
+      defaultValue: 'ACTIVE'
     },
     access_type: {
       allowNull: false,
       type: DataTypes.ENUM('FULL', 'EDITOR', 'VIEWER'),
-      defaultValue: 'VIEWER',
+      defaultValue: 'VIEWER'
     },
+    user_uuid: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    project_uuid: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    created_at: {
+      allowNull: true,
+      type: DataTypes.DATE
+    },
+    updated_at: {
+      allowNull: true,
+      type: DataTypes.DATE
+    }
   });
 
   UserProject.associate = models => {
