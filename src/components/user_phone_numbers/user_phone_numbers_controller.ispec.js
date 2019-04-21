@@ -9,7 +9,7 @@ const ACTIVE = 'ACTIVE';
 
 describe('Given /api/user_phone_numbers', () => {
   /* SUPER ADMIN */
-  describe('and a SUPER ADMIN is logged in', () => {
+  describe('when a SUPER ADMIN is logged in', () => {
     let phoneNumbers;
     let users;
 
@@ -155,7 +155,7 @@ describe('Given /api/user_phone_numbers', () => {
   });
 
   /* COMPANY ADMIN */
-  describe('and a COMPANY ADMIN is logged in', () => {
+  describe('when a COMPANY ADMIN is logged in', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
@@ -182,7 +182,7 @@ describe('Given /api/user_phone_numbers', () => {
   });
 
   /* COMPANY REGULAR USER */
-  describe('and a COMPANY REGULAR USER is logged in', () => {
+  describe('when a COMPANY REGULAR USER is logged in', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',

@@ -11,17 +11,17 @@ NPM 5.6.0 or higher
 Setup your `.env` file. An example `.env-example` file is included with this project for
 your reference. Assign values to the properties prefixed with `STAGING_DB_`.
 
-## Getting started 
+## Getting started
 
 `npm install`
 
-`npm run dev` (run in dev mode)
+`npm run local` (run in dev mode)
 
 `npm run staging` (run in staging mode)
 
 ## Setup Postgres DB in Docker
 
-This command sets up a docker container then populates the db with mock data `npm run db`
+This command sets up a docker container then populates the db with mock data `npm run db:local`
 
 ## Setting up the database with mock data
 
@@ -31,7 +31,7 @@ have a free add-on which you can use with an existing application.
 When you have your postgres database details, enter them into the .env
 file.
 
-To seed the db with demo data, run this command `npm run db:setup`
+To seed the db with demo data, run this command `npm run db:local:setup`
 
 ## Using the mock data
 
@@ -85,14 +85,12 @@ If you have heroku installed you can view the logs of your app by typing
 something like `heroku logs --app your-heroku-project` in the command line.
 
 ## Updating npm dependencies
+
 https://flaviocopes.com/update-npm-dependencies/
 
 ## AWS CD pipeline
+
 https://docs.aws.amazon.com/AWSGettingStartedContinuousDeliveryPipeline/latest/GettingStarted/CICD_Jenkins_Pipeline.html
 https://medium.com/@yogeshdarji99/steps-to-install-awscli-on-mac-5bad783483a
 
 ### Contributor(s) Danny Pule - open sourced under the MIT Liscense https://github.com/dannypule
-
-
-
-

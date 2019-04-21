@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 const ACTIVE = 'ACTIVE';
 
 describe('Given /api/user_addresses', () => {
-  describe('and a SUPER ADMIN is logged in', () => {
+  describe('when a SUPER ADMIN is logged in', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'super.admin@email.fake',
@@ -233,7 +233,7 @@ describe('Given /api/user_addresses', () => {
     });
   });
 
-  describe('and a COMPANY ADMIN is logged in', () => {
+  describe('when a COMPANY ADMIN is logged in', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
@@ -258,7 +258,7 @@ describe('Given /api/user_addresses', () => {
     });
   });
 
-  describe('and a COMPANY REGULAR USER is logged in', () => {
+  describe('when a COMPANY REGULAR USER is logged in', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
