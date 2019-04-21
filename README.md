@@ -15,13 +15,14 @@ your reference. Assign values to the properties prefixed with `STAGING_DB_`.
 
 `npm install`
 
-`npm run local` (run in dev mode)
+`npm run start:local` to run in local mode
 
-`npm run staging` (run in staging mode)
+`npm run start:staging` to run in staging mode
 
 ## Setup Postgres DB in Docker
 
-This command sets up a docker container then populates the db with mock data `npm run db:local`
+`npm run db:local` to start the db in a docker container
+`npm run db:local:setup` to seed the db
 
 ## Setting up the database with mock data
 
@@ -29,9 +30,9 @@ This project is configured to run with an external Postgres database. Heroku
 have a free add-on which you can use with an existing application.
 
 When you have your postgres database details, enter them into the .env
-file.
+file under `STAGING_`.
 
-To seed the db with demo data, run this command `npm run db:local:setup`
+To seed the db with demo data, run this command `npm run db:staging:setup`
 
 ## Using the mock data
 
@@ -54,7 +55,8 @@ View mock users using this test command `http://localhost:5566/api/users`
 This application does not have full test coverage by any stretch but some unit and integrations tests have been setup to provide a baseline for further test coverage.
 
 `npm run test` to run unit and jest tests in watch mode
-`npm run test:c` to run unit and jest tests and generate a coverage report
+
+`npm run test:i` to run integration tests
 
 ## Heroku support
 
