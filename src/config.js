@@ -1,4 +1,4 @@
-require('dotenv').load({ silent: true });
+require('dotenv').config();
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -19,7 +19,6 @@ const configuration = {
         port: process.env.DEVELOPMENT_DB_PORT,
         host: process.env.DEVELOPMENT_DB_HOST,
         dialect: 'postgres',
-        operatorsAliases: false,
         dialectOptions: {
           ssl: false,
         },
@@ -39,7 +38,6 @@ const configuration = {
       options: {
         host: process.env.STAGING_DB_HOST,
         dialect: 'postgres',
-        operatorsAliases: false,
         dialectOptions: {
           ssl: true,
         },
@@ -66,7 +64,6 @@ const configuration = {
       options: {
         host: process.env.PROD_DB_HOST,
         dialect: 'postgres',
-        operatorsAliases: false,
         dialectOptions: {
           ssl: true,
         },
