@@ -54,7 +54,9 @@ View mock users using this test command `http://localhost:5566/api/users`
 
 This application does not have full test coverage by any stretch but some unit and integrations tests have been setup to provide a baseline for further test coverage.
 
-`npm run test` to run unit and jest tests in watch mode
+`npm run test` to run unit tests
+
+`npm run test:watch` to run unit tests in watch mode
 
 `npm run test:i` to run integration tests
 
