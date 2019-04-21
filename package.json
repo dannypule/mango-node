@@ -15,6 +15,7 @@
     "test": "NODE_ENV=development jest -c jest.config.unit.js",
     "test:watch": "npm run test -- --watch",
     "test:i": "NODE_ENV=development jest -c jest.config.integration.js",
+    "test:staging:i": "NODE_ENV=staging jest -c jest.config.integration.js",
     "test:c": "jest -c jest.config.unit.js --forceExit --coverage --verbose",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
