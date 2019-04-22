@@ -2,8 +2,8 @@ import axios from 'axios';
 import config from '../../config';
 
 const axiosInstance = axios.create({
-  baseURL: `${config.baseURL}`,
-  timeout: 5000,
+  baseURL: config.baseURL,
+  timeout: 5000
 });
 const ACTIVE = 'ACTIVE';
 
@@ -12,7 +12,7 @@ describe('Given /api/user_addresses', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'super.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();
@@ -23,6 +23,7 @@ describe('Given /api/user_addresses', () => {
         const res = await axiosInstance.get('/api/user_addresses');
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -58,6 +59,7 @@ describe('Given /api/user_addresses', () => {
         const res = await axiosInstance.get('/api/user_addresses?page=4');
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -81,6 +83,7 @@ describe('Given /api/user_addresses', () => {
         const res = await axiosInstance.get(`/api/user_addresses?uuid=${uuid}`);
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(1);
@@ -126,12 +129,13 @@ describe('Given /api/user_addresses', () => {
           country: 'Austria',
           postCode: '11837',
           typeCode: 1,
-          userUuid: uuid,
+          userUuid: uuid
         };
 
         const res = await axiosInstance.post('/api/user_addresses', postData);
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.addressLine1).toBe(postData.addressLine1);
@@ -179,12 +183,13 @@ describe('Given /api/user_addresses', () => {
           country: 'Austria',
           postCode: '11837',
           typeCode: 1,
-          userUuid,
+          userUuid
         };
 
         const res = await axiosInstance.put('/api/user_addresses', postData);
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.addressLine1).toBe(postData.addressLine1);
@@ -216,14 +221,15 @@ describe('Given /api/user_addresses', () => {
 
       it('should permanently remove address from databse', async done => {
         const postData = {
-          uuid: addresses[0].uuid,
+          uuid: addresses[0].uuid
         };
 
         const res = await axiosInstance.delete('/api/user_addresses', {
-          data: postData,
+          data: postData
         });
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data).toHaveProperty('message');
@@ -237,7 +243,7 @@ describe('Given /api/user_addresses', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();
@@ -247,6 +253,7 @@ describe('Given /api/user_addresses', () => {
       it('should return addresses', async done => {
         const res = await axiosInstance.get('/api/user_addresses');
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -262,7 +269,7 @@ describe('Given /api/user_addresses', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();

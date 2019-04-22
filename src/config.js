@@ -7,7 +7,7 @@ const port = 5566;
 const configuration = {
   port,
   cors: {
-    exposedHeaders: ['Link'],
+    exposedHeaders: ['Link']
   },
   development: {
     baseURL: `http://localhost:${port}`,
@@ -20,14 +20,14 @@ const configuration = {
         host: process.env.DEVELOPMENT_DB_HOST,
         dialect: 'postgres',
         dialectOptions: {
-          ssl: false,
+          ssl: false
         },
         define: { underscored: true },
-        logging: false,
-      },
+        logging: false
+      }
     },
     jwtEncryption: process.env.DEVELOPMENT_JWT_ENCRYPTION,
-    jwtExpiration: process.env.DEVELOPMENT_JWT_EXPIRATION,
+    jwtExpiration: process.env.DEVELOPMENT_JWT_EXPIRATION
   },
   staging: {
     baseURL: `todo`,
@@ -39,7 +39,7 @@ const configuration = {
         host: process.env.STAGING_DB_HOST,
         dialect: 'postgres',
         dialectOptions: {
-          ssl: true,
+          ssl: true
         },
         define: { underscored: true },
         logging: false,
@@ -48,12 +48,12 @@ const configuration = {
           max: 5,
           min: 0,
           idle: 20000,
-          acquire: 20000,
-        },
-      },
+          acquire: 20000
+        }
+      }
     },
     jwtEncryption: process.env.STAGING_JWT_ENCRYPTION,
-    jwtExpiration: process.env.STAGING_JWT_EXPIRATION,
+    jwtExpiration: process.env.STAGING_JWT_EXPIRATION
   },
   production: {
     baseURL: `todo`,
@@ -65,13 +65,21 @@ const configuration = {
         host: process.env.PROD_DB_HOST,
         dialect: 'postgres',
         dialectOptions: {
-          ssl: true,
+          ssl: true
         },
         define: { underscored: true },
-      },
+        logging: false,
+        pool: {
+          // increase pool size for AWS https://github.com/sequelize/sequelize/issues/7884
+          max: 5,
+          min: 0,
+          idle: 20000,
+          acquire: 20000
+        }
+      }
     },
     jwtEncryption: process.env.PROD_JWT_ENCRYPTION,
-    jwtExpiration: process.env.PROD_JWT_EXPIRATION,
-  },
+    jwtExpiration: process.env.PROD_JWT_EXPIRATION
+  }
 };
 export default configuration[env];

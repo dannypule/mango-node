@@ -14,9 +14,10 @@ const formatFromDb = user => {
     email: user.email,
     createdAt: user.created_at,
     updatedAt: user.updated_at,
+    companyUuid: user.company_uuid,
     userRoleCode: user.user_role_code,
     verfied: user.verfied,
-    status: user.status,
+    status: user.status
   };
 };
 
@@ -70,16 +71,16 @@ const updateUser = async (req, res, userUuid, objectToUpdate) => {
   try {
     const result = await model.update(objectToUpdate, {
       where: {
-        uuid: userUuid,
-      },
+        uuid: userUuid
+      }
     });
     if (result[0] !== 1) {
       responseUtils.fail(res, { message: 'Unable to update this user.' });
     }
     const _user = await model.findOne({
       where: {
-        uuid: req.body.uuid,
-      },
+        uuid: req.body.uuid
+      }
     });
     responseUtils.success(res, { content: formatFromDb(_user) });
   } catch (err) {
@@ -92,5 +93,5 @@ export default {
   saltAndHashPassword,
   addUser,
   isPermitted,
-  updateUser,
+  updateUser
 };
