@@ -1,12 +1,12 @@
 const LIMIT = 15;
 
-const getPage = req => parseInt(req.query.page, 10) || 1; // page 1 default
+const getCurrentPage = req => parseInt(req.query.page, 10) || 1; // page 1 default
 
-const getPages = data => Math.ceil(data.count / LIMIT);
+const getNumberOfPages = data => Math.ceil(data.count / LIMIT);
 
-const getOffset = req => LIMIT * (getPage(req) - 1);
+const getOffset = req => LIMIT * (getCurrentPage(req) - 1);
 
-const getFormattedFromDB = (data, formatFromDb) => data.rows.map(formatFromDb);
+const formatDbResponse = (data, formatFromDb) => data.rows.map(formatFromDb);
 
 const getDbQuery = (req, options = { where: {} }) => {
   const { uuid } = req.query;
@@ -40,9 +40,9 @@ const getDbQuery = (req, options = { where: {} }) => {
 };
 
 const getResponseBody = (req, data, formatFromDb) => {
-  const page = getPage(req);
-  const pages = getPages(data);
-  const formatted = getFormattedFromDB(data, formatFromDb);
+  const page = getCurrentPage(req);
+  const pages = getNumberOfPages(data);
+  const formatted = formatDbResponse(data, formatFromDb);
   return { content: formatted, count: data.count, pages, page, length: formatted.length };
 };
 
