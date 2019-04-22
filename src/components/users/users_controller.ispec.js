@@ -98,8 +98,6 @@ describe('Given /api/users', () => {
             userRoleCode: 40,
             status: 'ACTIVE'
           };
-          console.log(postData)
-          console.log('===============================================')
           const res = await axiosInstance.post('/api/users/add_user', postData);
 
           expect(res.status).toBe(200);

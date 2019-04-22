@@ -22,10 +22,7 @@ const configuration = {
         dialectOptions: {
           ssl: false
         },
-        define: {
-          freezeTableName: true,
-          underscored: true
-        },
+        define: { underscored: true },
         logging: false
       }
     },
@@ -33,7 +30,7 @@ const configuration = {
     jwtExpiration: process.env.DEVELOPMENT_JWT_EXPIRATION
   },
   staging: {
-    baseURL: ``,
+    baseURL: `todo`,
     db: {
       username: process.env.STAGING_DB_USERNAME,
       password: process.env.STAGING_DB_PASSWORD,
@@ -44,12 +41,10 @@ const configuration = {
         dialectOptions: {
           ssl: true
         },
-        define: {
-          freezeTableName: true,
-          underscored: true
-        },
+        define: { underscored: true },
         logging: false,
         pool: {
+          // increase pool size for AWS https://github.com/sequelize/sequelize/issues/7884
           max: 5,
           min: 0,
           idle: 20000,
@@ -61,7 +56,7 @@ const configuration = {
     jwtExpiration: process.env.STAGING_JWT_EXPIRATION
   },
   production: {
-    baseURL: ``,
+    baseURL: `todo`,
     db: {
       username: process.env.PROD_DB_USERNAME,
       password: process.env.PROD_DB_PASSWORD,
@@ -72,12 +67,10 @@ const configuration = {
         dialectOptions: {
           ssl: true
         },
-        define: {
-          freezeTableName: true,
-          underscored: true
-        },
+        define: { underscored: true },
         logging: false,
         pool: {
+          // increase pool size for AWS https://github.com/sequelize/sequelize/issues/7884
           max: 5,
           min: 0,
           idle: 20000,
