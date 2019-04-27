@@ -34,13 +34,13 @@ const updateCompany = async (req, res) => {
   try {
     await model.update(companiesService.formatForDb(company), {
       where: {
-        uuid: company.uuid,
-      },
+        uuid: company.uuid
+      }
     });
     const _company = await model.findOne({
       where: {
-        uuid: req.body.uuid,
-      },
+        uuid: req.body.uuid
+      }
     });
     responseUtils.success(res, companiesService.formatFromDb(_company));
   } catch (err) {
@@ -52,12 +52,12 @@ const deleteCompany = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        uuid: req.body.uuid,
-      },
+        uuid: req.body.uuid
+      }
     });
     if (result === 1) {
       responseUtils.success(res, {
-        message: 'Successfully deleted company.',
+        message: 'Successfully deleted company.'
       });
     } else {
       responseUtils.fail(res, { message: 'Unable to delete this company.' });
@@ -71,5 +71,5 @@ export default {
   getCompanies,
   addCompany,
   updateCompany,
-  deleteCompany,
+  deleteCompany
 };
