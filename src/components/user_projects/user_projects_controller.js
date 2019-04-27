@@ -1,6 +1,6 @@
 import db from '../../db_models';
 import responseUtils from '../../utils/responseUtils';
-import getRequestUtils from '../../utils/getRequestUtils';
+import requestUtils from '../../utils/requestUtils';
 import userProjectsService from './user_projects_service';
 
 const model = db.UserProject;
@@ -9,15 +9,16 @@ const getUserProjects = async (req, res) => {
   try {
     const { userUuid, projectUuid, postCode } = req.query;
 
-    const dbQuery = getRequestUtils.getDbQuery(req, {
+    const dbQuery = requestUtils.getDbQuery({
+      req,
       where: {
         user_uuid: userUuid,
         project_uuid: projectUuid,
-        post_code: postCode,
-      },
+        post_code: postCode
+      }
     });
     const data = await model.findAndCountAll(dbQuery);
-    const responseBody = getRequestUtils.getResponseBody(req, data, userProjectsService.formatFromDb);
+    const responseBody = requestUtils.getResponseBody(req, data, userProjectsService.formatFromDb);
     responseUtils.success(res, responseBody);
   } catch (err) {
     responseUtils.success(res, err);
@@ -41,13 +42,13 @@ const updateUserProject = async (req, res) => {
   try {
     await model.update(userProjectsService.formatForDb(userProject), {
       where: {
-        uuid: userProject.uuid,
-      },
+        uuid: userProject.uuid
+      }
     });
     const updated = await model.findOne({
       where: {
-        uuid: req.body.uuid,
-      },
+        uuid: req.body.uuid
+      }
     });
     responseUtils.success(res, userProjectsService.formatFromDb(updated));
   } catch (err) {
@@ -59,12 +60,12 @@ const deleteUserProject = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        uuid: req.body.uuid,
-      },
+        uuid: req.body.uuid
+      }
     });
     if (result === 1) {
       responseUtils.success(res, {
-        message: 'Successfully deleted project.',
+        message: 'Successfully deleted project.'
       });
     } else {
       responseUtils.fail(res, { message: 'Unable to delete this project.' });
@@ -78,5 +79,5 @@ export default {
   getUserProjects,
   addUserProject,
   updateUserProject,
-  deleteUserProject,
+  deleteUserProject
 };

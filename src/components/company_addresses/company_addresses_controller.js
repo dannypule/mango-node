@@ -1,6 +1,6 @@
 import db from '../../db_models';
 import responseUtils from '../../utils/responseUtils';
-import getRequestUtils from '../../utils/getRequestUtils';
+import requestUtils from '../../utils/requestUtils';
 import companyAddressesService from './company_addresses_service';
 
 const model = db.CompanyAddress;
@@ -9,14 +9,15 @@ const getCompanyAddresses = async (req, res) => {
   try {
     const { companyUuid, postCode } = req.query;
 
-    const dbQuery = getRequestUtils.getDbQuery(req, {
+    const dbQuery = requestUtils.getDbQuery({
+      req,
       where: {
         company_uuid: companyUuid,
-        post_code: postCode,
-      },
+        post_code: postCode
+      }
     });
     const data = await model.findAndCountAll(dbQuery);
-    const responseBody = getRequestUtils.getResponseBody(req, data, companyAddressesService.formatFromDb);
+    const responseBody = requestUtils.getResponseBody(req, data, companyAddressesService.formatFromDb);
     responseUtils.success(res, responseBody);
   } catch (err) {
     responseUtils.success(res, err);
@@ -40,13 +41,13 @@ const updateCompanyAddress = async (req, res) => {
   try {
     await model.update(companyAddressesService.formatForDb(companyAddress), {
       where: {
-        uuid: companyAddress.uuid,
-      },
+        uuid: companyAddress.uuid
+      }
     });
     const _companyAddress = await model.findOne({
       where: {
-        uuid: req.body.uuid,
-      },
+        uuid: req.body.uuid
+      }
     });
     responseUtils.success(res, companyAddressesService.formatFromDb(_companyAddress));
   } catch (err) {
@@ -58,12 +59,12 @@ const deleteCompanyAddress = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        uuid: req.body.uuid,
-      },
+        uuid: req.body.uuid
+      }
     });
     if (result === 1) {
       responseUtils.success(res, {
-        message: 'Successfully delete address.',
+        message: 'Successfully delete address.'
       });
     } else {
       responseUtils.fail(res, { message: 'Unable to delete address.' });
@@ -77,5 +78,5 @@ export default {
   getCompanyAddresses,
   addCompanyAddress,
   updateCompanyAddress,
-  deleteCompanyAddress,
+  deleteCompanyAddress
 };

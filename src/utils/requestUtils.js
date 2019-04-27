@@ -8,36 +8,39 @@ const getOffset = req => LIMIT * (getCurrentPage(req) - 1);
 
 const formatDbResponse = (data, formatFromDb) => data.rows.map(formatFromDb);
 
-const getDbQuery = (req, options = { where: {} }) => {
+const getWhere = (req, where) => {
   const { uuid } = req.query;
-  const limit = LIMIT;
-  const offset = getOffset(req);
-  const { where } = options;
-  const dbQuery = {
-    where: {},
-    limit,
-    offset,
-    order: [['createdAt', 'DESC']]
-  };
+  let newWhere = {};
 
   if (uuid) {
-    dbQuery.where = {
-      ...dbQuery.where,
+    newWhere = {
+      ...newWhere,
       uuid
     };
   }
 
   Object.keys(where).forEach(key => {
     if (where[key]) {
-      dbQuery.where = {
-        ...dbQuery.where,
+      newWhere = {
+        ...newWhere,
         [key]: where[key]
       };
     }
   });
 
-  return dbQuery;
+  return newWhere;
 };
+
+const getSortBy = req => req.query.sortBy || 'created_at';
+
+const getSortOrder = req => req.query.sortOrder || 'DESC';
+
+const getDbQuery = ({ req, where = {} }) => ({
+  where: getWhere(req, where),
+  limit: LIMIT,
+  offset: getOffset(req),
+  order: [[getSortBy(req), getSortOrder(req)]]
+});
 
 const getResponseBody = (req, data, formatFromDb) => {
   const page = getCurrentPage(req);
