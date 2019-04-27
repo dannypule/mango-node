@@ -11,12 +11,12 @@ export const getJWT = user => {
       userRoleCode: user.user_role_code,
       companyUuid: user.company_uuid,
       verified: user.verified,
-      status: user.status,
+      status: user.status
     },
     jwtEncryption,
     {
-      expiresIn: expirationTime,
-    },
+      expiresIn: expirationTime
+    }
   );
 
   return `Bearer ${token}`;

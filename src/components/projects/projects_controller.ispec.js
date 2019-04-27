@@ -2,8 +2,8 @@ import axios from 'axios';
 import config from '../../config';
 
 const axiosInstance = axios.create({
-  baseURL: `${config.baseURL}`,
-  timeout: 5000,
+  baseURL: config.baseURL,
+  timeout: 5000
 });
 const ACTIVE = 'ACTIVE';
 
@@ -12,7 +12,7 @@ describe('Given /api/projects', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'super.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
 
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
@@ -25,6 +25,7 @@ describe('Given /api/projects', () => {
           const res = await axiosInstance.get('/api/projects');
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(15);
@@ -48,6 +49,7 @@ describe('Given /api/projects', () => {
           const res = await axiosInstance.get('/api/projects?page=4');
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(15);
@@ -70,6 +72,7 @@ describe('Given /api/projects', () => {
           const res = await axiosInstance.get(`/api/projects?uuid=${project.uuid}`);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(1);
@@ -97,11 +100,12 @@ describe('Given /api/projects', () => {
           const postData = {
             title: 'Company-wide Office 365 Uninstallation',
             userUuid: user.uuid,
-            companyUuid: company.uuid,
+            companyUuid: company.uuid
           };
           const res = await axiosInstance.post('/api/projects', postData);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data).toHaveProperty('uuid');
@@ -132,11 +136,12 @@ describe('Given /api/projects', () => {
             title: 'Company-wide Office 365 Removal',
             userUuid: project.userUuid,
             companyUuid: project.companyUuid,
-            status: 'DELETED',
+            status: 'DELETED'
           };
           const res = await axiosInstance.put('/api/projects', postData);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data).toHaveProperty('uuid');
@@ -163,13 +168,14 @@ describe('Given /api/projects', () => {
       describe('DELETE /api/projects', () => {
         it('should permanently remove projects from database', async done => {
           const postData = {
-            uuid: project.uuid,
+            uuid: project.uuid
           };
           const res = await axiosInstance.delete('/api/projects', {
-            data: postData,
+            data: postData
           });
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
           expect(res.data.data).toHaveProperty('message');
 
@@ -183,7 +189,7 @@ describe('Given /api/projects', () => {
     beforeEach(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
 
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
@@ -195,6 +201,7 @@ describe('Given /api/projects', () => {
         const res = await axiosInstance.get('/api/projects');
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -218,7 +225,7 @@ describe('Given /api/projects', () => {
     beforeEach(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
 
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;

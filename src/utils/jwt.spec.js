@@ -1,15 +1,15 @@
 import { getJWT } from './jwt';
-import * as config from '../config';
 
-config.default = {
+jest.mock('../config', () => ({
   jwtExpiration: '25920000000',
-  jwtEncryption: 'h7dl0skFjCMg902JQLCaP',
-};
+  jwtEncryption: 'h7dl0skFjCMg902JQLCaP'
+}));
+
 const user = {
   uuid: null,
   user_role_code: null,
   company_uuid: null,
-  status: null,
+  status: null
 };
 
 describe('Given getJWT', () => {

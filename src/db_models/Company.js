@@ -4,17 +4,25 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
+      defaultValue: DataTypes.UUIDV4
     },
     name: {
       allowNull: false,
-      type: DataTypes.STRING(40),
+      type: DataTypes.STRING(40)
     },
     status: {
       allowNull: false,
       type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
-      defaultValue: 'ACTIVE',
+      defaultValue: 'ACTIVE'
     },
+    created_at: {
+      allowNull: true,
+      type: DataTypes.DATE
+    },
+    updated_at: {
+      allowNull: true,
+      type: DataTypes.DATE
+    }
   });
 
   Company.associate = models => {

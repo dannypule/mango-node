@@ -4,21 +4,20 @@ import Sequelize from 'sequelize';
 import config from '../config';
 
 const sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, config.db.options);
-console.log('DATABASE: ', config.db.database);
-console.log('process.env.NODE_ENV: ', process.env.NODE_ENV);
+console.log(`DATABASE: ${config.db.database}`);
+console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    console.log('DB connection established.');
   })
   .catch(err => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Unable to connect to DB:', err);
   });
 
 const db = {};
 
-fs
-  .readdirSync(__dirname)
+fs.readdirSync(__dirname)
   .filter(file => {
     return file.indexOf('.') !== 0 && file !== 'index.js' && !file.includes('js.map');
   })

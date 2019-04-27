@@ -2,8 +2,8 @@ import axios from 'axios';
 import config from '../../config';
 
 const axiosInstance = axios.create({
-  baseURL: `${config.baseURL}`,
-  timeout: 5000,
+  baseURL: config.baseURL,
+  timeout: 5000
 });
 const ACTIVE = 'ACTIVE';
 
@@ -16,7 +16,7 @@ describe('Given /api/user_phone_numbers', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'super.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();
@@ -36,6 +36,7 @@ describe('Given /api/user_phone_numbers', () => {
         const res = await axiosInstance.get('/api/user_phone_numbers');
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -61,6 +62,7 @@ describe('Given /api/user_phone_numbers', () => {
         const res = await axiosInstance.get('/api/user_phone_numbers?page=4');
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -82,11 +84,12 @@ describe('Given /api/user_phone_numbers', () => {
         const postData = {
           phone: '840.649.2349',
           typeCode: 1,
-          userUuid: uuid,
+          userUuid: uuid
         };
         const res = await axiosInstance.post('/api/user_phone_numbers', postData);
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data).toHaveProperty('uuid');
@@ -112,12 +115,13 @@ describe('Given /api/user_phone_numbers', () => {
           uuid,
           phone: '840.649.2348',
           typeCode: 3,
-          userUuid,
+          userUuid
         };
 
         const res = await axiosInstance.put('/api/user_phone_numbers', postData);
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.uuid).toBe(postData.uuid);
@@ -137,14 +141,15 @@ describe('Given /api/user_phone_numbers', () => {
     describe('DELETE /api/user_phone_numbers', () => {
       it('should permanently remove phone number from databse', async done => {
         const postData = {
-          uuid: phoneNumbers[0].uuid,
+          uuid: phoneNumbers[0].uuid
         };
 
         const res = await axiosInstance.delete('/api/user_phone_numbers', {
-          data: postData,
+          data: postData
         });
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data).toHaveProperty('message');
@@ -159,7 +164,7 @@ describe('Given /api/user_phone_numbers', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();
@@ -170,6 +175,7 @@ describe('Given /api/user_phone_numbers', () => {
       it('should return phoneNumbers', async done => {
         const res = await axiosInstance.get('/api/user_phone_numbers');
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -186,7 +192,7 @@ describe('Given /api/user_phone_numbers', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();
