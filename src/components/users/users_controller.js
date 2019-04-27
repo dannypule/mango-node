@@ -1,15 +1,15 @@
 import usersService from './users_service';
 import db from '../../db_models';
 import responseUtils from '../../utils/responseUtils';
-import getRequestUtils from '../../utils/getRequestUtils';
+import requestUtils from '../../utils/requestUtils';
 
 const model = db.User;
 
 const getUsers = async (req, res) => {
   try {
-    const dbQuery = getRequestUtils.getDbQuery(req);
+    const dbQuery = requestUtils.getDbQuery({ req });
     const data = await model.findAndCountAll(dbQuery);
-    const responseBody = getRequestUtils.getResponseBody(req, data, usersService.formatFromDb);
+    const responseBody = requestUtils.getResponseBody(req, data, usersService.formatFromDb);
     responseUtils.success(res, responseBody);
   } catch (err) {
     responseUtils.fail(res, err);
