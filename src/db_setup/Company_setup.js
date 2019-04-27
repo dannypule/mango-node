@@ -9,7 +9,7 @@ export default () => {
 
       // *** COMPANY 1 - Google ***
       company = await db.Company.create({
-        name: 'Google',
+        name: 'Google'
       });
       await db.CompanyAddress.create({
         address_line_1: faker.address.streetAddress(),
@@ -21,17 +21,17 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        company_uuid: company.uuid,
+        company_uuid: company.uuid
       });
       await db.CompanyPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        company_uuid: company.uuid,
+        company_uuid: company.uuid
       });
 
       // *** COMPANY 2 - Apple ***
       company = await db.Company.create({
-        name: 'Apple',
+        name: 'Apple'
       });
       await db.CompanyAddress.create({
         address_line_1: faker.address.streetAddress(),
@@ -43,17 +43,17 @@ export default () => {
         country: faker.address.country(),
         post_code: faker.address.zipCode(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        company_uuid: company.uuid,
+        company_uuid: company.uuid
       });
       await db.CompanyPhoneNumber.create({
         phone: faker.phone.phoneNumber(),
         type_code: Math.floor(Math.random() * 3) + 1,
-        company_uuid: company.uuid,
+        company_uuid: company.uuid
       });
 
       for (let i = 0; i < 200; i++) {
         db.Company.create({
-          name: faker.company.companyName(),
+          name: faker.company.companyName()
         }).then(() => {
           if (i === 199) {
             console.log(colors.green('Demo items inserted into Company table.'));
