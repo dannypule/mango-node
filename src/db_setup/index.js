@@ -10,6 +10,7 @@ import db from '../db_models';
 
 import UserRoleSetup from './UserRole_setup';
 import CompanySetup from './Company_setup';
+import HealthClubSetup from './HealthClub_setup';
 import UserSetup from './User_setup';
 import ProjectSetup from './Project_setup';
 import UserProjectSetup from './UserProject_setup';
@@ -35,6 +36,7 @@ const performSync = async () => {
   // ///////////////////////////////////////////////////////////////////////////////////////
   await UserRoleSetup();
   await CompanySetup();
+  await HealthClubSetup();
   await UserSetup();
   await ProjectSetup();
   await UserProjectSetup();

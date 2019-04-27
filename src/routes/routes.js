@@ -3,6 +3,7 @@ import passport from 'passport';
 
 import authController from '../components/auth/auth_controller';
 import companiesController from '../components/companies/companies_controller';
+import healthClubsController from '../components/health_clubs/health_clubs_controller';
 import usersController from '../components/users/users_controller';
 import projectsController from '../components/projects/projects_controller';
 import userProjectsController from '../components/user_projects/user_projects_controller';
@@ -30,21 +31,44 @@ router.get(
   '/companies',
   authenticateViaToken,
   accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), // todo limit self
-  companiesController.getCompanies,
+  companiesController.getCompanies
 );
 router.post(
   '/companies',
   authenticateViaToken,
   accessControls([COMPANY_EDITOR, COMPANY_ADMIN]),
-  companiesController.addCompany,
+  companiesController.addCompany
 );
 router.put(
   '/companies',
   authenticateViaToken,
   accessControls([COMPANY_EDITOR, COMPANY_ADMIN]),
-  companiesController.updateCompany,
+  companiesController.updateCompany
 );
 router.delete('/companies', authenticateViaToken, accessControls([]), companiesController.deleteCompany);
+
+// ===================================================
+// '/api/health_clubs'
+// =========================
+router.get(
+  '/health_clubs',
+  authenticateViaToken,
+  accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]), // todo limit self
+  healthClubsController.getHealthClubs
+);
+router.post(
+  '/health_clubs',
+  authenticateViaToken,
+  accessControls([COMPANY_EDITOR, COMPANY_ADMIN]),
+  healthClubsController.addHealthClub
+);
+router.put(
+  '/health_clubs',
+  authenticateViaToken,
+  accessControls([COMPANY_EDITOR, COMPANY_ADMIN]),
+  healthClubsController.updateHealthClub
+);
+router.delete('/health_clubs', authenticateViaToken, accessControls([]), healthClubsController.deleteHealthClub);
 
 // ===================================================
 // '/api/users'
@@ -53,43 +77,43 @@ router.get(
   '/users',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  usersController.getUsers,
+  usersController.getUsers
 );
 router.post(
   '/users/add_user',
   authenticateViaToken,
   accessControls([COMPANY_EDITOR, COMPANY_ADMIN]),
-  usersController.addUser,
+  usersController.addUser
 );
 router.put(
   '/users/update_user',
   authenticateViaToken,
   accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
-  usersController.updateWholeUser,
+  usersController.updateWholeUser
 );
 router.put(
   '/users/update_email',
   authenticateViaToken,
   accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
-  usersController.updateEmail,
+  usersController.updateEmail
 );
 router.put(
   '/users/update_name',
   authenticateViaToken,
   accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
-  usersController.updateName,
+  usersController.updateName
 );
 router.put(
   '/users/update_password',
   authenticateViaToken,
   accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
-  usersController.updatePassword,
+  usersController.updatePassword
 );
 router.put(
   '/users/update_status',
   authenticateViaToken,
   accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
-  usersController.changeUserStatus,
+  usersController.changeUserStatus
 );
 router.delete('/users/remove_user', authenticateViaToken, accessControls([COMPANY_ADMIN]), usersController.removeUser);
 
@@ -100,19 +124,19 @@ router.get(
   '/projects',
   authenticateViaToken,
   accessControls([COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  projectsController.getProjects,
+  projectsController.getProjects
 );
 router.post(
   '/projects',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  projectsController.addProject,
+  projectsController.addProject
 );
 router.put(
   '/projects',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  projectsController.updateProject,
+  projectsController.updateProject
 );
 router.delete('/projects', authenticateViaToken, accessControls([COMPANY_ADMIN]), projectsController.deleteProject);
 
@@ -123,25 +147,25 @@ router.get(
   '/user_projects',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userProjectsController.getUserProjects,
+  userProjectsController.getUserProjects
 );
 router.post(
   '/user_projects',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userProjectsController.addUserProject,
+  userProjectsController.addUserProject
 );
 router.put(
   '/user_projects',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userProjectsController.updateUserProject,
+  userProjectsController.updateUserProject
 );
 router.delete(
   '/user_projects',
   authenticateViaToken,
   accessControls([COMPANY_ADMIN]),
-  userProjectsController.deleteUserProject,
+  userProjectsController.deleteUserProject
 );
 
 // ===================================================
@@ -151,25 +175,25 @@ router.get(
   '/company_addresses',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  companyAddressesController.getCompanyAddresses,
+  companyAddressesController.getCompanyAddresses
 );
 router.post(
   '/company_addresses',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  companyAddressesController.addCompanyAddress,
+  companyAddressesController.addCompanyAddress
 );
 router.put(
   '/company_addresses',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  companyAddressesController.updateCompanyAddress,
+  companyAddressesController.updateCompanyAddress
 );
 router.delete(
   '/company_addresses',
   authenticateViaToken,
   accessControls([COMPANY_ADMIN]),
-  companyAddressesController.deleteCompanyAddress,
+  companyAddressesController.deleteCompanyAddress
 );
 
 // ===================================================
@@ -179,25 +203,25 @@ router.get(
   '/company_phone_numbers',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  companyPhoneNumbersController.getCompanyPhoneNumbers,
+  companyPhoneNumbersController.getCompanyPhoneNumbers
 );
 router.post(
   '/company_phone_numbers',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  companyPhoneNumbersController.addCompanyPhoneNumber,
+  companyPhoneNumbersController.addCompanyPhoneNumber
 );
 router.put(
   '/company_phone_numbers',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  companyPhoneNumbersController.updateCompanyPhoneNumber,
+  companyPhoneNumbersController.updateCompanyPhoneNumber
 );
 router.delete(
   '/company_phone_numbers',
   authenticateViaToken,
   accessControls([COMPANY_ADMIN]),
-  companyPhoneNumbersController.deleteCompanyPhoneNumber,
+  companyPhoneNumbersController.deleteCompanyPhoneNumber
 );
 
 // ===================================================
@@ -207,25 +231,25 @@ router.get(
   '/user_addresses',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userAddressesController.getUserAddresses,
+  userAddressesController.getUserAddresses
 );
 router.post(
   '/user_addresses',
   authenticateViaToken,
   accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userAddressesController.addUserAddress,
+  userAddressesController.addUserAddress
 );
 router.put(
   '/user_addresses',
   authenticateViaToken,
   accessControls([SELF, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userAddressesController.updateUserAddress,
+  userAddressesController.updateUserAddress
 );
 router.delete(
   '/user_addresses',
   authenticateViaToken,
   accessControls([COMPANY_ADMIN]),
-  userAddressesController.deleteUserAddress,
+  userAddressesController.deleteUserAddress
 );
 
 // ===================================================
@@ -235,25 +259,25 @@ router.get(
   '/user_phone_numbers',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userPhoneNumbersController.getUserPhoneNumbers,
+  userPhoneNumbersController.getUserPhoneNumbers
 );
 router.post(
   '/user_phone_numbers',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userPhoneNumbersController.addUserPhoneNumber,
+  userPhoneNumbersController.addUserPhoneNumber
 );
 router.put(
   '/user_phone_numbers',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  userPhoneNumbersController.updateUserPhoneNumber,
+  userPhoneNumbersController.updateUserPhoneNumber
 );
 router.delete(
   '/user_phone_numbers',
   authenticateViaToken,
   accessControls([COMPANY_ADMIN]),
-  userPhoneNumbersController.deleteUserPhoneNumber,
+  userPhoneNumbersController.deleteUserPhoneNumber
 );
 
 export default router;
