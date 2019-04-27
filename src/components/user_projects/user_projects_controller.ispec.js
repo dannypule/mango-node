@@ -2,8 +2,8 @@ import axios from 'axios';
 import config from '../../config';
 
 const axiosInstance = axios.create({
-  baseURL: `${config.baseURL}`,
-  timeout: 5000,
+  baseURL: config.baseURL,
+  timeout: 5000
 });
 const ACTIVE = 'ACTIVE';
 
@@ -12,7 +12,7 @@ describe('Given /api/user_projects', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'super.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
 
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
@@ -25,6 +25,7 @@ describe('Given /api/user_projects', () => {
           const res = await axiosInstance.get('/api/user_projects');
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(15);
@@ -47,6 +48,7 @@ describe('Given /api/user_projects', () => {
           const res = await axiosInstance.get('/api/user_projects?page=4');
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(15);
@@ -69,6 +71,7 @@ describe('Given /api/user_projects', () => {
           const res = await axiosInstance.get(`/api/user_projects?uuid=${userProject.uuid}`);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(1);
@@ -91,6 +94,7 @@ describe('Given /api/user_projects', () => {
           const res = await axiosInstance.get(`/api/user_projects?projectUuid=${userProject.projectUuid}`);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBeGreaterThanOrEqual(1);
@@ -113,6 +117,7 @@ describe('Given /api/user_projects', () => {
           const res = await axiosInstance.get(`/api/user_projects?userUuid=${userProject.userUuid}`);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBeGreaterThanOrEqual(1);
@@ -139,11 +144,12 @@ describe('Given /api/user_projects', () => {
         it('should add user_project', async done => {
           const postData = {
             userUuid: users.uuid,
-            projectUuid: project.uuid,
+            projectUuid: project.uuid
           };
           const res = await axiosInstance.post('/api/user_projects', postData);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data).toHaveProperty('uuid');
@@ -172,11 +178,12 @@ describe('Given /api/user_projects', () => {
             uuid: userProject.uuid,
             userUuid: userProject.userUuid,
             projectUuid: userProject.projectUuid,
-            status: 'DELETED',
+            status: 'DELETED'
           };
           const res = await axiosInstance.put('/api/user_projects', postData);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data).toHaveProperty('uuid');
@@ -201,13 +208,14 @@ describe('Given /api/user_projects', () => {
       describe('DELETE /api/user_projects', () => {
         it('should permanently remove user_projects from database', async done => {
           const postData = {
-            uuid: userProject.uuid,
+            uuid: userProject.uuid
           };
           const res = await axiosInstance.delete('/api/user_projects', {
-            data: postData,
+            data: postData
           });
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
           expect(res.data.data).toHaveProperty('message');
 
@@ -221,7 +229,7 @@ describe('Given /api/user_projects', () => {
     beforeEach(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
 
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
@@ -233,6 +241,7 @@ describe('Given /api/user_projects', () => {
         const res = await axiosInstance.get('/api/user_projects');
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -255,7 +264,7 @@ describe('Given /api/user_projects', () => {
     beforeEach(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
 
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;

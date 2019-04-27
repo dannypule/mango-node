@@ -6,76 +6,76 @@ import {
   COMPANY_EDITOR,
   COMPANY_VIEWER,
   COMPANY_REGULAR,
-  SELF,
+  SELF
 } from './accessControls';
 
 const nextMock = jest.fn();
 const jsonMock = jest.fn();
 const reqMockSuperAdmin = {
   user: {
-    uuid: "a48096d2-da23-4c85-a079-7889eda5994d",
-    userRoleCode: SUPERADMIN,
+    uuid: 'a48096d2-da23-4c85-a079-7889eda5994d',
+    userRoleCode: SUPERADMIN
   },
   body: {
-    uuid: "fcab0b13-99f8-4290-bf88-07e8abe5acf3",
-  },
+    uuid: 'fcab0b13-99f8-4290-bf88-07e8abe5acf3'
+  }
 };
 const reqMockAdmin = {
   user: {
-    uuid: "a48096d2-da23-4c85-a079-7889eda5994d",
-    userRoleCode: ADMIN,
+    uuid: 'a48096d2-da23-4c85-a079-7889eda5994d',
+    userRoleCode: ADMIN
   },
   body: {
-    uuid: "fcab0b13-99f8-4290-bf88-07e8abe5acf3",
-  },
+    uuid: 'fcab0b13-99f8-4290-bf88-07e8abe5acf3'
+  }
 };
 const reqMockCompanyAdmin = {
   user: {
-    uuid: "a48096d2-da23-4c85-a079-7889eda5994d",
-    userRoleCode: COMPANY_ADMIN,
+    uuid: 'a48096d2-da23-4c85-a079-7889eda5994d',
+    userRoleCode: COMPANY_ADMIN
   },
   body: {
-    uuid: "fcab0b13-99f8-4290-bf88-07e8abe5acf3",
-  },
+    uuid: 'fcab0b13-99f8-4290-bf88-07e8abe5acf3'
+  }
 };
 const reqMockCompanyEditor = {
   user: {
-    uuid: "a48096d2-da23-4c85-a079-7889eda5994d",
-    userRoleCode: COMPANY_EDITOR,
+    uuid: 'a48096d2-da23-4c85-a079-7889eda5994d',
+    userRoleCode: COMPANY_EDITOR
   },
   body: {
-    uuid: "fcab0b13-99f8-4290-bf88-07e8abe5acf3",
-  },
+    uuid: 'fcab0b13-99f8-4290-bf88-07e8abe5acf3'
+  }
 };
 const reqMockCompanyViewer = {
   user: {
-    uuid: "a48096d2-da23-4c85-a079-7889eda5994d",
-    userRoleCode: COMPANY_VIEWER,
+    uuid: 'a48096d2-da23-4c85-a079-7889eda5994d',
+    userRoleCode: COMPANY_VIEWER
   },
   body: {
-    uuid: "fcab0b13-99f8-4290-bf88-07e8abe5acf3",
-  },
+    uuid: 'fcab0b13-99f8-4290-bf88-07e8abe5acf3'
+  }
 };
 const reqMockCompanyRegular = {
   user: {
-    uuid: "a48096d2-da23-4c85-a079-7889eda5994d",
-    userRoleCode: COMPANY_REGULAR,
+    uuid: 'a48096d2-da23-4c85-a079-7889eda5994d',
+    userRoleCode: COMPANY_REGULAR
   },
   body: {
-    uuid: "fcab0b13-99f8-4290-bf88-07e8abe5acf3",
-  },
+    uuid: 'fcab0b13-99f8-4290-bf88-07e8abe5acf3'
+  }
 };
 const reqMockSelf = {
   user: {
-    uuid: "fcab0b13-99f8-4290-bf88-07e8abe5acf3",
-    userRoleCode: COMPANY_REGULAR,
+    uuid: 'fcab0b13-99f8-4290-bf88-07e8abe5acf3',
+    userRoleCode: COMPANY_REGULAR
   },
   body: {
-    uuid: "fcab0b13-99f8-4290-bf88-07e8abe5acf3",
-  },
+    uuid: 'fcab0b13-99f8-4290-bf88-07e8abe5acf3'
+  }
 };
 const resMock = {
-  json: jsonMock,
+  json: jsonMock
 };
 
 describe('Given accessControls', () => {
