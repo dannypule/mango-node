@@ -126,7 +126,7 @@ describe('Given /api/users', () => {
             uuid: user.uuid,
             firstName: 'updatedFirstName',
             lastName: 'updatedLastName',
-            email: 'updated.email@test-email.fake',
+            email: `updated_at_${new Date().getTime()}@fakez.fakez`,
             userRoleCode: 40,
             status: 'INACTIVE'
           };
@@ -150,7 +150,7 @@ describe('Given /api/users', () => {
         it('should update email', async done => {
           const postData = {
             uuid: user.uuid,
-            email: 'email.is.updated@test-email.fake'
+            email: `updated_email_at_${new Date().getTime()}@fakez.fakez`
           };
           const res = await axiosInstance.put('/api/users/update_email', postData);
 

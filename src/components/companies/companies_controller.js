@@ -1,15 +1,15 @@
 import db from '../../db_models';
 import responseUtils from '../../utils/responseUtils';
-import getRequestUtils from '../../utils/getRequestUtils';
+import requestUtils from '../../utils/requestUtils';
 import companiesService from './companies_service';
 
 const model = db.Company;
 
 const getCompanies = async (req, res) => {
   try {
-    const dbQuery = getRequestUtils.getDbQuery(req);
+    const dbQuery = requestUtils.getDbQuery({ req });
     const data = await model.findAndCountAll(dbQuery);
-    const responseBody = getRequestUtils.getResponseBody(req, data, companiesService.formatFromDb);
+    const responseBody = requestUtils.getResponseBody(req, data, companiesService.formatFromDb);
     responseUtils.success(res, responseBody);
   } catch (err) {
     responseUtils.success(res, err);

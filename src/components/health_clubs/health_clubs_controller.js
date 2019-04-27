@@ -1,15 +1,15 @@
 import db from '../../db_models';
 import responseUtils from '../../utils/responseUtils';
-import getRequestUtils from '../../utils/getRequestUtils';
+import requestUtils from '../../utils/requestUtils';
 import healthClubsService from './health_clubs_service';
 
 const model = db.HealthClub;
 
 const getHealthClubs = async (req, res) => {
   try {
-    const dbQuery = getRequestUtils.getDbQuery(req);
+    const dbQuery = requestUtils.getDbQuery({ req });
     const data = await model.findAndCountAll(dbQuery);
-    const responseBody = getRequestUtils.getResponseBody(req, data, healthClubsService.formatFromDb);
+    const responseBody = requestUtils.getResponseBody(req, data, healthClubsService.formatFromDb);
     responseUtils.success(res, responseBody);
   } catch (err) {
     responseUtils.success(res, err);

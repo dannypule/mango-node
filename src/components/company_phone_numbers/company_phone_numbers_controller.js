@@ -1,6 +1,6 @@
 import db from '../../db_models';
 import responseUtils from '../../utils/responseUtils';
-import getRequestUtils from '../../utils/getRequestUtils';
+import requestUtils from '../../utils/requestUtils';
 import companyPhoneNumbersService from './company_phone_numbers_service';
 
 const model = db.CompanyPhoneNumber;
@@ -9,14 +9,15 @@ const getCompanyPhoneNumbers = async (req, res) => {
   try {
     const { companyUuid, postCode } = req.query;
 
-    const dbQuery = getRequestUtils.getDbQuery(req, {
+    const dbQuery = requestUtils.getDbQuery({
+      req,
       where: {
         company_uuid: companyUuid,
-        post_code: postCode,
-      },
+        post_code: postCode
+      }
     });
     const data = await model.findAndCountAll(dbQuery);
-    const responseBody = getRequestUtils.getResponseBody(req, data, companyPhoneNumbersService.formatFromDb);
+    const responseBody = requestUtils.getResponseBody(req, data, companyPhoneNumbersService.formatFromDb);
     responseUtils.success(res, responseBody);
   } catch (err) {
     responseUtils.success(res, err);
@@ -40,13 +41,13 @@ const updateCompanyPhoneNumber = async (req, res) => {
   try {
     await model.update(companyPhoneNumbersService.formatForDb(companyPhoneNumber), {
       where: {
-        uuid: companyPhoneNumber.uuid,
-      },
+        uuid: companyPhoneNumber.uuid
+      }
     });
     const _companyPhoneNumber = await model.findOne({
       where: {
-        uuid: req.body.uuid,
-      },
+        uuid: req.body.uuid
+      }
     });
     responseUtils.success(res, companyPhoneNumbersService.formatFromDb(_companyPhoneNumber));
   } catch (err) {
@@ -58,12 +59,12 @@ const deleteCompanyPhoneNumber = async (req, res) => {
   try {
     const result = await model.destroy({
       where: {
-        uuid: req.body.uuid,
-      },
+        uuid: req.body.uuid
+      }
     });
     if (result === 1) {
       responseUtils.success(res, {
-        message: 'Successfully deleted phone number.',
+        message: 'Successfully deleted phone number.'
       });
     } else {
       responseUtils.fail(res, { message: 'Unable to delete phone number.' });
@@ -77,5 +78,5 @@ export default {
   getCompanyPhoneNumbers,
   addCompanyPhoneNumber,
   updateCompanyPhoneNumber,
-  deleteCompanyPhoneNumber,
+  deleteCompanyPhoneNumber
 };
