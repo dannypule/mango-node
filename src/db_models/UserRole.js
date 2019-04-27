@@ -3,23 +3,31 @@ export default (sequelize, DataTypes) => {
     id: {
       allowNull: false,
       type: DataTypes.INTEGER,
-      autoIncrement: true,
+      autoIncrement: true
     },
     code: {
       allowNull: false,
       type: DataTypes.INTEGER,
       unique: true,
-      primaryKey: true,
+      primaryKey: true
     },
     description: {
       allowNull: false,
-      type: DataTypes.STRING(200),
+      type: DataTypes.STRING(200)
     },
     status: {
       allowNull: false,
       type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
-      defaultValue: 'ACTIVE',
+      defaultValue: 'ACTIVE'
     },
+    created_at: {
+      allowNull: true,
+      type: DataTypes.DATE
+    },
+    updated_at: {
+      allowNull: true,
+      type: DataTypes.DATE
+    }
   });
 
   return UserRole;

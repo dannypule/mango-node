@@ -2,8 +2,8 @@ import axios from 'axios';
 import config from '../../config';
 
 const axiosInstance = axios.create({
-  baseURL: `${config.baseURL}`,
-  timeout: 5000,
+  baseURL: config.baseURL,
+  timeout: 5000
 });
 const ACTIVE = 'ACTIVE';
 
@@ -12,7 +12,7 @@ describe('Given /api/company_phone_numbers', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'super.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();
@@ -24,6 +24,7 @@ describe('Given /api/company_phone_numbers', () => {
           const res = await axiosInstance.get('/api/company_phone_numbers');
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(15);
@@ -52,6 +53,7 @@ describe('Given /api/company_phone_numbers', () => {
           const res = await axiosInstance.get('/api/company_phone_numbers?page=4');
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(15);
@@ -75,6 +77,7 @@ describe('Given /api/company_phone_numbers', () => {
           const res = await axiosInstance.get(`/api/company_phone_numbers?uuid=${uuid}`);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(1);
@@ -108,11 +111,13 @@ describe('Given /api/company_phone_numbers', () => {
           phone: '840.649.2349',
           typeCode: 1,
           companyUuid: uuid,
+          status: 'ACTIVE'
         };
 
         const res = await axiosInstance.post('/api/company_phone_numbers', postData);
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.phone).toBe(postData.phone);
@@ -146,12 +151,13 @@ describe('Given /api/company_phone_numbers', () => {
           uuid,
           phone: '555.777.9999',
           typeCode: 1,
-          companyUuid,
+          companyUuid
         };
 
         const res = await axiosInstance.put('/api/company_phone_numbers', postData);
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.uuid).toBe(postData.uuid);
@@ -177,14 +183,15 @@ describe('Given /api/company_phone_numbers', () => {
 
       it('should permanently remove phoneNumber from databse', async done => {
         const postData = {
-          uuid: phoneNumber.uuid,
+          uuid: phoneNumber.uuid
         };
 
         const res = await axiosInstance.delete('/api/company_phone_numbers', {
-          data: postData,
+          data: postData
         });
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data).toHaveProperty('message');
@@ -198,7 +205,7 @@ describe('Given /api/company_phone_numbers', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();
@@ -208,6 +215,7 @@ describe('Given /api/company_phone_numbers', () => {
       it('should return phoneNumbers', async done => {
         const res = await axiosInstance.get('/api/company_phone_numbers');
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -231,7 +239,7 @@ describe('Given /api/company_phone_numbers', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
       done();

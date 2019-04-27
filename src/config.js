@@ -1,4 +1,4 @@
-require('dotenv').load({ silent: true });
+require('dotenv').config();
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -7,7 +7,7 @@ const port = 5566;
 const configuration = {
   port,
   cors: {
-    exposedHeaders: ['Link'],
+    exposedHeaders: ['Link']
   },
   development: {
     baseURL: `http://localhost:${port}`,
@@ -19,19 +19,21 @@ const configuration = {
         port: process.env.DEVELOPMENT_DB_PORT,
         host: process.env.DEVELOPMENT_DB_HOST,
         dialect: 'postgres',
-        operatorsAliases: false,
         dialectOptions: {
-          ssl: false,
+          ssl: false
         },
-        define: { underscored: true },
-        logging: false,
-      },
+        define: {
+          freezeTableName: true,
+          underscored: true
+        },
+        logging: false
+      }
     },
     jwtEncryption: process.env.DEVELOPMENT_JWT_ENCRYPTION,
-    jwtExpiration: process.env.DEVELOPMENT_JWT_EXPIRATION,
+    jwtExpiration: process.env.DEVELOPMENT_JWT_EXPIRATION
   },
   staging: {
-    baseURL: `todo`,
+    baseURL: ``,
     db: {
       username: process.env.STAGING_DB_USERNAME,
       password: process.env.STAGING_DB_PASSWORD,
@@ -39,26 +41,27 @@ const configuration = {
       options: {
         host: process.env.STAGING_DB_HOST,
         dialect: 'postgres',
-        operatorsAliases: false,
         dialectOptions: {
-          ssl: true,
+          ssl: true
         },
-        define: { underscored: true },
+        define: {
+          freezeTableName: true,
+          underscored: true
+        },
         logging: false,
         pool: {
-          // increase pool size for AWS https://github.com/sequelize/sequelize/issues/7884
           max: 5,
           min: 0,
           idle: 20000,
-          acquire: 20000,
-        },
-      },
+          acquire: 20000
+        }
+      }
     },
     jwtEncryption: process.env.STAGING_JWT_ENCRYPTION,
-    jwtExpiration: process.env.STAGING_JWT_EXPIRATION,
+    jwtExpiration: process.env.STAGING_JWT_EXPIRATION
   },
   production: {
-    baseURL: `todo`,
+    baseURL: ``,
     db: {
       username: process.env.PROD_DB_USERNAME,
       password: process.env.PROD_DB_PASSWORD,
@@ -66,15 +69,24 @@ const configuration = {
       options: {
         host: process.env.PROD_DB_HOST,
         dialect: 'postgres',
-        operatorsAliases: false,
         dialectOptions: {
-          ssl: true,
+          ssl: true
         },
-        define: { underscored: true },
-      },
+        define: {
+          freezeTableName: true,
+          underscored: true
+        },
+        logging: false,
+        pool: {
+          max: 5,
+          min: 0,
+          idle: 20000,
+          acquire: 20000
+        }
+      }
     },
     jwtEncryption: process.env.PROD_JWT_ENCRYPTION,
-    jwtExpiration: process.env.PROD_JWT_EXPIRATION,
-  },
+    jwtExpiration: process.env.PROD_JWT_EXPIRATION
+  }
 };
 export default configuration[env];

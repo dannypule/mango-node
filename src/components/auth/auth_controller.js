@@ -10,8 +10,8 @@ const login = async (req, res) => {
   try {
     const user = await model.findOne({
       where: {
-        email: req.body.email,
-      },
+        email: req.body.email
+      }
     });
 
     if (!user) responseUtils.fail(res, { message: `Couldn't log in.` });
@@ -34,7 +34,6 @@ const login = async (req, res) => {
 
 const register = (req, res) => {
   const user = req.body;
-
   usersService.addUser(
     req,
     res,
@@ -45,13 +44,13 @@ const register = (req, res) => {
       password: user.password,
       companyUuid: user.companyUuid,
       userRoleCode: 30, // todo basic user - should use constants file
-      status: 'ACTIVE',
+      status: 'ACTIVE'
     },
-    true,
+    true
   );
 };
 
 export default {
   login,
-  register,
+  register
 };

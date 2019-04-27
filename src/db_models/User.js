@@ -4,35 +4,51 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
+      defaultValue: DataTypes.UUIDV4
     },
     first_name: {
       allowNull: true,
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(100)
     },
     last_name: {
       allowNull: true,
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(100)
     },
     email: {
       allowNull: true,
       type: DataTypes.STRING(100),
-      unique: true,
+      unique: true
     },
     password: {
       allowNull: false,
-      type: DataTypes.STRING(150),
+      type: DataTypes.STRING(150)
     },
     verified: {
       allowNull: false,
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: false
     },
     status: {
       allowNull: false,
       type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
-      defaultValue: 'ACTIVE',
+      defaultValue: 'ACTIVE'
     },
+    user_role_code: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
+    company_uuid: {
+      type: DataTypes.UUID,
+      allowNull: true
+    },
+    created_at: {
+      allowNull: true,
+      type: DataTypes.DATE
+    },
+    updated_at: {
+      allowNull: true,
+      type: DataTypes.DATE
+    }
   });
 
   User.associate = models => {

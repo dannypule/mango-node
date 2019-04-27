@@ -2,8 +2,8 @@ import axios from 'axios';
 import config from '../../config';
 
 const axiosInstance = axios.create({
-  baseURL: `${config.baseURL}`,
-  timeout: 5000,
+  baseURL: config.baseURL,
+  timeout: 5000
 });
 const ACTIVE = 'ACTIVE';
 
@@ -12,7 +12,7 @@ describe('Given /api/companies', () => {
     beforeAll(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'super.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
 
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
@@ -21,10 +21,11 @@ describe('Given /api/companies', () => {
 
     describe('GET', () => {
       describe('GET /api/companies', () => {
-        it('should return companies', async done => {
+        it('should return companies', async () => {
           const res = await axiosInstance.get('/api/companies');
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(15);
@@ -36,58 +37,54 @@ describe('Given /api/companies', () => {
           expect(res.data.data.content[0]).toHaveProperty('createdAt');
           expect(res.data.data.content[0]).toHaveProperty('updatedAt');
           expect(res.data.data.content[0]).toHaveProperty('status');
-
-          done();
         });
       });
 
       describe('GET /api/companies?page=4', () => {
-        it('should return users from page 4', async done => {
+        it('should return users from page 4', async () => {
           const res = await axiosInstance.get('/api/companies?page=4');
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(15);
           expect(res.data.data.page).toBe(4);
           expect(res.data.data.length).toBe(15);
-
-          done();
         });
       });
 
       describe('GET /api/companies?uuid=:uuid', () => {
         let company;
-        beforeEach(async done => {
+        beforeEach(async () => {
           const res = await axiosInstance.get('/api/companies');
           [company] = res.data.data.content;
-          done();
         });
 
-        it('should return company with uuid', async done => {
+        it('should return company with uuid', async () => {
           const res = await axiosInstance.get(`/api/companies?uuid=${company.uuid}`);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.content.length).toBe(1);
           expect(res.data.data.page).toBe(1);
           expect(res.data.data.length).toBe(1);
-
-          done();
         });
       });
     });
 
     describe('POST', () => {
       describe('POST /api/companies', () => {
-        it('should add company', async done => {
+        it('should add company', async () => {
           const postData = {
-            name: 'Super Corp',
+            name: 'Super Corp'
           };
           const res = await axiosInstance.post('/api/companies', postData);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data).toHaveProperty('uuid');
@@ -96,18 +93,15 @@ describe('Given /api/companies', () => {
           expect(res.data.data).toHaveProperty('updatedAt');
           expect(res.data.data).toHaveProperty('status');
           expect(res.data.data.status).toBe(ACTIVE);
-
-          done();
         });
       });
     });
 
     describe('PUT', () => {
       let company;
-      beforeEach(async done => {
+      beforeEach(async () => {
         const res = await axiosInstance.get('/api/companies');
         [company] = res.data.data.content;
-        done();
       });
 
       describe('PUT /api/companies', () => {
@@ -115,11 +109,12 @@ describe('Given /api/companies', () => {
           const postData = {
             uuid: company.uuid,
             name: 'Super cool test corp',
-            status: 'DELETED',
+            status: 'DELETED'
           };
           const res = await axiosInstance.put('/api/companies', postData);
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
 
           expect(res.data.data.uuid).toBe(postData.uuid);
@@ -133,26 +128,24 @@ describe('Given /api/companies', () => {
 
     describe('DELETE', () => {
       let company;
-      beforeEach(async done => {
+      beforeEach(async () => {
         const res = await axiosInstance.get('/api/companies');
         [company] = res.data.data.content;
-        done();
       });
 
       describe('DELETE /api/companies', () => {
-        it('should permanently remove companies from database', async done => {
+        it('should permanently remove companies from database', async () => {
           const postData = {
-            uuid: company.uuid,
+            uuid: company.uuid
           };
           const res = await axiosInstance.delete('/api/companies', {
-            data: postData,
+            data: postData
           });
 
           expect(res.status).toBe(200);
+          expect(res.data.message).toBe(undefined);
           expect(res.data.ok).toBe(true);
           expect(res.data.data).toHaveProperty('message');
-
-          done();
         });
       });
     });
@@ -163,7 +156,7 @@ describe('Given /api/companies', () => {
     beforeEach(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
 
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
@@ -175,6 +168,7 @@ describe('Given /api/companies', () => {
         const res = await axiosInstance.get('/api/companies');
 
         expect(res.status).toBe(200);
+        expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data.content.length).toBe(15);
@@ -196,7 +190,7 @@ describe('Given /api/companies', () => {
     beforeEach(async done => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
-        password: 'supersecure',
+        password: 'supersecure'
       });
 
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
