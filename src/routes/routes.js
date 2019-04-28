@@ -8,7 +8,7 @@ import usersController from '../components/users/users_controller';
 import projectsController from '../components/projects/projects_controller';
 import userProjectsController from '../components/user_projects/user_projects_controller';
 import healthClubAddressesController from '../components/health_club_addresses/health_club_addresses_controller';
-import companyPhoneNumbersController from '../components/company_phone_numbers/company_phone_numbers_controller';
+import healthClubPhoneNumbersController from '../components/health_club_phone_numbers/health_club_phone_numbers_controller';
 import userAddressesController from '../components/user_addresses/user_addresses_controller';
 import userPhoneNumbersController from '../components/user_phone_numbers/user_phone_numbers_controller';
 import { accessControls, SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN } from '../middleware/accessControls';
@@ -197,31 +197,31 @@ router.delete(
 );
 
 // ===================================================
-// '/api/company_phone_numbers'
+// '/api/health_club_phone_numbers'
 // =========================
 router.get(
-  '/company_phone_numbers',
+  '/health_club_phone_numbers',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  companyPhoneNumbersController.getCompanyPhoneNumbers
+  healthClubPhoneNumbersController.getHealthClubPhoneNumbers
 );
 router.post(
-  '/company_phone_numbers',
+  '/health_club_phone_numbers',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  companyPhoneNumbersController.addCompanyPhoneNumber
+  healthClubPhoneNumbersController.addHealthClubPhoneNumber
 );
 router.put(
-  '/company_phone_numbers',
+  '/health_club_phone_numbers',
   authenticateViaToken,
   accessControls([SELF, COMPANY_VIEWER, COMPANY_EDITOR, COMPANY_ADMIN]),
-  companyPhoneNumbersController.updateCompanyPhoneNumber
+  healthClubPhoneNumbersController.updateHealthClubPhoneNumber
 );
 router.delete(
-  '/company_phone_numbers',
+  '/health_club_phone_numbers',
   authenticateViaToken,
   accessControls([COMPANY_ADMIN]),
-  companyPhoneNumbersController.deleteCompanyPhoneNumber
+  healthClubPhoneNumbersController.deleteHealthClubPhoneNumber
 );
 
 // ===================================================
