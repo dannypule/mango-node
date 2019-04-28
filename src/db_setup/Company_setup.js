@@ -23,7 +23,7 @@ export default () => {
       //   type_code: Math.floor(Math.random() * 3) + 1,
       //   company_uuid: company.uuid
       // });
-      // await db.CompanyPhoneNumber.create({
+      // await db.HealthClubPhoneNumber.create({
       //   phone: faker.phone.phoneNumber(),
       //   type_code: Math.floor(Math.random() * 3) + 1,
       //   company_uuid: company.uuid
@@ -45,7 +45,7 @@ export default () => {
       //   type_code: Math.floor(Math.random() * 3) + 1,
       //   company_uuid: company.uuid
       // });
-      // await db.CompanyPhoneNumber.create({
+      // await db.HealthClubPhoneNumber.create({
       //   phone: faker.phone.phoneNumber(),
       //   type_code: Math.floor(Math.random() * 3) + 1,
       //   company_uuid: company.uuid

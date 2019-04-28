@@ -7,21 +7,20 @@ const axiosInstance = axios.create({
 });
 const ACTIVE = 'ACTIVE';
 
-describe('Given /api/company_phone_numbers', () => {
+describe('Given /api/health_club_phone_numbers', () => {
   describe('when a SUPER ADMIN is logged in', () => {
-    beforeAll(async done => {
+    beforeAll(async () => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'super.admin@email.fake',
         password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-      done();
     });
 
     describe('GET', () => {
-      describe('GET /api/company_phone_numbers', () => {
-        it('should return phoneNumbers', async done => {
-          const res = await axiosInstance.get('/api/company_phone_numbers');
+      describe('GET /api/health_club_phone_numbers', () => {
+        it('should return phoneNumbers', async () => {
+          const res = await axiosInstance.get('/api/health_club_phone_numbers');
 
           expect(res.status).toBe(200);
           expect(res.data.message).toBe(undefined);
@@ -39,18 +38,16 @@ describe('Given /api/company_phone_numbers', () => {
           expect(res.data.data.content[0]).toHaveProperty('uuid');
           expect(res.data.data.content[0]).toHaveProperty('phone');
           expect(res.data.data.content[0]).toHaveProperty('typeCode');
-          expect(res.data.data.content[0]).toHaveProperty('companyUuid');
+          expect(res.data.data.content[0]).toHaveProperty('healthClubUuid');
           expect(res.data.data.content[0]).toHaveProperty('createdAt');
           expect(res.data.data.content[0]).toHaveProperty('updatedAt');
           expect(res.data.data.content[0]).toHaveProperty('status');
-
-          done();
         });
       });
 
-      describe('GET /api/company_phone_numbers?page=4', () => {
-        it('should return phone numbers from page 4', async done => {
-          const res = await axiosInstance.get('/api/company_phone_numbers?page=4');
+      describe('GET /api/health_club_phone_numbers?page=4', () => {
+        it('should return phone numbers from page 4', async () => {
+          const res = await axiosInstance.get('/api/health_club_phone_numbers?page=4');
 
           expect(res.status).toBe(200);
           expect(res.data.message).toBe(undefined);
@@ -58,23 +55,20 @@ describe('Given /api/company_phone_numbers', () => {
 
           expect(res.data.data.content.length).toBe(15);
           expect(res.data.data.page).toBe(4);
-
-          done();
         });
       });
 
-      describe('GET /api/company_phone_numbers?uuid=<dynamic-uuid>', () => {
+      describe('GET /api/health_club_phone_numbers?uuid=<dynamic-uuid>', () => {
         let phoneNumber;
 
-        beforeEach(async done => {
-          const phoneNumberRes = await axiosInstance.get('/api/company_phone_numbers');
+        beforeEach(async () => {
+          const phoneNumberRes = await axiosInstance.get('/api/health_club_phone_numbers');
           [phoneNumber] = phoneNumberRes.data.data.content;
-          done();
         });
 
-        it('should return company phone number based on uuid', async done => {
+        it('should return health club phone number based on uuid', async () => {
           const { uuid } = phoneNumber;
-          const res = await axiosInstance.get(`/api/company_phone_numbers?uuid=${uuid}`);
+          const res = await axiosInstance.get(`/api/health_club_phone_numbers?uuid=${uuid}`);
 
           expect(res.status).toBe(200);
           expect(res.data.message).toBe(undefined);
@@ -86,35 +80,32 @@ describe('Given /api/company_phone_numbers', () => {
           expect(res.data.data.content[0]).toHaveProperty('uuid');
           expect(res.data.data.content[0]).toHaveProperty('phone');
           expect(res.data.data.content[0]).toHaveProperty('typeCode');
-          expect(res.data.data.content[0]).toHaveProperty('companyUuid');
+          expect(res.data.data.content[0]).toHaveProperty('healthClubUuid');
           expect(res.data.data.content[0]).toHaveProperty('createdAt');
           expect(res.data.data.content[0]).toHaveProperty('updatedAt');
           expect(res.data.data.content[0]).toHaveProperty('status');
-
-          done();
         });
       });
     });
 
-    describe('POST /api/company_phone_numbers', () => {
-      let company;
+    describe('POST /api/health_club_phone_numbers', () => {
+      let healthClub;
 
-      beforeEach(async done => {
-        const companiesRes = await axiosInstance.get('/api/companies');
-        [company] = companiesRes.data.data.content;
-        done();
+      beforeEach(async () => {
+        const healthClubsRes = await axiosInstance.get('/api/health_clubs');
+        [healthClub] = healthClubsRes.data.data.content;
       });
 
-      it('should add phoneNumber', async done => {
-        const { uuid } = company;
+      it('should add phoneNumber', async () => {
+        const { uuid } = healthClub;
         const postData = {
           phone: '840.649.2349',
           typeCode: 1,
-          companyUuid: uuid,
+          healthClubUuid: uuid,
           status: 'ACTIVE'
         };
 
-        const res = await axiosInstance.post('/api/company_phone_numbers', postData);
+        const res = await axiosInstance.post('/api/health_club_phone_numbers', postData);
 
         expect(res.status).toBe(200);
         expect(res.data.message).toBe(undefined);
@@ -122,39 +113,36 @@ describe('Given /api/company_phone_numbers', () => {
 
         expect(res.data.data.phone).toBe(postData.phone);
         expect(res.data.data.typeCode).toBe(postData.typeCode);
-        expect(res.data.data.companyUuid).toBe(postData.companyUuid);
+        expect(res.data.data.healthClubUuid).toBe(postData.healthClubUuid);
         expect(res.data.data).toHaveProperty('createdAt');
         expect(res.data.data).toHaveProperty('updatedAt');
         expect(res.data.data.status).toBe(ACTIVE);
-
-        done();
       });
     });
 
-    describe('PUT /api/company_phone_numbers', () => {
+    describe('PUT /api/health_club_phone_numbers', () => {
       let phoneNumber;
-      let company;
+      let healthClub;
 
-      beforeEach(async done => {
-        const phoneNumbersRes = await axiosInstance.get('/api/company_phone_numbers');
+      beforeEach(async () => {
+        const phoneNumbersRes = await axiosInstance.get('/api/health_club_phone_numbers');
         [phoneNumber] = phoneNumbersRes.data.data.content;
-        const companiesRes = await axiosInstance.get('/api/companies');
-        [company] = companiesRes.data.data.content;
-        done();
+        const healthClubsRes = await axiosInstance.get('/api/health_clubs');
+        [healthClub] = healthClubsRes.data.data.content;
       });
 
-      it('should update phoneNumber', async done => {
+      it('should update phoneNumber', async () => {
         const { uuid } = phoneNumber;
-        const { uuid: companyUuid } = company;
+        const { uuid: healthClubUuid } = healthClub;
 
         const postData = {
           uuid,
           phone: '555.777.9999',
           typeCode: 1,
-          companyUuid
+          healthClubUuid
         };
 
-        const res = await axiosInstance.put('/api/company_phone_numbers', postData);
+        const res = await axiosInstance.put('/api/health_club_phone_numbers', postData);
 
         expect(res.status).toBe(200);
         expect(res.data.message).toBe(undefined);
@@ -163,30 +151,27 @@ describe('Given /api/company_phone_numbers', () => {
         expect(res.data.data.uuid).toBe(postData.uuid);
         expect(res.data.data.phone).toBe(postData.phone);
         expect(res.data.data.typeCode).toBe(postData.typeCode);
-        expect(res.data.data.companyUuid).toBe(postData.companyUuid);
+        expect(res.data.data.healthClubUuid).toBe(postData.healthClubUuid);
         expect(res.data.data).toHaveProperty('createdAt');
         expect(res.data.data).toHaveProperty('updatedAt');
         expect(res.data.data.status).toBe(ACTIVE);
-
-        done();
       });
     });
 
-    describe('DELETE /api/company_phone_numbers', () => {
+    describe('DELETE /api/health_club_phone_numbers', () => {
       let phoneNumber;
 
-      beforeEach(async done => {
-        const phoneNumberRes = await axiosInstance.get('/api/company_phone_numbers');
+      beforeEach(async () => {
+        const phoneNumberRes = await axiosInstance.get('/api/health_club_phone_numbers');
         [phoneNumber] = phoneNumberRes.data.data.content;
-        done();
       });
 
-      it('should permanently remove phoneNumber from databse', async done => {
+      it('should permanently remove phoneNumber from databse', async () => {
         const postData = {
           uuid: phoneNumber.uuid
         };
 
-        const res = await axiosInstance.delete('/api/company_phone_numbers', {
+        const res = await axiosInstance.delete('/api/health_club_phone_numbers', {
           data: postData
         });
 
@@ -195,25 +180,22 @@ describe('Given /api/company_phone_numbers', () => {
         expect(res.data.ok).toBe(true);
 
         expect(res.data.data).toHaveProperty('message');
-
-        done();
       });
     });
   });
 
   describe('when a COMPANY ADMIN is logged in', () => {
-    beforeAll(async done => {
+    beforeAll(async () => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.admin@email.fake',
         password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-      done();
     });
 
-    describe('GET /api/company_phone_numbers', () => {
-      it('should return phoneNumbers', async done => {
-        const res = await axiosInstance.get('/api/company_phone_numbers');
+    describe('GET /api/health_club_phone_numbers', () => {
+      it('should return phoneNumbers', async () => {
+        const res = await axiosInstance.get('/api/health_club_phone_numbers');
         expect(res.status).toBe(200);
         expect(res.data.message).toBe(undefined);
         expect(res.data.ok).toBe(true);
@@ -225,36 +207,32 @@ describe('Given /api/company_phone_numbers', () => {
         expect(res.data.data.content[0]).toHaveProperty('uuid');
         expect(res.data.data.content[0]).toHaveProperty('phone');
         expect(res.data.data.content[0]).toHaveProperty('typeCode');
-        expect(res.data.data.content[0]).toHaveProperty('companyUuid');
+        expect(res.data.data.content[0]).toHaveProperty('healthClubUuid');
         expect(res.data.data.content[0]).toHaveProperty('createdAt');
         expect(res.data.data.content[0]).toHaveProperty('updatedAt');
         expect(res.data.data.content[0]).toHaveProperty('status');
-
-        done();
       });
     });
   });
 
   describe('when a COMPANY REGULAR USER is logged in', () => {
-    beforeAll(async done => {
+    beforeAll(async () => {
       const res = await axiosInstance.post('/api/auth/login', {
         email: 'company.regular@email.fake',
         password: 'supersecure'
       });
       axiosInstance.defaults.headers.common.Authorization = res.data.data.token;
-      done();
     });
 
-    describe('GET /api/company_phone_numbers', () => {
-      it('should NOT return phoneNumbers', async done => {
+    describe('GET /api/health_club_phone_numbers', () => {
+      it('should NOT return phoneNumbers', async () => {
         try {
-          await axiosInstance.get('/api/company_phone_numbers');
+          await axiosInstance.get('/api/health_club_phone_numbers');
         } catch (err) {
           expect(err.response.status).toBe(403);
           expect(err.response.data.ok).toBe(false);
           expect(err.response.data).toHaveProperty('message');
         } finally {
-          done();
         }
       });
     });

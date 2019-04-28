@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const CompanyPhoneNumber = sequelize.define('CompanyPhoneNumber', {
+  const HealthClubPhoneNumber = sequelize.define('HealthClubPhoneNumber', {
     uuid: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -20,7 +20,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DELETED'),
       defaultValue: 'ACTIVE'
     },
-    company_uuid: {
+    health_club_uuid: {
       type: DataTypes.UUID,
       allowNull: false
     },
@@ -34,9 +34,9 @@ export default (sequelize, DataTypes) => {
     }
   });
 
-  CompanyPhoneNumber.associate = models => {
-    CompanyPhoneNumber.belongsTo(models.Company);
+  HealthClubPhoneNumber.associate = models => {
+    HealthClubPhoneNumber.belongsTo(models.Company);
   };
 
-  return CompanyPhoneNumber;
+  return HealthClubPhoneNumber;
 };
