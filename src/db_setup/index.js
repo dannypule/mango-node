@@ -14,10 +14,10 @@ import HealthClubSetup from './HealthClub_setup';
 import UserSetup from './User_setup';
 import ProjectSetup from './Project_setup';
 import UserProjectSetup from './UserProject_setup';
-import CompanyAddress from './CompanyAddress_setup';
-import CompanyPhoneNumber from './CompanyPhoneNumber_setup';
-import UserAddress from './UserAddress_setup';
-import UserPhoneNumber from './UserPhoneNumber_setup';
+import HealthClubAddressSetup from './HealthClubAddress_setup';
+import CompanyPhoneNumberSetup from './CompanyPhoneNumber_setup';
+import UserAddressSetup from './UserAddress_setup';
+import UserPhoneNumberSetup from './UserPhoneNumber_setup';
 
 const performSync = async () => {
   // ///////////////////////////////////////////////////////////////////////////////////////
@@ -40,10 +40,10 @@ const performSync = async () => {
   await UserSetup();
   await ProjectSetup();
   await UserProjectSetup();
-  await CompanyAddress();
-  await CompanyPhoneNumber();
-  await UserAddress();
-  await UserPhoneNumber();
+  await HealthClubAddressSetup();
+  await CompanyPhoneNumberSetup();
+  await UserAddressSetup();
+  await UserPhoneNumberSetup();
 
   console.log(colors.green('DB setup complete. Bye!'));
   process.exit(0);

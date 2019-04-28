@@ -10,10 +10,10 @@ const formatFromDb = item => {
     country: item.country,
     postCode: item.post_code,
     typeCode: item.type_code,
-    companyUuid: item.company_uuid,
+    healthClubUuid: item.health_club_uuid,
     createdAt: item.created_at,
     updatedAt: item.updated_at,
-    status: item.status,
+    status: item.status
   };
 };
 
@@ -28,12 +28,12 @@ const formatForDb = item => {
     country: item.country,
     post_code: item.postCode,
     type_code: item.typeCode,
-    company_uuid: item.companyUuid,
-    status: item.status,
+    health_club_uuid: item.healthClubUuid,
+    status: item.status
   };
 };
 
 export default {
   formatFromDb,
-  formatForDb,
+  formatForDb
 };
