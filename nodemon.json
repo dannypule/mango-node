@@ -1,4 +1,4 @@
 {
   "verbose": true,
-  "ignore": ["*.test.*", "*.spec.*", "jest.*", "**/dist/**", "**/db_setup/**", "**/coverage/**"]
+  "ignore": ["*.test.*", "*.spec.*", "*.ispec.*", "jest.*", "**/dist/**", "**/db_setup/**", "**/coverage/**"]
 }
