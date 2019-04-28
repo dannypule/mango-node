@@ -14,11 +14,11 @@ const login = async (req, res) => {
       }
     });
 
-    if (!user) responseUtils.fail(res, { message: `Couldn't log in.` });
+    if (!user) responseUtils.fail(res, { message: `Couldn't log in.` }, 403);
 
     bcrypt.compare(req.body.password, user.password, (err, r) => {
       if (err) {
-        responseUtils.fail(res, err);
+        responseUtils.fail(res, { message: `Couldn't log in.` }, 403);
         return;
       }
       if (r) {
@@ -28,7 +28,7 @@ const login = async (req, res) => {
       }
     });
   } catch (err) {
-    responseUtils.fail(res, err);
+    responseUtils.fail(res, { message: `Couldn't log in.` }, 403);
   }
 };
 
