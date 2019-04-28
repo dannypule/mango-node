@@ -15,7 +15,7 @@ import UserSetup from './User_setup';
 import ProjectSetup from './Project_setup';
 import UserProjectSetup from './UserProject_setup';
 import HealthClubAddressSetup from './HealthClubAddress_setup';
-import CompanyPhoneNumberSetup from './CompanyPhoneNumber_setup';
+import HealthClubPhoneNumberSetup from './HealthClubPhoneNumber_setup';
 import UserAddressSetup from './UserAddress_setup';
 import UserPhoneNumberSetup from './UserPhoneNumber_setup';
 
@@ -41,7 +41,7 @@ const performSync = async () => {
   await ProjectSetup();
   await UserProjectSetup();
   await HealthClubAddressSetup();
-  await CompanyPhoneNumberSetup();
+  await HealthClubPhoneNumberSetup();
   await UserAddressSetup();
   await UserPhoneNumberSetup();
 
